@@ -1,0 +1,308 @@
+/* admin/statistics.wxss */
+.container {
+  background-color: #F5F5F5;
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background-color: #FFFFFF;
+  border-bottom: 1rpx solid #E0E0E0;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.export-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 20rpx;
+  background-color: #F5F5F5;
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.export-btn:active {
+  background-color: #E0E0E0;
+}
+
+/* 筛选条件 */
+.filter-bar {
+  display: flex;
+  gap: 30rpx;
+  padding: 30rpx;
+  background-color: #FFFFFF;
+  border-bottom: 1rpx solid #E0E0E0;
+}
+
+.filter-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.filter-label {
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.picker-value {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 20rpx;
+  background-color: #F5F5F5;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+/* 统计内容 */
+.statistics-content {
+  flex: 1;
+  height: calc(100vh - 220rpx);
+  padding: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+.date-range {
+  font-size: 24rpx;
+  color: #999999;
+  margin-bottom: 30rpx;
+}
+
+/* 核心指标 */
+.overview-section {
+  margin-bottom: 40rpx;
+}
+
+.indicator-cards {
+  display: flex;
+  gap: 20rpx;
+  flex-wrap: wrap;
+}
+
+.indicator-card {
+  flex: 1;
+  min-width: 140rpx;
+  padding: 30rpx 20rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.indicator-value {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #FF6B35;
+  margin-bottom: 8rpx;
+}
+
+.indicator-label {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 图表区域 */
+.chart-section,
+.store-section,
+.teacher-section {
+  margin-bottom: 40rpx;
+}
+
+.chart-container {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.chart-placeholder {
+  width: 100%;
+}
+
+.chart-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.chart-data {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 200rpx;
+  margin-bottom: 20rpx;
+}
+
+.chart-data.horizontal {
+  flex-direction: column;
+  height: auto;
+  gap: 20rpx;
+}
+
+.chart-bar {
+  width: 60rpx;
+  background-color: #FF6B35;
+  border-radius: 8rpx 8rpx 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 8rpx;
+  position: relative;
+  min-height: 20rpx;
+}
+
+.chart-bar.horizontal {
+  width: auto;
+  height: 40rpx;
+  border-radius: 0 8rpx 8rpx 0;
+  padding-top: 0;
+  padding-left: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.bar-value {
+  font-size: 20rpx;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.bar-label {
+  font-size: 24rpx;
+  color: #FFFFFF;
+  margin-right: 16rpx;
+  white-space: nowrap;
+}
+
+.chart-x-axis {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.x-label {
+  font-size: 22rpx;
+  color: #999999;
+  text-align: center;
+  width: 60rpx;
+}
+
+/* 门店统计 */
+.store-cards {
+  display: flex;
+  gap: 20rpx;
+  flex-wrap: wrap;
+}
+
+.store-card {
+  flex: 1;
+  min-width: 280rpx;
+  padding: 30rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.store-name {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+.store-data {
+  display: flex;
+  gap: 40rpx;
+}
+
+.data-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.data-value {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #FF6B35;
+  margin-bottom: 8rpx;
+}
+
+.data-label {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 导师详情 */
+.teacher-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.teacher-item {
+  padding: 30rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.teacher-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.teacher-name {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.teacher-meta {
+  display: flex;
+  gap: 30rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}

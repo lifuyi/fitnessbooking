@@ -1,0 +1,304 @@
+/* profile/index.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding-bottom: 40rpx;
+}
+
+/* 用户信息 */
+.user-header {
+  background-color: #FF6B35;
+  padding: 60rpx 30rpx 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  margin-right: 24rpx;
+}
+
+.user-details {
+  color: #FFFFFF;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.user-meta {
+  opacity: 0.8;
+}
+
+.settings-btn {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+.settings-btn .icon-settings {
+  font-size: 36rpx;
+}
+
+/* 功能模块 */
+.function-modules {
+  margin: 20rpx 30rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.module-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.module-item:last-child {
+  border-bottom: none;
+}
+
+.module-icon {
+  width: 80rpx;
+  height: 80rpx;
+  background-color: rgba(255, 107, 53, 0.1);
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+
+.module-icon .icon-calendar,
+.module-icon .icon-card,
+.module-icon .icon-qrcode,
+.module-icon .icon-service {
+  font-size: 40rpx;
+  color: #FF6B35;
+}
+
+.module-content {
+  flex: 1;
+}
+
+.module-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 4rpx;
+  display: block;
+}
+
+.module-desc {
+  font-size: 26rpx;
+  color: #666666;
+  display: block;
+}
+
+.module-item .icon-arrow-right {
+  font-size: 28rpx;
+  color: #CCCCCC;
+}
+
+/* 预约预览 */
+.booking-preview,
+.card-preview {
+  margin: 20rpx 30rpx;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.preview-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.preview-more {
+  font-size: 28rpx;
+  color: #FF6B35;
+}
+
+.preview-list {
+  padding: 0 10rpx;
+}
+
+.preview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.preview-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  flex: 1;
+  padding-right: 20rpx;
+}
+
+.item-title {
+  font-size: 30rpx;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.item-meta {
+  color: #666666;
+  margin-bottom: 4rpx;
+}
+
+.item-status {
+  white-space: nowrap;
+}
+
+/* 课程卡预览 */
+.card-list {
+  padding: 0 10rpx;
+}
+
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.card-item:last-child {
+  border-bottom: none;
+}
+
+.card-info {
+  flex: 1;
+  padding-right: 20rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.card-count {
+  display: flex;
+  align-items: baseline;
+}
+
+.count-number {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #FF6B35;
+}
+
+.count-unit {
+  font-size: 24rpx;
+  color: #FF6B35;
+  margin: 0 4rpx;
+}
+
+.count-total {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.card-status {
+  white-space: nowrap;
+}
+
+/* 状态标签 */
+.status-tag {
+  font-size: 24rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.status-primary {
+  background-color: rgba(255, 107, 53, 0.1);
+  color: #FF6B35;
+}
+
+.status-success {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+}
+
+.status-warning {
+  background-color: rgba(255, 149, 0, 0.1);
+  color: #FF9500;
+}
+
+.status-error {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+}
+
+.status-default {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #666666;
+}
+
+/* 退出登录 */
+.logout-section {
+  margin: 40rpx 30rpx;
+}
+
+.logout-btn {
+  width: 100%;
+  height: 88rpx;
+  background-color: #FFFFFF;
+  color: #FF3B30;
+  border: 1rpx solid #F5F5F5;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-btn:active {
+  background-color: #F5F5F5;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* 图标字体 */
+.iconfont {
+  font-family: 'iconfont';
+}
+
+.icon-settings:before { content: '\e600'; }
+.icon-calendar:before { content: '\e601'; }
+.icon-card:before { content: '\e602'; }
+.icon-qrcode:before { content: '\e603'; }
+.icon-service:before { content: '\e604'; }
+.icon-arrow-right:before { content: '\e605'; }

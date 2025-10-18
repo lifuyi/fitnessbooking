@@ -1,0 +1,163 @@
+<!-- booking/index.wxml -->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="header-title">{{i18n.t('profile.my.bookings')}}</text>
+  </view>
+
+  <!-- 标签页 -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-index="0">
+      <text>{{i18n.t('booking.upcoming')}}</text>
+    </view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1">
+      <text>{{i18n.t('booking.history')}}</text>
+    </view>
+  </view>
+
+  <!-- 筛选条件 -->
+  <view class="filter-bar" wx:if="{{currentTab === 1}}">
+    <view class="filter-item">
+      <text class="filter-label">{{i18n.t('booking.status')}}</text>
+      <picker mode="selector" range="{{getStatusOptions()}}" bindchange="switchStatus">
+        <view class="picker-value">
+          {{getCurrentStatusText()}}
+          <text class="iconfont icon-arrow-down"></text>
+        </view>
+      </picker>
+    </view>
+    <view class="filter-item">
+      <text class="filter-label">{{i18n.t('booking.time')}}</text>
+      <picker mode="selector" range="{{getDateRangeOptions()}}" bindchange="switchDateRange">
+        <view class="picker-value">
+          {{getCurrentDateRangeText()}}
+          <text class="iconfont icon-arrow-down"></text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 预约列表 -->
+  <view class="booking-list" wx:if="{{!loading && bookings.length > 0}}">
+    <view class="booking-item card card-padding" wx:for="{{bookings}}" wx:key="bookingId">
+      <view class="booking-header">
+        <view class="course-info">
+          <text class="course-name">{{item.courseName}}</text>
+          <text class="dance-type tag tag-primary">{{item.danceTypeName}}</text>
+        </view>
+        <view class="booking-status {{getStatusClass(item.status)}}">
+          <text>{{getStatusText(item.status)}}</text>
+        </view>
+      </view>
+      
+      <view class="booking-details">
+        <view class="detail-item">
+          <text class="detail-icon iconfont icon-time"></text>
+          <text class="detail-text">{{formatCourseTime(item.date, item.startTime, item.endTime)}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-icon iconfont icon-store"></text>
+          <text class="detail-text">{{item.storeName}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-icon iconfont icon-user"></text>
+          <view class="teacher-info">
+            <image class="teacher-avatar radius-circle" src="{{item.teacherAvatar}}" mode="aspectFill"></image>
+            <text class="detail-text">{{item.teacherName}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 预约时间 -->
+      <view class="booking-meta text-small" wx:if="{{item.status === 'booked'}}">
+        <text>{{i18n.t('booking.checkin.time')}}：{{item.bookingTime}}</text>
+      </view>
+      
+      <!-- 取消信息 -->
+      <view class="cancel-info text-small" wx:if="{{item.status === 'cancelled'}}">
+        <text>{{i18n.t('booking.cancel.time')}}：{{item.cancelTime}}</text>
+        <text wx:if="{{item.cancelReason}}">{{i18n.t('booking.cancel.reason')}}：{{item.cancelReason}}</text>
+      </view>
+      
+      <!-- 签到状态 -->
+      <view class="checkin-status" wx:if="{{item.status === 'completed'}}">
+        <text class="checkin-icon {{item.checkedIn ? 'checked' : ''}}">{{item.checkedIn ? '✓' : '✗'}}</text>
+        <text class="checkin-text">{{item.checkedIn ? i18n.t('booking.checked.in') : i18n.t('booking.not.checked.in')}}</text>
+      </view>
+      
+      <!-- 操作按钮 -->
+      <view class="booking-actions">
+        <!-- 即将上课的操作 -->
+        <block wx:if="{{item.status === 'booked'}}">
+          <button class="action-btn checkin-btn {{canCheckIn(item.date, item.startTime, item.checkedIn) ? '' : 'disabled'}}" 
+                  bindtap="checkIn" 
+                  data-booking-id="{{item.bookingId}}" 
+                  data-course-name="{{item.courseName}}"
+                  disabled="{{!canCheckIn(item.date, item.startTime, item.checkedIn)}}">
+            {{canCheckIn(item.date, item.startTime, item.checkedIn) ? i18n.t('booking.checkin') : i18n.t('booking.not.checkin.time')}}
+          </button>
+          <button class="action-btn cancel-btn {{canCancel(item.date, item.startTime) ? '' : 'disabled'}}" 
+                  bindtap="cancelBooking" 
+                  data-booking-id="{{item.bookingId}}" 
+                  data-course-name="{{item.courseName}}"
+                  disabled="{{!canCancel(item.date, item.startTime)}}">
+            {{canCancel(item.date, item.startTime) ? i18n.t('booking.cancel.booking') : i18n.t('booking.cannot.cancel')}}
+          </button>
+        </block>
+        
+        <!-- 历史记录的操作 -->
+        <block wx:if="{{item.status === 'completed'}}">
+          <button class="action-btn evaluate-btn" 
+                  bindtap="evaluate" 
+                  data-booking-id="{{item.bookingId}}">
+            {{i18n.t('booking.evaluate')}}
+          </button>
+          <button class="action-btn rebook-btn" 
+                  bindtap="rebook" 
+                  data-course-id="{{item.courseId}}">
+            {{i18n.t('booking.rebook')}}
+          </button>
+        </block>
+        
+        <block wx:if="{{item.status === 'cancelled'}}">
+          <button class="action-btn rebook-btn" 
+                  bindtap="rebook" 
+                  data-course-id="{{item.courseId}}">
+            {{i18n.t('booking.rebook')}}
+          </button>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading">
+      <text>加载中...</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-container" wx:if="{{!loading && bookings.length === 0}}">
+    <view class="empty">
+      <text class="empty-icon">{{currentTab === 0 ? '📅' : '📝'}}</text>
+      <text class="empty-text">{{currentTab === 0 ? i18n.t('booking.no.upcoming') : i18n.t('booking.no.history')}}</text>
+      <button class="empty-action-btn" bindtap="navigateToCourseList" wx:if="{{currentTab === 0}}">
+        {{i18n.t('booking.go.booking')}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{!loading && hasMore}}">
+    <view class="load-more-btn {{loadingMore ? 'loading' : ''}}" bindtap="loadMoreBookings">
+      <text wx:if="{{!loadingMore}}">{{i18n.t('booking.load.more')}}</text>
+      <text wx:else>{{i18n.t('text.loading')}}</text>
+    </view>
+  </view>
+
+  <!-- 没有更多 -->
+  <view class="no-more" wx:if="{{!loading && !hasMore && bookings.length > 0}}">
+    <text class="no-more-text">{{i18n.t('booking.no.more')}}</text>
+  </view>
+</view>

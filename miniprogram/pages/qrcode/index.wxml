@@ -1,0 +1,112 @@
+<!-- qrcode/index.wxml -->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="navigateBack">
+      <text class="iconfont icon-back"></text>
+    </view>
+    <text class="header-title">入场码</text>
+    <view class="refresh-btn" bindtap="refreshQRCode">
+      <text class="iconfont icon-refresh"></text>
+    </view>
+  </view>
+
+  <!-- 用户信息 -->
+  <view class="user-info card card-padding">
+    <view class="user-basic">
+      <image class="user-avatar radius-circle" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view class="user-details">
+        <view class="user-name">{{userInfo.nickName}}</view>
+        <view class="user-meta text-small">会员ID：{{userInfo.userId}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 二维码区域 -->
+  <view class="qrcode-section">
+    <view class="qrcode-card card card-padding">
+      <view class="qrcode-header">
+        <text class="qrcode-title">我的入场码</text>
+        <text class="qrcode-desc">请在课程开始前向工作人员出示</text>
+      </view>
+      
+      <view class="qrcode-wrapper">
+        <!-- 这里应该使用实际的二维码组件，暂时用占位符代替 -->
+        <view class="qrcode-placeholder">
+          <text class="iconfont icon-qrcode-large"></text>
+          <text class="qrcode-text">{{qrCodeContent}}</text>
+        </view>
+      </view>
+      
+      <view class="qrcode-footer">
+        <view class="countdown">
+          <text class="countdown-text">二维码将在</text>
+          <text class="countdown-number">{{countdown}}</text>
+          <text class="countdown-text">秒后刷新</text>
+        </view>
+        <view class="qrcode-actions">
+          <view class="action-btn" bindtap="refreshQRCode">
+            <text class="iconfont icon-refresh"></text>
+            <text>刷新</text>
+          </view>
+          <view class="action-btn" bindtap="saveQRCode">
+            <text class="iconfont icon-download"></text>
+            <text>保存</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 使用说明 -->
+  <view class="usage-tips card card-padding">
+    <view class="tips-title">使用说明</view>
+    <view class="tips-list">
+      <view class="tips-item">
+        <text class="tips-bullet">1.</text>
+        <text>到达舞室后，请向工作人员出示此入场码</text>
+      </view>
+      <view class="tips-item">
+        <text class="tips-bullet">2.</text>
+        <text>工作人员扫描二维码后，即可完成课程核销</text>
+      </view>
+      <view class="tips-item">
+        <text class="tips-bullet">3.</text>
+        <text>二维码每30秒自动刷新，确保安全使用</text>
+      </view>
+      <view class="tips-item">
+        <text class="tips-bullet">4.</text>
+        <text>如遇问题，请联系舞室工作人员</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 联系客服 -->
+  <view class="contact-section">
+    <view class="contact-card card card-padding">
+      <view class="contact-header">
+        <text class="iconfont icon-service"></text>
+        <text class="contact-title">需要帮助？</text>
+      </view>
+      <view class="contact-content">
+        <text class="contact-desc">如有任何问题，请联系我们的客服</text>
+        <view class="contact-info">
+          <text class="contact-item">客服电话：19925187494</text>
+          <text class="contact-item">客服微信：icondance</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 加载状态 -->
+<view class="loading-container" wx:if="{{loading}}">
+  <view class="loading">
+    <text>生成中...</text>
+  </view>
+</view>

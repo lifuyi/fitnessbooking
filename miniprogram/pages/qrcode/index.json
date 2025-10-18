@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "入场码",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "language-switch": "/components/language-switch"
+  }
+}

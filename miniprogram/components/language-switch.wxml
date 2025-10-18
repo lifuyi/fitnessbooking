@@ -1,0 +1,4 @@
+<view class="language-switch" bindtap="switchLanguage">
+  <text class="iconfont icon-language"></text>
+  <text class="language-text">{{i18n.getLanguage() === 'zh-CN' ? 'EN' : '中文'}}</text>
+</view>

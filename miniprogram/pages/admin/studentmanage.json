@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "学员管理",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#F5F5F5",
+  "usingComponents": {
+    "language-switch": "/components/language-switch"
+  }
+}

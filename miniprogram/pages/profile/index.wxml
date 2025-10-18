@@ -1,0 +1,125 @@
+<!-- profile/index.wxml -->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 用户信息 -->
+  <view class="user-header">
+    <view class="user-info">
+      <image class="user-avatar radius-circle" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view class="user-details">
+        <view class="user-name">{{userInfo.nickName}}</view>
+        <view class="user-meta text-small">
+          <text>{{i18n.t('index.store.info')}}：{{currentStore}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="settings-btn" bindtap="navigateToSettings">
+      <text class="iconfont icon-settings"></text>
+    </view>
+  </view>
+
+  <!-- 功能模块 -->
+  <view class="function-modules">
+    <view class="module-item" bindtap="navigateToBookings">
+      <view class="module-icon">
+        <text class="iconfont icon-calendar"></text>
+      </view>
+      <view class="module-content">
+        <text class="module-title">{{i18n.t('profile.my.bookings')}}</text>
+        <text class="module-desc">{{i18n.t('profile.view.bookings')}}</text>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
+
+    <view class="module-item" bindtap="navigateToCourseCards">
+      <view class="module-icon">
+        <text class="iconfont icon-card"></text>
+      </view>
+      <view class="module-content">
+        <text class="module-title">{{i18n.t('profile.my.course.cards')}}</text>
+        <text class="module-desc">{{i18n.t('profile.view.course.cards')}}</text>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
+
+    <view class="module-item" bindtap="showQRCode">
+      <view class="module-icon">
+        <text class="iconfont icon-qrcode"></text>
+      </view>
+      <view class="module-content">
+        <text class="module-title">{{i18n.t('profile.entrance.code')}}</text>
+        <text class="module-desc">{{i18n.t('profile.generate.code')}}</text>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
+
+    <view class="module-item" bindtap="contactCustomerService">
+      <view class="module-icon">
+        <text class="iconfont icon-service"></text>
+      </view>
+      <view class="module-content">
+        <text class="module-title">{{i18n.t('profile.customer.service')}}</text>
+        <text class="module-desc">{{i18n.t('profile.contact.service')}}</text>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
+  </view>
+
+  <!-- 我的预约预览 -->
+  <view class="booking-preview card" wx:if="{{bookings.length > 0}}">
+    <view class="preview-header">
+      <text class="preview-title">{{i18n.t('profile.recent.bookings')}}</text>
+      <text class="preview-more" bindtap="navigateToBookings">{{i18n.t('profile.view.all')}}</text>
+    </view>
+    <view class="preview-list">
+      <view class="preview-item" wx:for="{{bookings}}" wx:for-index="index" wx:key="bookingId" wx:if="{{index < 3}}" bindtap="navigateToCourseDetail" data-course-id="{{item.courseId}}">
+        <view class="item-info">
+          <view class="item-title">{{item.courseName}}</view>
+          <view class="item-meta text-small">{{formatBookingTime(item)}}</view>
+          <view class="item-meta text-small">{{item.storeName}} · {{item.teacherName}}</view>
+        </view>
+        <view class="item-status">
+          <text class="status-tag {{getBookingStatusClass(item.status)}}">{{getBookingStatusText(item.status)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的课程卡预览 -->
+  <view class="card-preview card" wx:if="{{courseCards.length > 0}}">
+    <view class="preview-header">
+      <text class="preview-title">{{i18n.t('profile.my.cards')}}</text>
+      <text class="preview-more" bindtap="navigateToCourseCards">{{i18n.t('profile.view.all')}}</text>
+    </view>
+    <view class="card-list">
+      <view class="card-item" wx:for="{{courseCards}}" wx:for-index="index" wx:key="userCardId" wx:if="{{index < 3}}">
+        <view class="card-info">
+          <view class="card-title">{{item.cardName}}</view>
+          <view class="card-count">
+            <text class="count-number">{{item.remainingCount}}</text>
+            <text class="count-unit">次</text>
+            <text class="count-total">/ {{item.totalCount}}</text>
+          </view>
+        </view>
+        <view class="card-status">
+          <text class="status-tag {{getCourseCardStatusClass(item.status)}}">{{getCourseCardStatusText(item.status)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section">
+    <button class="logout-btn" bindtap="logout">{{i18n.t('profile.logout')}}</button>
+  </view>
+</view>
+
+<!-- 加载状态 -->
+<view class="loading-container" wx:if="{{loading}}">
+  <view class="loading">
+    <text>加载中...</text>
+  </view>
+</view>

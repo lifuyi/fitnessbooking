@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "导师详情",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "language-switch": "/components/language-switch"
+  }
+}

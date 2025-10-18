@@ -1,0 +1,123 @@
+<!-- admin/coursemanage.wxml -->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 头部 -->
+  <view class="header">
+    <text class="header-title">课程管理</text>
+    <view class="header-actions">
+      <view class="todo-reminder" wx:if="{{todoCount > 0}}">
+        <text class="todo-count">{{todoCount}}</text>
+        <text class="todo-text">待开始</text>
+      </view>
+      <view class="create-btn" bindtap="createCourse">
+        <text class="iconfont icon-plus"></text>
+        <text>创建课程</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-item" bindtap="showFilterPanel" data-type="storeId">
+      <text>{{getFilterDisplayText('storeId')}}</text>
+      <text class="iconfont icon-arrow-down"></text>
+    </view>
+    <view class="filter-item" bindtap="showFilterPanel" data-type="status">
+      <text>{{getFilterDisplayText('status')}}</text>
+      <text class="iconfont icon-arrow-down"></text>
+    </view>
+    <view class="filter-item" bindtap="showDatePicker">
+      <text>{{getFilterDisplayText('date')}}</text>
+      <text class="iconfont icon-calendar"></text>
+    </view>
+  </view>
+
+  <!-- 课程列表 -->
+  <scroll-view class="course-list" scroll-y="true" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="refreshCourses" refresher-triggered="{{loading}}">
+    <view class="course-item card" wx:for="{{courses}}" wx:key="courseId">
+      <view class="course-header">
+        <view class="course-info">
+          <view class="course-title-row">
+            <text class="course-title">{{item.name}}</text>
+            <text class="course-status status-tag {{getCourseStatusClass(item.status)}}">{{getCourseStatusText(item.status)}}</text>
+          </view>
+          <view class="course-time text-small">{{formatCourseTime(item)}}</view>
+          <view class="course-meta text-small">
+            <text class="course-store">{{item.storeName}}</text>
+            <text class="course-teacher">{{item.teacherName}}</text>
+          </view>
+        </view>
+        <view class="course-booking">
+          <text class="booking-count">{{item.bookedCount}}</text>
+          <text class="booking-total">/ {{item.capacity}}</text>
+          <text class="booking-label">预约</text>
+        </view>
+      </view>
+      
+      <view class="course-footer">
+        <view class="course-actions">
+          <view class="action-btn" bindtap="viewCourseBookings" data-course-id="{{item.courseId}}">
+            <text class="iconfont icon-users"></text>
+            <text>预约情况</text>
+          </view>
+          <view class="action-btn" bindtap="editCourse" data-course-id="{{item.courseId}}">
+            <text class="iconfont icon-edit"></text>
+            <text>编辑</text>
+          </view>
+          <view class="action-btn" bindtap="cancelCourse" data-course-id="{{item.courseId}}" wx:if="{{item.status === 'active'}}">
+            <text class="iconfont icon-close"></text>
+            <text>下架</text>
+          </view>
+          <view class="action-btn" bindtap="deleteCourse" data-course-id="{{item.courseId}}">
+            <text class="iconfont icon-delete"></text>
+            <text>删除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{courses.length === 0 && !loading}}">
+      <text class="empty-icon iconfont icon-empty"></text>
+      <text>暂无课程</text>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{courses.length > 0}}">
+      <text wx:if="{{loading}}">加载中...</text>
+      <text wx:elif="{{!hasMore}}">没有更多课程了</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 筛选器弹窗 -->
+<view class="filter-mask" wx:if="{{showFilter}}" bindtap="hideFilterPanel">
+  <view class="filter-panel" catchtap="">
+    <view class="panel-header">
+      <text>选择{{currentFilter === 'storeId' ? '门店' : '状态'}}</text>
+      <text class="iconfont icon-close" bindtap="hideFilterPanel"></text>
+    </view>
+    <scroll-view class="panel-content" scroll-y="true">
+      <view class="option-item {{filters[currentFilter] === item.value ? 'active' : ''}}" 
+            wx:for="{{getFilterOptions(currentFilter)}}" 
+            wx:key="value"
+            bindtap="selectFilterOption" 
+            data-value="{{item.value}}">
+        <text>{{item.label}}</text>
+        <text class="iconfont icon-check" wx:if="{{filters[currentFilter] === item.value}}"></text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 日期选择器 -->
+<picker mode="date" 
+        value="{{currentDate}}" 
+        wx:if="{{showDatePicker}}" 
+        bindchange="onDateConfirm"
+        bindcancel="hideDatePicker">
+</picker>

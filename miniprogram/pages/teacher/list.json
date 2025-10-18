@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "导师介绍",
+  "navigationBarBackgroundColor": "#FF6B35",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#F5F5F5",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "language-switch": "/components/language-switch"
+  }
+}

@@ -1,0 +1,184 @@
+/* teacher/list.wxss */
+.container {
+  background-color: #F5F5F5;
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30rpx;
+  background-color: #FFFFFF;
+  border-bottom: 1rpx solid #E0E0E0;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* 筛选条件 */
+.filter-bar {
+  display: flex;
+  gap: 30rpx;
+  padding: 30rpx;
+  background-color: #FFFFFF;
+  border-bottom: 1rpx solid #E0E0E0;
+}
+
+.filter-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.filter-label {
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.picker-value {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 20rpx;
+  background-color: #F5F5F5;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+/* 导师列表 */
+.teacher-list {
+  padding: 30rpx;
+}
+
+.teacher-item {
+  display: flex;
+  gap: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.teacher-avatar {
+  flex-shrink: 0;
+}
+
+.avatar-image {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.teacher-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.teacher-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teacher-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.teacher-rating {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.rating-stars {
+  font-size: 24rpx;
+  color: #FF9500;
+}
+
+.rating-value {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.teacher-dance-types {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+}
+
+.dance-type {
+  font-size: 22rpx;
+}
+
+.teacher-specialties,
+.teacher-intro {
+  color: #666666;
+  line-height: 1.5;
+}
+
+.teacher-meta {
+  display: flex;
+  gap: 24rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+/* 加载状态 */
+.loading-container,
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* 加载更多 */
+.load-more {
+  padding: 30rpx;
+  text-align: center;
+}
+
+.load-more-btn {
+  display: inline-block;
+  padding: 16rpx 40rpx;
+  background-color: #F5F5F5;
+  color: #666666;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+}
+
+.load-more-btn.loading {
+  opacity: 0.6;
+}
+
+/* 没有更多 */
+.no-more {
+  padding: 30rpx;
+  text-align: center;
+}
+
+.no-more-text {
+  font-size: 24rpx;
+  color: #CCCCCC;
+}

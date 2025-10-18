@@ -1,0 +1,291 @@
+/* teacher/detail.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+}
+
+/* 导师封面 */
+.teacher-cover {
+  position: relative;
+  width: 100%;
+  height: 500rpx;
+  overflow: hidden;
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+}
+
+.cover-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.cover-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40rpx 30rpx;
+  color: #FFFFFF;
+}
+
+.teacher-basic {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.teacher-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  margin-right: 24rpx;
+}
+
+.teacher-details {
+  flex: 1;
+}
+
+.teacher-name {
+  font-size: 40rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.teacher-title {
+  font-size: 28rpx;
+  opacity: 0.8;
+}
+
+.teacher-stats {
+  display: flex;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.stat-divider {
+  width: 1rpx;
+  height: 40rpx;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 20rpx;
+}
+
+/* 导师介绍 */
+.teacher-intro {
+  margin: 20rpx 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+  position: relative;
+  padding-left: 20rpx;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6rpx;
+  height: 24rpx;
+  background-color: #FF6B35;
+  border-radius: 3rpx;
+}
+
+.intro-content {
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 1.6;
+}
+
+/* 擅长舞种 */
+.dance-types {
+  margin: 20rpx 30rpx;
+}
+
+.dance-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.dance-item {
+  font-size: 26rpx;
+}
+
+/* 导师课程 */
+.teacher-courses {
+  margin: 20rpx 30rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.course-list {
+  max-height: 800rpx;
+}
+
+.course-item {
+  margin-bottom: 20rpx;
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.course-info {
+  flex: 1;
+  padding-right: 20rpx;
+}
+
+.course-title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.course-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-right: 16rpx;
+  flex: 1;
+}
+
+.course-dance-type {
+  font-size: 22rpx;
+  white-space: nowrap;
+}
+
+.course-time {
+  color: #666666;
+  margin-bottom: 8rpx;
+}
+
+.course-meta {
+  display: flex;
+  align-items: center;
+  color: #666666;
+}
+
+.course-store {
+  margin-right: 20rpx;
+  padding-right: 20rpx;
+  border-right: 1rpx solid #E0E0E0;
+}
+
+.course-status {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.course-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-difficulty {
+  display: flex;
+  align-items: center;
+}
+
+.difficulty-stars {
+  display: flex;
+  align-items: center;
+  margin-left: 8rpx;
+}
+
+.difficulty-stars .icon-star {
+  font-size: 24rpx;
+  color: #E0E0E0;
+  margin-right: 4rpx;
+}
+
+.difficulty-stars .icon-star.active {
+  color: #FF9500;
+}
+
+.course-action .btn-small {
+  padding: 12rpx 24rpx;
+  font-size: 26rpx;
+}
+
+.course-action .btn-small[disabled] {
+  background-color: #F0F0F0;
+  color: #CCCCCC;
+}
+
+/* 空状态 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  color: #999999;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.3;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 30rpx 0;
+  color: #999999;
+  font-size: 26rpx;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* 图标字体 */
+.iconfont {
+  font-family: 'iconfont';
+}
+
+.icon-star:before { content: '\e600'; }
+.icon-empty:before { content: '\e601'; }

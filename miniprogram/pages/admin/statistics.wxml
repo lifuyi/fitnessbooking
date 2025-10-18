@@ -1,0 +1,168 @@
+<!-- admin/statistics.wxml -->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 头部 -->
+  <view class="header">
+    <text class="header-title">数据统计</text>
+    <view class="export-actions">
+      <view class="export-btn" bindtap="exportReport" data-type="excel">
+        <text class="iconfont icon-excel"></text>
+        <text>导出Excel</text>
+      </view>
+      <view class="export-btn" bindtap="exportReport" data-type="image">
+        <text class="iconfont icon-image"></text>
+        <text>导出图片</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选条件 -->
+  <view class="filter-bar">
+    <view class="filter-item">
+      <text class="filter-label">门店</text>
+      <picker mode="selector" range="{{getStoreOptions()}}" bindchange="switchStore">
+        <view class="picker-value">
+          {{getStoreOptionText()}}
+          <text class="iconfont icon-arrow-down"></text>
+        </view>
+      </picker>
+    </view>
+    <view class="filter-item">
+      <text class="filter-label">时间</text>
+      <picker mode="selector" range="{{getPeriodOptions()}}" bindchange="switchPeriod">
+        <view class="picker-value">
+          {{getPeriodOptionText()}}
+          <text class="iconfont icon-arrow-down"></text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 统计内容 -->
+  <scroll-view class="statistics-content" scroll-y="true" wx:if="{{!loading && statistics}}">
+    <!-- 核心指标 -->
+    <view class="overview-section">
+      <view class="section-title">数据概览</view>
+      <view class="date-range">{{formatDateRange(statistics.period)}}</view>
+      
+      <view class="indicator-cards">
+        <view class="indicator-card">
+          <text class="indicator-value">{{statistics.overview.totalBookings}}</text>
+          <text class="indicator-label">总预约量</text>
+        </view>
+        <view class="indicator-card">
+          <text class="indicator-value">{{statistics.overview.totalUsers}}</text>
+          <text class="indicator-label">总学员数</text>
+        </view>
+        <view class="indicator-card">
+          <text class="indicator-value">{{statistics.overview.activeUsers}}</text>
+          <text class="indicator-label">活跃学员</text>
+        </view>
+        <view class="indicator-card">
+          <text class="indicator-value">{{statistics.overview.newUsers}}</text>
+          <text class="indicator-label">新增学员</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 预约趋势 -->
+    <view class="chart-section">
+      <view class="section-title">预约趋势</view>
+      <view class="chart-container">
+        <view class="chart-placeholder">
+          <text class="chart-title">预约量变化趋势</text>
+          <view class="chart-data">
+            <view class="chart-bar" wx:for="{{chartOptions.bookingTrend.series[0].data}}" wx:key="*this" style="height: {{item * 4}}rpx;">
+              <text class="bar-value">{{item}}</text>
+            </view>
+          </view>
+          <view class="chart-x-axis">
+            <text class="x-label" wx:for="{{chartOptions.bookingTrend.categories}}" wx:key="*this">{{item}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 门店统计 -->
+    <view class="store-section">
+      <view class="section-title">门店统计</view>
+      <view class="store-cards">
+        <view class="store-card" wx:for="{{statistics.storeStats}}" wx:key="storeId">
+          <view class="store-name">{{item.storeName}}</view>
+          <view class="store-data">
+            <view class="data-item">
+              <text class="data-value">{{item.bookings}}</text>
+              <text class="data-label">预约量</text>
+            </view>
+            <view class="data-item">
+              <text class="data-value">{{item.users}}</text>
+              <text class="data-label">学员数</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 舞种分析 -->
+    <view class="chart-section">
+      <view class="section-title">舞种分析</view>
+      <view class="chart-container">
+        <view class="chart-placeholder">
+          <text class="chart-title">舞种预约排行</text>
+          <view class="chart-data horizontal">
+            <view class="chart-bar horizontal" wx:for="{{chartOptions.danceTypeStats.series[0].data}}" wx:key="*this" style="width: {{item * 2}}rpx;">
+              <text class="bar-label">{{chartOptions.danceTypeStats.categories[$index]}}</text>
+              <text class="bar-value">{{item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 导师分析 -->
+    <view class="chart-section">
+      <view class="section-title">导师分析</view>
+      <view class="chart-container">
+        <view class="chart-placeholder">
+          <text class="chart-title">导师带课次数</text>
+          <view class="chart-data">
+            <view class="chart-bar" wx:for="{{chartOptions.teacherStats.series[0].data}}" wx:key="*this" style="height: {{item * 6}}rpx;">
+              <text class="bar-value">{{item}}</text>
+            </view>
+          </view>
+          <view class="chart-x-axis">
+            <text class="x-label" wx:for="{{chartOptions.teacherStats.categories}}" wx:key="*this">{{item}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 导师详情 -->
+    <view class="teacher-section">
+      <view class="section-title">导师详情</view>
+      <view class="teacher-list">
+        <view class="teacher-item" wx:for="{{statistics.teacherStats}}" wx:key="teacherId">
+          <view class="teacher-info">
+            <text class="teacher-name">{{item.teacherName}}</text>
+            <view class="teacher-meta">
+              <text class="meta-item">带课 {{item.classes}} 节</text>
+              <text class="meta-item">预约 {{item.bookings}} 次</text>
+              <text class="meta-item">评分 {{item.rating}} 分</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading">
+      <text>加载中...</text>
+    </view>
+  </view>
+</view>

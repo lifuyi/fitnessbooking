@@ -1,0 +1,96 @@
+<!-- course/list.wxml -->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-item" bindtap="showFilterPanel" data-type="date">
+      <text>{{getFilterDisplayText('date')}}</text>
+      <text class="iconfont icon-arrow-down"></text>
+    </view>
+    <view class="filter-item" bindtap="showFilterPanel" data-type="danceType">
+      <text>{{getFilterDisplayText('danceType')}}</text>
+      <text class="iconfont icon-arrow-down"></text>
+    </view>
+    <view class="filter-item" bindtap="showFilterPanel" data-type="teacherId">
+      <text>{{getFilterDisplayText('teacherId')}}</text>
+      <text class="iconfont icon-arrow-down"></text>
+    </view>
+    <view class="filter-item" bindtap="showFilterPanel" data-type="storeId">
+      <text>{{getFilterDisplayText('storeId')}}</text>
+      <text class="iconfont icon-arrow-down"></text>
+    </view>
+  </view>
+
+  <!-- 课程列表 -->
+  <scroll-view class="course-list" scroll-y="true" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="refreshCourses" refresher-triggered="{{loading}}">
+    <view class="course-item card card-padding" wx:for="{{courses}}" wx:key="courseId">
+      <view class="course-header" bindtap="navigateToCourseDetail" data-course-id="{{item.courseId}}">
+        <view class="course-info">
+          <view class="course-title-row">
+            <text class="course-title">{{item.name}}</text>
+            <text class="course-dance-type tag tag-primary">{{item.danceTypeName}}</text>
+          </view>
+          <view class="course-time text-small">{{formatCourseTime(item)}}</view>
+          <view class="course-teacher text-small">
+            <image class="teacher-avatar radius-circle" src="{{item.teacherAvatar}}" mode="aspectFill"></image>
+            <text>{{item.teacherName}}</text>
+            <text class="course-store">{{item.storeName}}</text>
+          </view>
+        </view>
+        <view class="course-status">
+          <text class="{{getRemainingClass(item)}}">{{getRemainingText(item)}}</text>
+        </view>
+      </view>
+      
+      <view class="course-footer">
+        <view class="course-difficulty">
+          <text class="text-small">{{i18n.t('course.difficulty')}}：</text>
+          <view class="difficulty-stars">
+            <text class="iconfont icon-star {{index < item.difficulty ? 'active' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:key="*this"></text>
+          </view>
+        </view>
+        <view class="course-action">
+          <button class="btn-primary btn-small" bindtap="bookCourse" data-course-id="{{item.courseId}}" disabled="{{item.capacity - item.bookedCount <= 0}}">
+            {{item.capacity - item.bookedCount > 0 ? i18n.t('status.available') : i18n.t('status.full')}}
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{courses.length === 0 && !loading}}">
+      <text class="empty-icon iconfont icon-empty"></text>
+      <text>{{i18n.t('text.empty')}}</text>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{courses.length > 0}}">
+      <text wx:if="{{loading}}">{{i18n.t('text.loading')}}</text>
+      <text wx:elif="{{!hasMore}}">{{i18n.t('course.no.more')}}</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 筛选器弹窗 -->
+<view class="filter-mask" wx:if="{{showFilter}}" bindtap="hideFilterPanel">
+  <view class="filter-panel" catchtap="">
+    <view class="panel-header">
+      <text>{{i18n.t('course.select')}}{{currentFilter === 'date' ? i18n.t('course.date') : currentFilter === 'danceType' ? i18n.t('course.dance.type') : currentFilter === 'teacherId' ? i18n.t('course.teacher') : i18n.t('course.store')}}</text>
+      <text class="iconfont icon-close" bindtap="hideFilterPanel"></text>
+    </view>
+    <scroll-view class="panel-content" scroll-y="true">
+      <view class="option-item {{filters[currentFilter] === item.value ? 'active' : ''}}" 
+            wx:for="{{getFilterOptions(currentFilter)}}" 
+            wx:key="value"
+            bindtap="selectFilterOption" 
+            data-value="{{item.value}}">
+        <text>{{item.label}}</text>
+        <text class="iconfont icon-check" wx:if="{{filters[currentFilter] === item.value}}"></text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

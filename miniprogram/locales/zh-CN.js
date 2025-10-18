@@ -1,0 +1,136 @@
+const zhCN = {
+  // 通用
+  'app.name': '福田石厦Home 24h自助舞蹈室',
+  'app.name.short': '福田石厦Home',
+  
+  // 导航栏
+  'navbar.home': '首页',
+  'navbar.booking': '预约',
+  'navbar.profile': '我的',
+  
+  // 首页
+  'index.welcome': '欢迎来到福田石厦Home 24h自助舞蹈室',
+  'index.store.info': '门店信息',
+  'index.store.hours': '营业时间',
+  'index.function.booking': '课程预约',
+  'index.function.purchase': '在线购卡',
+  'index.function.teachers': '导师介绍',
+  'index.function.shop': '周边商城',
+  'index.teachers.section': '导师 TUTOR',
+  'index.courses.today': '今日课程',
+  'index.login.prompt.title': '登录后体验更多功能',
+  'index.login.prompt.desc': '查看预约记录、剩余课程次数等',
+  'index.login.button': '立即登录',
+  
+  // 个人中心
+  'profile.my.bookings': '我的预约',
+  'profile.view.bookings': '查看预约记录',
+  'profile.my.course.cards': '我的课程卡',
+  'profile.view.course.cards': '查看剩余次数',
+  'profile.entrance.code': '入场码',
+  'profile.generate.code': '点击生成核销码',
+  'profile.customer.service': '客服中心',
+  'profile.contact.service': '联系客服',
+  'profile.recent.bookings': '近期预约',
+  'profile.view.all': '查看全部',
+  'profile.my.cards': '我的课程卡',
+  'profile.logout': '退出登录',
+  
+  // 预约相关
+  'booking.upcoming': '即将上课',
+  'booking.history': '历史记录',
+  'booking.status': '状态',
+  'booking.time': '时间',
+  'booking.checkin.time': '签到时间',
+  'booking.cancel.time': '取消时间',
+  'booking.cancel.reason': '取消原因',
+  'booking.checkin': '签到',
+  'booking.not.checkin.time': '未到签到时间',
+  'booking.cancel.booking': '取消预约',
+  'booking.cannot.cancel': '不可取消',
+  'booking.evaluate': '评价',
+  'booking.rebook': '再次预约',
+  'booking.checked.in': '已签到',
+  'booking.not.checked.in': '未签到',
+  'booking.no.upcoming': '暂无即将上课的预约',
+  'booking.no.history': '暂无历史预约记录',
+  'booking.go.booking': '去预约课程',
+  'booking.load.more': '加载更多',
+  'booking.no.more': '没有更多记录了',
+  
+  // 课程相关
+  'course.no.more': '没有更多课程了',
+  'course.select': '选择',
+  'course.date': '日期',
+  'course.dance.type': '舞种',
+  'course.teacher': '导师',
+  'course.store': '门店',
+  
+  // 筛选相关
+  'filter.all': '全部',
+  'filter.today': '今日',
+  'filter.tomorrow': '明日',
+  'filter.this.week': '本周',
+  
+  // 导师相关
+  'teacher.specialties': '专长',
+  'teacher.experience': '经验',
+  'teacher.courses': '课程',
+  'teacher.sessions': '节',
+  'teacher.no.info': '暂无导师信息',
+  'teacher.no.more': '没有更多导师了',
+  'teacher.load.more': '加载更多',
+  
+  // 课程相关
+  'course.detail': '课程详情',
+  'course.introduction': '课程介绍',
+  'course.difficulty': '难度',
+  'course.content': '内容',
+  'course.notice': '注意',
+  'course.teacher': '导师介绍',
+  'course.store.info': '门店信息',
+  'course.booking.notice': '预约须知',
+  'course.booking.cancel': '课程开始前2小时可免费取消预约',
+  'course.booking.late': '迟到超过10分钟将无法入场',
+  'course.booking.attire': '请穿着适合运动的服装和舞蹈鞋',
+  'course.consume.free': '免费体验',
+  'course.consume.card': '消耗1次{danceType}课程卡',
+  'course.remaining': '剩余{count}次',
+  
+  // 管理员登录
+  'admin.login.title': '管理员登录',
+  'admin.login.system': '管理系统',
+  'admin.login.phone': '请输入手机号',
+  'admin.login.code': '请输入验证码',
+  'admin.login.button': '登录',
+  'admin.login.forgot': '忘记密码？',
+  'admin.login.footer': '如有问题，请联系超级管理员',
+  'admin.login.phone.error': '请输入正确的手机号',
+  'admin.login.code.error': '请输入6位验证码',
+  
+  // 通用按钮和文本
+  'button.confirm': '确定',
+  'button.cancel': '取消',
+  'button.back': '返回',
+  'button.share': '分享',
+  'button.call': '电话',
+  'button.navigate': '导航',
+  'text.loading': '加载中...',
+  'text.empty': '暂无数据',
+  
+  // 状态文本
+  'status.expired': '已结束',
+  'status.full': '已满员',
+  'status.booked': '已预约',
+  'status.available': '立即预约',
+  
+  // 错误提示
+  'error.network': '网络连接失败，请检查网络设置',
+  'error.login.required': '请先登录后再预约课程，是否立即登录？',
+  'error.course.expired': '课程已过期',
+  'error.course.full': '课程已满员',
+  'error.course.booked': '您已预约此课程',
+  'error.classes.insufficient': '您的课程次数不足，请线下购卡或联系客服'
+}
+
+module.exports = zhCN

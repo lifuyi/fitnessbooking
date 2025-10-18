@@ -1,0 +1,133 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 顶部操作栏 -->
+  <view class="header-actions">
+    <view class="store-switch" bindtap="switchStore">
+      <text class="store-name">{{currentStore.name || '南山店'}}</text>
+      <text class="iconfont icon-arrow-down"></text>
+    </view>
+    <view class="qrcode-btn" bindtap="showQRCode">
+      <text class="iconfont icon-qrcode"></text>
+      <text>入场码</text>
+    </view>
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+
+  <!-- Banner轮播区 -->
+  <swiper class="banner-swiper" indicator-dots="true" autoplay="true" interval="3000" duration="500" bindchange="onBannerChange">
+    <swiper-item wx:for="{{banners}}" wx:key="*this">
+      <image class="banner-image" src="{{item}}" mode="aspectFill" bindtap="onBannerTap" data-index="{{index}}"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 门店信息栏 -->
+  <view class="store-info card card-padding" wx:if="{{currentStore}}">
+    <view class="store-header">
+      <view class="store-logo radius-circle">
+        <text class="iconfont icon-store"></text>
+      </view>
+      <view class="store-details">
+        <view class="store-title">{{i18n.t('app.name')}}（{{currentStore.name}}）</view>
+        <view class="store-hours text-small">
+          <text class="iconfont icon-time"></text>
+          <text>{{i18n.t('index.store.hours')}} {{currentStore.businessHours}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="store-contact">
+      <view class="contact-item" bindtap="makePhoneCall">
+        <text class="iconfont icon-phone"></text>
+        <text class="text-small">{{currentStore.phone}}</text>
+      </view>
+      <view class="contact-item" bindtap="openLocation">
+        <text class="iconfont icon-location"></text>
+        <text class="text-small">{{currentStore.address}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="function-entries">
+    <view class="entry-item" bindtap="navigateToBooking">
+      <view class="entry-icon brand-bg">
+        <text class="iconfont icon-calendar"></text>
+      </view>
+      <text class="entry-title">{{i18n.t('index.function.booking')}}</text>
+    </view>
+    <view class="entry-item disabled">
+      <view class="entry-icon">
+        <text class="iconfont icon-card"></text>
+      </view>
+      <text class="entry-title">{{i18n.t('index.function.purchase')}}</text>
+    </view>
+    <view class="entry-item" bindtap="viewAllTeachers">
+      <view class="entry-icon">
+        <text class="iconfont icon-user"></text>
+      </view>
+      <text class="entry-title">{{i18n.t('index.function.teachers')}}</text>
+    </view>
+    <view class="entry-item disabled">
+      <view class="entry-icon">
+        <text class="iconfont icon-shop"></text>
+      </view>
+      <text class="entry-title">{{i18n.t('index.function.shop')}}</text>
+    </view>
+  </view>
+
+  <!-- 导师展示区 -->
+  <view class="teachers-section">
+    <view class="section-header">
+      <text class="section-title">{{i18n.t('index.teachers.section')}}</text>
+      <text class="section-more" bindtap="viewAllTeachers">{{i18n.t('button.confirm')}}</text>
+    </view>
+    <scroll-view class="teachers-scroll" scroll-x="true" show-scrollbar="false">
+      <view class="teacher-item" wx:for="{{teachers}}" wx:key="teacherId" bindtap="navigateToTeacherDetail" data-teacher-id="{{item.teacherId}}">
+        <image class="teacher-avatar radius-circle" src="{{item.avatar}}" mode="aspectFill"></image>
+        <text class="teacher-name">{{item.name}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 今日课程 -->
+  <view class="courses-section">
+    <view class="section-header">
+      <text class="section-title">{{i18n.t('index.courses.today')}}</text>
+      <text class="section-more" bindtap="viewAllCourses">{{i18n.t('button.confirm')}}</text>
+    </view>
+    <view class="course-list">
+      <view class="course-item card card-padding" wx:for="{{todayCourses}}" wx:key="courseId" bindtap="navigateToCourseDetail" data-course-id="{{item.courseId}}">
+        <view class="course-info">
+          <view class="course-header">
+            <text class="course-title">{{item.name}}</text>
+            <text class="course-dance-type tag tag-primary">{{item.danceTypeName}}</text>
+          </view>
+          <view class="course-time text-small">{{formatCourseTime(item)}}</view>
+          <view class="course-teacher text-small">
+            <image class="teacher-small-avatar radius-circle" src="{{item.teacherAvatar}}" mode="aspectFill"></image>
+            <text>{{i18n.t('course.teacher')}}：{{item.teacherName}}</text>
+          </view>
+        </view>
+        <view class="course-status">
+          <text class="{{getRemainingClass(item)}}">{{getRemainingText(item)}}</text>
+          <view class="course-action btn-primary btn-small">{{i18n.t('status.available')}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 登录提示 -->
+  <view class="login-prompt card card-padding" wx:if="{{!hasUserInfo}}">
+    <view class="prompt-content">
+      <text class="prompt-title">{{i18n.t('index.login.prompt.title')}}</text>
+      <text class="prompt-desc text-small">{{i18n.t('index.login.prompt.desc')}}</text>
+    </view>
+    <button class="login-btn btn-primary" wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile">
+      {{i18n.t('index.login.button')}}
+    </button>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>{{i18n.t('text.loading')}}</text>
+  </view>
+</view>

@@ -1,0 +1,167 @@
+<!-- admin/studentmanage.wxml -->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 头部 -->
+  <view class="header">
+    <text class="header-title">学员管理</text>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <text class="iconfont icon-search"></text>
+      <input class="search-input" 
+             placeholder="搜索学员昵称" 
+             value="{{keyword}}" 
+             bindinput="onSearchInput" 
+             bindconfirm="onSearchConfirm" />
+    </view>
+  </view>
+
+  <!-- 学员列表 -->
+  <scroll-view class="student-list" scroll-y="true" bindscrolltolower="loadMore" refresher-enabled="true" bindrefresherrefresh="loadStudents" refresher-triggered="{{loading}}">
+    <view class="student-item card" wx:for="{{students}}" wx:key="userId">
+      <view class="student-header" bindtap="viewStudentDetail" data-student="{{item}}">
+        <image class="student-avatar radius-circle" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+        <view class="student-info">
+          <view class="student-name">{{item.nickName}}</view>
+          <view class="student-meta text-small">
+            <text>ID: {{item.userId}}</text>
+            <text class="divider">|</text>
+            <text>注册: {{formatRegisterTime(item.createTime)}}</text>
+          </view>
+        </view>
+        <text class="iconfont icon-arrow-right"></text>
+      </view>
+      
+      <view class="student-classes">
+        <view class="classes-title text-small">剩余课程次数</view>
+        <view class="classes-list">
+          <view class="classes-item" wx:for="{{getStudentClasses(item)}}" wx:for-item="class" wx:key="danceType">
+            <text class="classes-name">{{class.name}}</text>
+            <text class="classes-count">{{class.count}}次</text>
+          </view>
+          <view class="classes-empty text-small" wx:if="{{getStudentClasses(item).length === 0}}">
+            <text>暂无课程次数</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="student-actions">
+        <view class="action-btn" bindtap="viewStudentBookings" data-user-id="{{item.userId}}">
+          <text class="iconfont icon-calendar"></text>
+          <text>预约记录</text>
+        </view>
+        <view class="action-btn" bindtap="showClassesModal" data-student="{{item}}">
+          <text class="iconfont icon-edit"></text>
+          <text>调整次数</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{students.length === 0 && !loading}}">
+      <text class="empty-icon iconfont icon-empty"></text>
+      <text>暂无学员</text>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{students.length > 0}}">
+      <text wx:if="{{loading}}">加载中...</text>
+      <text wx:elif="{{!hasMore}}">没有更多学员了</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 学员详情弹窗 -->
+<view class="detail-mask" wx:if="{{showStudentDetail}}" bindtap="hideStudentDetail">
+  <view class="detail-panel" catchtap="">
+    <view class="panel-header">
+      <text class="panel-title">学员详情</text>
+      <text class="iconfont icon-close" bindtap="hideStudentDetail"></text>
+    </view>
+    
+    <view class="panel-content" wx:if="{{currentStudent}}">
+      <view class="detail-item">
+        <text class="detail-label">头像</text>
+        <image class="detail-avatar radius-circle" src="{{currentStudent.avatarUrl}}" mode="aspectFill"></image>
+      </view>
+      
+      <view class="detail-item">
+        <text class="detail-label">昵称</text>
+        <text class="detail-value">{{currentStudent.nickName}}</text>
+      </view>
+      
+      <view class="detail-item">
+        <text class="detail-label">用户ID</text>
+        <text class="detail-value">{{currentStudent.userId}}</text>
+      </view>
+      
+      <view class="detail-item">
+        <text class="detail-label">注册时间</text>
+        <text class="detail-value">{{formatRegisterTime(currentStudent.createTime)}}</text>
+      </view>
+      
+      <view class="detail-item">
+        <text class="detail-label">课程次数</text>
+        <view class="detail-classes">
+          <view class="detail-class-item" wx:for="{{getStudentClasses(currentStudent)}}" wx:for-item="class" wx:key="danceType">
+            <text class="class-name">{{class.name}}</text>
+            <text class="class-count">{{class.count}}次</text>
+          </view>
+          <text class="text-small" wx:if="{{getStudentClasses(currentStudent).length === 0}}">暂无课程次数</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 课程次数调整弹窗 -->
+<view class="modal-mask" wx:if="{{showClassesModal}}" bindtap="hideClassesModal">
+  <view class="modal-panel" catchtap="">
+    <view class="panel-header">
+      <text class="panel-title">调整课程次数</text>
+      <text class="iconfont icon-close" bindtap="hideClassesModal"></text>
+    </view>
+    
+    <view class="panel-content">
+      <view class="form-item">
+        <text class="form-label">舞种</text>
+        <picker mode="selector" 
+                range="{{danceTypes}}" 
+                range-key="name" 
+                bindchange="onDanceTypeChange">
+          <view class="picker-value">
+            {{classesData.danceType ? getDanceTypeName(classesData.danceType) : '请选择舞种'}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">调整次数</text>
+        <input class="form-input" 
+               type="number" 
+               placeholder="正数为增加，负数为减少" 
+               value="{{classesData.count}}" 
+               bindinput="onCountInput" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">调整原因</text>
+        <input class="form-input" 
+               placeholder="请输入调整原因" 
+               value="{{classesData.reason}}" 
+               bindinput="onReasonInput" />
+      </view>
+    </view>
+    
+    <view class="panel-footer">
+      <button class="cancel-btn" bindtap="hideClassesModal">取消</button>
+      <button class="confirm-btn btn-primary" bindtap="confirmClassesUpdate">确认</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,152 @@
+<!-- course/detail.wxml -->
+<view class="container" wx:if="{{!loading}}">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 课程封面 -->
+  <view class="course-cover">
+    <image class="cover-image" src="{{course.coverImage}}" mode="aspectFill"></image>
+    <view class="cover-actions">
+      <view class="back-btn" bindtap="navigateBack">
+        <text class="iconfont icon-back"></text>
+      </view>
+      <view class="share-btn" open-type="share">
+        <text class="iconfont icon-share"></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程基本信息 -->
+  <view class="course-info card card-padding">
+    <view class="course-header">
+      <text class="course-title">{{course.name}}</text>
+      <text class="course-dance-type tag tag-primary">{{course.danceTypeName}}</text>
+    </view>
+    
+    <view class="course-meta">
+      <view class="meta-item">
+        <text class="iconfont icon-time"></text>
+        <text>{{formatCourseTime(course)}}</text>
+      </view>
+      <view class="meta-item" bindtap="navigateToTeacherDetail">
+        <image class="teacher-avatar radius-circle" src="{{teacher.avatar}}" mode="aspectFill"></image>
+        <text>导师：{{teacher.name}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="iconfont icon-location"></text>
+        <text>{{course.storeName}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="iconfont icon-users"></text>
+        <text class="text-warning">剩余{{course.capacity - course.bookedCount}}名额</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程介绍 -->
+  <view class="course-intro card card-padding">
+    <view class="section-title">{{i18n.t('course.introduction')}}</view>
+    
+    <view class="intro-item">
+      <text class="intro-label">{{i18n.t('course.difficulty')}}</text>
+      <view class="difficulty-stars">
+        <text class="iconfont icon-star {{item ? 'active' : ''}}" wx:for="{{getDifficultyStars(course.difficulty)}}" wx:key="*this"></text>
+        <text class="difficulty-text">{{course.difficulty === 1 ? '入门' : course.difficulty === 2 ? '初级' : course.difficulty === 3 ? '进阶' : course.difficulty === 4 ? '高级' : '专业'}}</text>
+      </view>
+    </view>
+    
+    <view class="intro-item">
+      <text class="intro-label">{{i18n.t('course.content')}}</text>
+      <text class="intro-content">{{course.description}}</text>
+    </view>
+    
+    <view class="intro-item">
+      <text class="intro-label">{{i18n.t('course.notice')}}</text>
+      <text class="intro-content">{{i18n.t('course.booking.attire')}}</text>
+    </view>
+  </view>
+
+  <!-- 导师信息 -->
+  <view class="teacher-info card card-padding" bindtap="navigateToTeacherDetail">
+    <view class="section-title">{{i18n.t('course.teacher')}}</view>
+    <view class="teacher-card">
+      <image class="teacher-avatar-large radius-circle" src="{{teacher.avatar}}" mode="aspectFill"></image>
+      <view class="teacher-details">
+        <view class="teacher-name">{{teacher.name}}</view>
+        <view class="teacher-meta text-small">
+          <text>{{teacher.experience}}年教学经验</text>
+          <text class="divider">|</text>
+          <text>{{teacher.classCount}}节课程</text>
+        </view>
+        <view class="teacher-desc text-small">{{teacher.introduction}}</view>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
+  </view>
+
+  <!-- 门店信息 -->
+  <view class="store-info card card-padding">
+    <view class="section-title">{{i18n.t('course.store.info')}}</view>
+    <view class="store-card">
+      <view class="store-name">{{i18n.t('app.name')}}（{{course.storeName}}）</view>
+      <view class="store-meta text-small">
+        <text class="iconfont icon-time"></text>
+        <text>{{i18n.t('index.store.hours')}} 10:30-22:00</text>
+      </view>
+      <view class="store-actions">
+        <view class="action-btn" bindtap="makePhoneCall">
+          <text class="iconfont icon-phone"></text>
+          <text>{{i18n.t('button.call')}}</text>
+        </view>
+        <view class="action-btn" bindtap="openLocation">
+          <text class="iconfont icon-navigation"></text>
+          <text>{{i18n.t('button.navigate')}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预约须知 -->
+  <view class="booking-notice card card-padding">
+    <view class="section-title">{{i18n.t('course.booking.notice')}}</view>
+    <view class="notice-list">
+      <view class="notice-item">
+        <text class="notice-bullet">•</text>
+        <text>{{i18n.t('course.booking.cancel')}}</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-bullet">•</text>
+        <text>{{i18n.t('course.booking.late')}}</text>
+      </view>
+      <view class="notice-item">
+        <text class="notice-bullet">•</text>
+        <text>{{i18n.t('course.booking.attire')}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部占位 -->
+  <view class="bottom-placeholder"></view>
+</view>
+
+<!-- 加载状态 -->
+<view class="loading-container" wx:if="{{loading}}">
+  <view class="loading">
+    <text>{{i18n.t('text.loading')}}</text>
+  </view>
+</view>
+
+<!-- 底部操作栏 -->
+<view class="bottom-bar" wx:if="{{!loading}}">
+  <view class="consume-info">
+    <text class="consume-text">{{getConsumeText(course)}}</text>
+    <text class="remaining-text" wx:if="{{course.consumeType === 'class_card' && bookingStatus === 'available'}}">剩余{{remainingClasses}}次</text>
+  </view>
+  <button class="booking-btn {{getBookingButtonClass()}}" 
+          bindtap="bookCourse" 
+          disabled="{{bookingStatus !== 'available'}}">
+    {{getBookingButtonText()}}
+  </button>
+</view>

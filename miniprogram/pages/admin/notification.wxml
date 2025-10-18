@@ -1,0 +1,163 @@
+<!-- admin/notification.wxml -->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 头部 -->
+  <view class="header">
+    <text class="header-title">通知推送</text>
+    <view class="create-btn" bindtap="showCreateNotification">
+      <text class="iconfont icon-plus"></text>
+      <text>创建通知</text>
+    </view>
+  </view>
+
+  <!-- 通知类型切换 -->
+  <view class="type-tabs">
+    <view class="tab-item {{currentType === 'course_change' ? 'active' : ''}}" 
+          bindtap="switchType" 
+          data-type="course_change">
+      <text>课程变动</text>
+    </view>
+    <view class="tab-item {{currentType === 'class_reminder' ? 'active' : ''}}" 
+          bindtap="switchType" 
+          data-type="class_reminder">
+      <text>上课提醒</text>
+    </view>
+    <view class="tab-item {{currentType === 'system' ? 'active' : ''}}" 
+          bindtap="switchType" 
+          data-type="system">
+      <text>系统通知</text>
+    </view>
+    <view class="tab-item {{currentType === 'promotion' ? 'active' : ''}}" 
+          bindtap="switchType" 
+          data-type="promotion">
+      <text>营销活动</text>
+    </view>
+  </view>
+
+  <!-- 通知列表 -->
+  <scroll-view class="notification-list" scroll-y="true" refresher-enabled="true" bindrefresherrefresh="loadNotifications" refresher-triggered="{{loading}}">
+    <view class="notification-item card" wx:for="{{notifications}}" wx:key="notificationId" wx:if="{{item.type === currentType}}">
+      <view class="notification-header">
+        <view class="notification-title">{{item.title}}</view>
+        <text class="notification-status status-tag {{getNotificationStatusClass(item.status)}}">{{getNotificationStatusText(item.status)}}</text>
+      </view>
+      
+      <view class="notification-content">{{item.content}}</view>
+      
+      <view class="notification-meta">
+        <text class="meta-item">发送: {{item.sendCount}}人</text>
+        <text class="meta-item">阅读: {{item.readCount}}人</text>
+        <text class="meta-item">{{formatTime(item.createTime)}}</text>
+      </view>
+      
+      <view class="notification-actions" wx:if="{{item.status === 'draft'}}">
+        <view class="action-btn edit">
+          <text class="iconfont icon-edit"></text>
+          <text>编辑</text>
+        </view>
+        <view class="action-btn delete" bindtap="deleteNotification" data-notification-id="{{item.notificationId}}">
+          <text class="iconfont icon-delete"></text>
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{notifications.length === 0 && !loading}}">
+      <text class="empty-icon iconfont icon-empty"></text>
+      <text>暂无通知</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 创建通知弹窗 -->
+<view class="modal-mask" wx:if="{{showCreateModal}}" bindtap="hideCreateModal">
+  <view class="modal-panel" catchtap="">
+    <view class="panel-header">
+      <text class="panel-title">创建通知</text>
+      <text class="iconfont icon-close" bindtap="hideCreateModal"></text>
+    </view>
+    
+    <scroll-view class="panel-content" scroll-y="true">
+      <view class="form-item">
+        <text class="form-label">通知类型</text>
+        <picker mode="selector" 
+                range="{{typeOptions}}" 
+                range-key="label" 
+                bindchange="onTypeChange">
+          <view class="picker-value">
+            {{getNotificationTypeText(notificationForm.type)}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">通知标题</text>
+        <input class="form-input" 
+               placeholder="请输入通知标题" 
+               value="{{notificationForm.title}}" 
+               bindinput="onFormInput" 
+               data-field="title" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">通知内容</text>
+        <textarea class="form-textarea" 
+                  placeholder="请输入通知内容" 
+                  value="{{notificationForm.content}}" 
+                  bindinput="onFormInput" 
+                  data-field="content" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">发送目标</text>
+        <picker mode="selector" 
+                range="{{targetTypeOptions}}" 
+                range-key="label" 
+                bindchange="onTargetTypeChange">
+          <view class="picker-value">
+            {{targetTypeOptions[notificationForm.targetType].label}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item" wx:if="{{notificationForm.targetType !== 'all'}}">
+        <text class="form-label">选择{{notificationForm.targetType === 'course' ? '课程' : '门店'}}</text>
+        <picker mode="selector" 
+                range="{{getTargetOptions()}}" 
+                range-key="label" 
+                bindchange="onTargetChange">
+          <view class="picker-value">
+            {{selectedTargetLabel || '请选择'}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">发送时间</text>
+        <view class="datetime-picker" bindtap="showDateTimePicker">
+          <text class="datetime-value">{{notificationForm.sendTime || '立即发送'}}</text>
+          <text class="iconfont icon-calendar"></text>
+        </view>
+      </view>
+    </scroll-view>
+    
+    <view class="panel-footer">
+      <button class="cancel-btn" bindtap="hideCreateModal">取消</button>
+      <button class="confirm-btn btn-primary" bindtap="sendNotification">发送</button>
+    </view>
+  </view>
+</view>
+
+<!-- 日期时间选择器 -->
+<picker mode="multiSelector" 
+        value="{{[0, 0]}}" 
+        range="{{[['2023', '2024'], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']]}}" 
+        wx:if="{{showDateTimePicker}}" 
+        bindchange="onDateTimeConfirm"
+        bindcancel="hideDateTimePicker">
+</picker>

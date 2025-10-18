@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "管理员登录",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "language-switch": "/components/language-switch"
+  }
+}

@@ -1,0 +1,13 @@
+<!--logs.wxml-->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <scroll-view class="scrollarea" scroll-y type="list">
+    <block wx:for="{{logs}}" wx:key="timeStamp" wx:for-item="log">
+      <view class="log-item">{{index + 1}}. {{log.date}}</view>
+    </block>
+  </scroll-view>
+</view>

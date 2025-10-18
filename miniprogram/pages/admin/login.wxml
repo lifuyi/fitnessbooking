@@ -1,0 +1,79 @@
+<!-- admin/login.wxml -->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="navigateBack">
+      <text class="iconfont icon-back"></text>
+    </view>
+    <text class="header-title">{{i18n.t('admin.login.title')}}</text>
+    <view class="placeholder"></view>
+  </view>
+
+  <!-- 登录表单 -->
+  <view class="login-form">
+    <!-- Logo区域 -->
+    <view class="logo-section">
+      <view class="logo">
+        <text class="iconfont icon-logo"></text>
+      </view>
+      <text class="app-name">{{i18n.t('app.name')}}</text>
+      <text class="app-desc">{{i18n.t('admin.login.system')}}</text>
+    </view>
+
+    <!-- 表单区域 -->
+    <view class="form-section">
+      <!-- 手机号输入 -->
+      <view class="form-item">
+        <view class="input-wrapper">
+          <text class="input-icon iconfont icon-phone"></text>
+          <input class="form-input" 
+                 type="number" 
+                 maxlength="11" 
+                 placeholder="{{i18n.t('admin.login.phone')}}" 
+                 value="{{phone}}" 
+                 bindinput="onPhoneInput" />
+        </view>
+        <text class="error-text" wx:if="{{phoneError}}">{{phoneError}}</text>
+      </view>
+
+      <!-- 验证码输入 -->
+      <view class="form-item">
+        <view class="input-wrapper with-btn">
+          <text class="input-icon iconfont icon-code"></text>
+          <input class="form-input" 
+                 type="number" 
+                 maxlength="6" 
+                 placeholder="{{i18n.t('admin.login.code')}}" 
+                 value="{{code}}" 
+                 bindinput="onCodeInput" />
+          <button class="code-btn {{codeSent && countdown > 0 ? 'disabled' : ''}}" 
+                  bindtap="sendSmsCode" 
+                  disabled="{{codeSent && countdown > 0}}">
+            {{codeSent && countdown > 0 ? countdown + 's' : i18n.t('admin.login.code')}}
+          </button>
+        </view>
+        <text class="error-text" wx:if="{{codeError}}">{{codeError}}</text>
+      </view>
+
+      <!-- 登录按钮 -->
+      <button class="login-btn btn-primary {{loading ? 'loading' : ''}}" 
+              bindtap="login" 
+              loading="{{loading}}"
+              disabled="{{loading}}">
+        {{loading ? i18n.t('text.loading') : i18n.t('admin.login.button')}}
+      </button>
+
+      <!-- 忘记密码 -->
+      <view class="forget-password">
+        <text class="forget-link" bindtap="forgetPassword">{{i18n.t('admin.login.forgot')}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="footer-info">
+    <text class="info-text">{{i18n.t('admin.login.footer')}}</text>
+    <text class="info-text">客服电话：19925187494</text>
+    <text class="settings-link" bindtap="navigateToSettings">{{i18n.t('admin.login.system')}}{{i18n.t('settings')}}</text>
+  </view>
+</view>

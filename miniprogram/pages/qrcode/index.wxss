@@ -1,0 +1,273 @@
+/* qrcode/index.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding-bottom: 40rpx;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60rpx 30rpx 20rpx;
+  background-color: #FF6B35;
+  color: #FFFFFF;
+}
+
+.back-btn,
+.refresh-btn {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn .icon-back,
+.refresh-btn .icon-refresh {
+  font-size: 32rpx;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+/* 用户信息 */
+.user-info {
+  margin: 20rpx 30rpx;
+}
+
+.user-basic {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 4rpx;
+}
+
+.user-meta {
+  color: #666666;
+}
+
+/* 二维码区域 */
+.qrcode-section {
+  margin: 20rpx 30rpx;
+}
+
+.qrcode-card {
+  text-align: center;
+}
+
+.qrcode-header {
+  margin-bottom: 40rpx;
+}
+
+.qrcode-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.qrcode-desc {
+  font-size: 26rpx;
+  color: #666666;
+  display: block;
+}
+
+.qrcode-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40rpx;
+}
+
+.qrcode-placeholder {
+  width: 400rpx;
+  height: 400rpx;
+  background-color: #FFFFFF;
+  border: 2rpx dashed #E0E0E0;
+  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.qrcode-placeholder .icon-qrcode-large {
+  font-size: 120rpx;
+  color: #CCCCCC;
+  margin-bottom: 20rpx;
+}
+
+.qrcode-text {
+  font-size: 20rpx;
+  color: #999999;
+  max-width: 360rpx;
+  word-break: break-all;
+}
+
+.qrcode-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30rpx;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.countdown-number {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #FF6B35;
+  margin: 0 8rpx;
+}
+
+.qrcode-actions {
+  display: flex;
+  gap: 40rpx;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.action-btn .icon-refresh,
+.action-btn .icon-download {
+  font-size: 40rpx;
+  color: #FF6B35;
+}
+
+.action-btn text:last-child {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 使用说明 */
+.usage-tips {
+  margin: 20rpx 30rpx;
+}
+
+.tips-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+.tips-list {
+  padding-left: 10rpx;
+}
+
+.tips-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 1.5;
+}
+
+.tips-item:last-child {
+  margin-bottom: 0;
+}
+
+.tips-bullet {
+  color: #FF6B35;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+
+/* 联系客服 */
+.contact-section {
+  margin: 20rpx 30rpx;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.contact-header .icon-service {
+  font-size: 40rpx;
+  color: #FF6B35;
+  margin-right: 12rpx;
+}
+
+.contact-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.contact-content {
+  text-align: center;
+}
+
+.contact-desc {
+  font-size: 28rpx;
+  color: #666666;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.contact-item {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* 图标字体 */
+.iconfont {
+  font-family: 'iconfont';
+}
+
+.icon-back:before { content: '\e600'; }
+.icon-refresh:before { content: '\e601'; }
+.icon-qrcode-large:before { content: '\e602'; }
+.icon-download:before { content: '\e603'; }
+.icon-service:before { content: '\e604'; }

@@ -1,0 +1,254 @@
+/* course/list.wxss */
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 筛选栏 */
+.filter-bar {
+  display: flex;
+  background-color: #FFFFFF;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F0F0F0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.filter-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #333333;
+  padding: 12rpx 0;
+  position: relative;
+}
+
+.filter-item::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rpx;
+  height: 24rpx;
+  background-color: #F0F0F0;
+}
+
+.filter-item:last-child::after {
+  display: none;
+}
+
+.filter-item .icon-arrow-down {
+  margin-left: 8rpx;
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 课程列表 */
+.course-list {
+  flex: 1;
+  padding: 20rpx 30rpx;
+}
+
+.course-item {
+  margin-bottom: 20rpx;
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.course-info {
+  flex: 1;
+  padding-right: 20rpx;
+}
+
+.course-title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.course-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-right: 16rpx;
+  flex: 1;
+}
+
+.course-dance-type {
+  font-size: 22rpx;
+  white-space: nowrap;
+}
+
+.course-time {
+  color: #666666;
+  margin-bottom: 12rpx;
+}
+
+.course-teacher {
+  display: flex;
+  align-items: center;
+  color: #666666;
+}
+
+.teacher-avatar {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 12rpx;
+}
+
+.course-store {
+  margin-left: 20rpx;
+  padding-left: 20rpx;
+  border-left: 1rpx solid #E0E0E0;
+}
+
+.course-status {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.course-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-difficulty {
+  display: flex;
+  align-items: center;
+}
+
+.difficulty-stars {
+  display: flex;
+  align-items: center;
+  margin-left: 8rpx;
+}
+
+.difficulty-stars .icon-star {
+  font-size: 24rpx;
+  color: #E0E0E0;
+  margin-right: 4rpx;
+}
+
+.difficulty-stars .icon-star.active {
+  color: #FF9500;
+}
+
+.course-action .btn-small {
+  padding: 12rpx 24rpx;
+  font-size: 26rpx;
+}
+
+.course-action .btn-small[disabled] {
+  background-color: #F0F0F0;
+  color: #CCCCCC;
+}
+
+/* 空状态 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  color: #999999;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.3;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 30rpx 0;
+  color: #999999;
+  font-size: 26rpx;
+}
+
+/* 筛选器弹窗 */
+.filter-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.filter-panel {
+  width: 100%;
+  max-height: 80vh;
+  background-color: #FFFFFF;
+  border-radius: 24rpx 24rpx 0 0;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.panel-header .icon-close {
+  font-size: 32rpx;
+  color: #666666;
+}
+
+.panel-content {
+  max-height: 60vh;
+  padding: 0 30rpx;
+}
+
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 0;
+  font-size: 30rpx;
+  color: #333333;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.option-item:last-child {
+  border-bottom: none;
+}
+
+.option-item.active {
+  color: #FF6B35;
+}
+
+.option-item .icon-check {
+  font-size: 32rpx;
+  color: #FF6B35;
+}
+
+/* 图标字体 */
+.iconfont {
+  font-family: 'iconfont';
+}
+
+.icon-arrow-down:before { content: '\e600'; }
+.icon-close:before { content: '\e601'; }
+.icon-star:before { content: '\e602'; }
+.icon-check:before { content: '\e603'; }
+.icon-empty:before { content: '\e604'; }

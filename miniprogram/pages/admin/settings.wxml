@@ -1,0 +1,229 @@
+<!-- admin/settings.wxml -->
+<view class="container">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 头部 -->
+  <view class="header">
+    <text class="header-title">系统设置</text>
+    <view class="save-btn {{saving ? 'saving' : ''}}" bindtap="saveSettings">
+      <text wx:if="{{!saving}}">保存</text>
+      <text wx:else>保存中...</text>
+    </view>
+  </view>
+
+  <!-- 设置内容 -->
+  <scroll-view class="settings-content" scroll-y="true" wx:if="{{!loading}}">
+    <!-- 管理员信息 -->
+    <view class="admin-info card card-padding">
+      <view class="admin-avatar">
+        <text class="iconfont icon-admin"></text>
+      </view>
+      <view class="admin-details">
+        <view class="admin-name">{{adminInfo.name || '管理员'}}</view>
+        <view class="admin-role text-small">系统管理员</view>
+      </view>
+      <view class="logout-btn" bindtap="logout">
+        <text>退出登录</text>
+      </view>
+    </view>
+
+    <!-- 通知设置 -->
+    <view class="settings-section">
+      <view class="section-header">
+        <text class="section-title">通知设置</text>
+        <text class="section-desc text-small">配置系统通知推送</text>
+      </view>
+      <view class="setting-list">
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">预约提醒</text>
+            <text class="setting-desc text-small">用户预约成功后推送通知</text>
+          </view>
+          <switch class="setting-switch" checked="{{settings.notifications.bookingReminder}}" bindchange="toggleNotification" data-field="bookingReminder" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">上课提醒</text>
+            <text class="setting-desc text-small">课程开始前推送提醒</text>
+          </view>
+          <switch class="setting-switch" checked="{{settings.notifications.classReminder}}" bindchange="toggleNotification" data-field="classReminder" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">取消提醒</text>
+            <text class="setting-desc text-small">课程取消后推送通知</text>
+          </view>
+          <switch class="setting-switch" checked="{{settings.notifications.cancelReminder}}" bindchange="toggleNotification" data-field="cancelReminder" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">系统更新</text>
+            <text class="setting-desc text-small">系统更新和重要通知</text>
+          </view>
+          <switch class="setting-switch" checked="{{settings.notifications.systemUpdate}}" bindchange="toggleNotification" data-field="systemUpdate" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 课程设置 -->
+    <view class="settings-section">
+      <view class="section-header">
+        <text class="section-title">课程设置</text>
+        <text class="section-desc text-small">配置课程预约规则</text>
+      </view>
+      <view class="setting-list">
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">提前预约天数</text>
+            <text class="setting-desc text-small">用户最多可提前几天预约</text>
+          </view>
+          <input class="setting-input" type="number" value="{{settings.courses.advanceBookingDays}}" bindinput="changeNumberSetting" data-category="courses" data-field="advanceBookingDays" data-min="1" data-max="30" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">取消截止时间</text>
+            <text class="setting-desc text-small">课程开始前几小时可取消</text>
+          </view>
+          <input class="setting-input" type="number" value="{{settings.courses.cancelDeadline}}" bindinput="changeNumberSetting" data-category="courses" data-field="cancelDeadline" data-min="1" data-max="24" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">每日最大课程数</text>
+            <text class="setting-desc text-small">用户每天最多可预约课程数</text>
+          </view>
+          <input class="setting-input" type="number" value="{{settings.courses.maxDailyClasses}}" bindinput="changeNumberSetting" data-category="courses" data-field="maxDailyClasses" data-min="1" data-max="10" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">自动取消未签到</text>
+            <text class="setting-desc text-small">课程结束后自动取消未签到记录</text>
+          </view>
+          <switch class="setting-switch" checked="{{settings.courses.autoCancel}}" bindchange="toggleCourseSetting" data-field="autoCancel" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 门店设置 -->
+    <view class="settings-section">
+      <view class="section-header">
+        <text class="section-title">门店设置</text>
+        <text class="section-desc text-small">配置门店相关规则</text>
+      </view>
+      <view class="setting-list">
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">默认门店</text>
+            <text class="setting-desc text-small">新用户默认选择的门店</text>
+          </view>
+          <picker mode="selector" range="{{['南山店', '福田店', '宝安店']}}" bindchange="changeDefaultStore">
+            <view class="picker-value">
+              {{settings.stores.defaultStore}}
+              <text class="iconfont icon-arrow-down"></text>
+            </view>
+          </picker>
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">允许跨门店预约</text>
+            <text class="setting-desc text-small">用户可以预约其他门店课程</text>
+          </view>
+          <switch class="setting-switch" checked="{{settings.stores.allowCrossStore}}" bindchange="toggleStoreSetting" data-field="allowCrossStore" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">门店切换限制</text>
+            <text class="setting-desc text-small">每月最多可切换门店次数</text>
+          </view>
+          <input class="setting-input" type="number" value="{{settings.stores.storeSwitchLimit}}" bindinput="changeNumberSetting" data-category="stores" data-field="storeSwitchLimit" data-min="1" data-max="10" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 系统设置 -->
+    <view class="settings-section">
+      <view class="section-header">
+        <text class="section-title">系统设置</text>
+        <text class="section-desc text-small">系统级配置选项</text>
+      </view>
+      <view class="setting-list">
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">数据保留天数</text>
+            <text class="setting-desc text-small">历史数据保留时间</text>
+          </view>
+          <input class="setting-input" type="number" value="{{settings.system.dataRetention}}" bindinput="changeNumberSetting" data-category="system" data-field="dataRetention" data-min="30" data-max="365" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">维护模式</text>
+            <text class="setting-desc text-small">开启后用户无法使用小程序</text>
+          </view>
+          <switch class="setting-switch" checked="{{settings.system.maintenanceMode}}" bindchange="toggleSystemSetting" data-field="maintenanceMode" />
+        </view>
+        <view class="setting-item">
+          <view class="setting-info">
+            <text class="setting-label">调试模式</text>
+            <text class="setting-desc text-small">开启后显示调试信息</text>
+          </view>
+          <switch class="setting-switch" checked="{{settings.system.debugMode}}" bindchange="toggleSystemSetting" data-field="debugMode" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 系统管理 -->
+    <view class="settings-section">
+      <view class="section-header">
+        <text class="section-title">系统管理</text>
+        <text class="section-desc text-small">系统维护和数据管理</text>
+      </view>
+      <view class="setting-list">
+        <view class="setting-item" bindtap="checkForUpdate">
+          <view class="setting-info">
+            <text class="setting-label">检查更新</text>
+            <text class="setting-desc text-small">当前版本 {{version.current}}</text>
+          </view>
+          <view class="setting-action">
+            <text class="iconfont icon-arrow-right"></text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="clearCache">
+          <view class="setting-info">
+            <text class="setting-label">清除缓存</text>
+            <text class="setting-desc text-small">清理系统缓存数据</text>
+          </view>
+          <view class="setting-action">
+            <text class="iconfont icon-arrow-right"></text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="exportData">
+          <view class="setting-info">
+            <text class="setting-label">导出数据</text>
+            <text class="setting-desc text-small">导出系统数据备份</text>
+          </view>
+          <view class="setting-action">
+            <text class="iconfont icon-arrow-right"></text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="resetSettings">
+          <view class="setting-info">
+            <text class="setting-label">重置设置</text>
+            <text class="setting-desc text-small">恢复所有设置为默认值</text>
+          </view>
+          <view class="setting-action">
+            <text class="iconfont icon-arrow-right"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading">
+      <text>加载中...</text>
+    </view>
+  </view>
+</view>

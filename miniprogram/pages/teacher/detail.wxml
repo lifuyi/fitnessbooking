@@ -1,0 +1,113 @@
+<!-- teacher/detail.wxml -->
+<view class="container" wx:if="{{!loading}}">
+  <!-- 语言切换 -->
+  <view class="language-switch-container">
+    <language-switch bind:languagechange="onLanguageChange"></language-switch>
+  </view>
+  
+  <!-- 导师封面 -->
+  <view class="teacher-cover">
+    <image class="cover-image" src="{{teacher.avatar}}" mode="aspectFill"></image>
+    <view class="cover-gradient"></view>
+    <view class="cover-info">
+      <view class="teacher-basic">
+        <image class="teacher-avatar radius-circle" src="{{teacher.avatar}}" mode="aspectFill"></image>
+        <view class="teacher-details">
+          <view class="teacher-name">{{teacher.name}}</view>
+          <view class="teacher-title">{{getDanceTypesText(teacher.danceTypes)}}导师</view>
+        </view>
+      </view>
+      <view class="teacher-stats">
+        <view class="stat-item">
+          <text class="stat-number">{{teacher.experience}}</text>
+          <text class="stat-label">年教龄</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{teacher.classCount}}</text>
+          <text class="stat-label">节课程</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-number">{{teacher.rating}}</text>
+          <text class="stat-label">评分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 导师介绍 -->
+  <view class="teacher-intro card card-padding">
+    <view class="section-title">导师介绍</view>
+    <text class="intro-content">{{teacher.introduction}}</text>
+  </view>
+
+  <!-- 擅长舞种 -->
+  <view class="dance-types card card-padding">
+    <view class="section-title">擅长舞种</view>
+    <view class="dance-list">
+      <text class="dance-item tag tag-primary" wx:for="{{teacher.danceTypes}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 导师课程 -->
+  <view class="teacher-courses">
+    <view class="section-header">
+      <text class="section-title">导师课程</text>
+    </view>
+    
+    <scroll-view class="course-list" scroll-y="true" bindscrolltolower="loadMore">
+      <view class="course-item card card-padding" wx:for="{{courses}}" wx:key="courseId">
+        <view class="course-header" bindtap="navigateToCourseDetail" data-course-id="{{item.courseId}}">
+          <view class="course-info">
+            <view class="course-title-row">
+              <text class="course-title">{{item.name}}</text>
+              <text class="course-dance-type tag tag-primary">{{item.danceTypeName}}</text>
+            </view>
+            <view class="course-time text-small">{{formatCourseTime(item)}}</view>
+            <view class="course-meta text-small">
+              <text class="course-store">{{item.storeName}}</text>
+              <text class="course-duration">{{item.duration}}分钟</text>
+            </view>
+          </view>
+          <view class="course-status">
+            <text class="{{getRemainingClass(item)}}">{{getRemainingText(item)}}</text>
+          </view>
+        </view>
+        
+        <view class="course-footer">
+          <view class="course-difficulty">
+            <text class="text-small">难度：</text>
+            <view class="difficulty-stars">
+              <text class="iconfont icon-star {{index < item.difficulty ? 'active' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:key="*this"></text>
+            </view>
+          </view>
+          <view class="course-action">
+            <button class="btn-primary btn-small" bindtap="bookCourse" data-course-id="{{item.courseId}}" disabled="{{item.capacity - item.bookedCount <= 0}}">
+              {{item.capacity - item.bookedCount > 0 ? '立即预约' : '已满员'}}
+            </button>
+          </view>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty" wx:if="{{courses.length === 0 && !loading}}">
+        <text class="empty-icon iconfont icon-empty"></text>
+        <text>暂无课程安排</text>
+      </view>
+
+      <!-- 加载更多 -->
+      <view class="load-more" wx:if="{{courses.length > 0}}">
+        <text wx:if="{{loading}}">加载中...</text>
+        <text wx:elif="{{!hasMore}}">没有更多课程了</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 加载状态 -->
+<view class="loading-container" wx:if="{{loading}}">
+  <view class="loading">
+    <text>加载中...</text>
+  </view>
+</view>
