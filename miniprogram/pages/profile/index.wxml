@@ -74,6 +74,17 @@
       </view>
       <text class="iconfont icon-arrow-right"></text>
     </view>
+
+    <view class="module-item" bindtap="navigateToAdmin">
+      <view class="module-icon">
+        <text class="iconfont icon-admin"></text>
+      </view>
+      <view class="module-content">
+        <text class="module-title">管理员入口</text>
+        <text class="module-desc">系统管理功能</text>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
   </view>
 
   <!-- 我的预约预览 -->

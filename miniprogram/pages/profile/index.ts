@@ -47,6 +47,11 @@ Page({
     const app = getApp<IAppOption>()
     const i18nInstance = app.globalData.i18n
     
+    // 设置导航栏标题
+    wx.setNavigationBarTitle({
+      title: i18nInstance.t('profile.title')
+    })
+    
     this.setData({ 
       loading: true,
       i18n: i18nInstance,
@@ -70,6 +75,11 @@ Page({
     // 页面显示时刷新用户信息和语言设置
     const app = getApp<IAppOption>()
     const i18nInstance = app.globalData.i18n
+    
+    // 更新导航栏标题
+    wx.setNavigationBarTitle({
+      title: i18nInstance.t('profile.title')
+    })
     
     this.setData({ 
       i18n: i18nInstance,
@@ -429,6 +439,13 @@ Page({
   navigateToSettings() {
     wx.navigateTo({
       url: '/pages/settings/index'
+    })
+  },
+  
+  // 跳转到管理员登录页面
+  navigateToAdmin() {
+    wx.navigateTo({
+      url: '/subpackage/admin/pages/login'
     })
   },
   

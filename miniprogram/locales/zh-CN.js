@@ -23,6 +23,7 @@ const zhCN = {
   'index.login.button': '立即登录',
   
   // 个人中心
+  'profile.title': '个人中心',
   'profile.my.bookings': '我的预约',
   'profile.view.bookings': '查看预约记录',
   'profile.my.course.cards': '我的课程卡',

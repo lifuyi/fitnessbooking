@@ -23,6 +23,7 @@ const en = {
   'index.login.button': 'Login Now',
   
   // 个人中心
+  'profile.title': 'Profile',
   'profile.my.bookings': 'My Bookings',
   'profile.view.bookings': 'View Booking Records',
   'profile.my.course.cards': 'My Course Cards',

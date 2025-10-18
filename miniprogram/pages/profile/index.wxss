@@ -359,4 +359,5 @@
 .icon-card:before { content: '\e602'; }
 .icon-qrcode:before { content: '\e603'; }
 .icon-service:before { content: '\e604'; }
+.icon-admin:before { content: '\e606'; }
 .icon-arrow-right:before { content: '\e605'; }
