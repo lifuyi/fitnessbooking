@@ -39,7 +39,7 @@
   <!-- 导师介绍 -->
   <view class="teacher-intro card card-padding">
     <view class="section-title">{{teacherIntroText}}</view>
-    <text class="intro-content">{{teacher.introduction}}</text>
+    <text class="intro-content">{{teacher.intro}}</text>
   </view>
 
   <!-- 擅长舞种 -->

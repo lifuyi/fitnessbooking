@@ -78,7 +78,7 @@ Component({
       if (!adminToken || !adminInfo) {
         showToast('请先登录')
         wx.redirectTo({
-          url: '/pages/admin/login'
+          url: '/subpackage/admin/pages/login'
         })
         return
       }
@@ -371,7 +371,7 @@ Component({
           
           // 跳转到登录页
           wx.redirectTo({
-            url: '/pages/admin/login'
+            url: '/subpackage/admin/pages/login'
           })
           
           showToast('已退出登录')

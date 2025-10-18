@@ -191,7 +191,7 @@ exports.checkLogin = checkLogin;
  */
 var navigateToLogin = function () {
     wx.navigateTo({
-        url: '/pages/admin/login'
+        url: '/subpackage/admin/pages/login'
     });
 };
 exports.navigateToLogin = navigateToLogin;

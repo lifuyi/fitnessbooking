@@ -39,7 +39,7 @@ Component({
       try {
         const pages = getCurrentPages()
         const currentPage = pages[pages.length - 1]
-        const courseId = currentPage.options?.courseId
+        const courseId = currentPage.options && currentPage.options.courseId
         
         if (!courseId) {
           showToast('课程ID不存在')
@@ -107,7 +107,7 @@ Component({
       }
       
       const userInfo = app.globalData.userInfo
-      return userInfo?.remainingClasses?.[danceType] || 0
+      return userInfo && userInfo.remainingClasses && userInfo.remainingClasses[danceType] || 0
     },
     
     // 预约课程

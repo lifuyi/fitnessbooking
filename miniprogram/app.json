@@ -8,13 +8,21 @@
     "pages/profile/index",
     "pages/booking/index",
     "pages/qrcode/index",
-    "pages/admin/login",
-    "pages/admin/coursemanage",
-    "pages/admin/studentmanage",
-    "pages/admin/notification",
-    "pages/admin/statistics",
-    "pages/admin/settings",
     "pages/logs/logs"
+  ],
+  "subPackages": [
+    {
+      "root": "subpackage/admin",
+      "name": "admin",
+      "pages": [
+        "pages/login",
+        "pages/coursemanage",
+        "pages/studentmanage",
+        "pages/notification",
+        "pages/statistics",
+        "pages/settings"
+      ]
+    }
   ],
   "usingComponents": {
     "language-switch": "/components/language-switch"

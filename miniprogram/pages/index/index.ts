@@ -1,6 +1,7 @@
 // index.ts
 import { checkLogin, showToast, formatTime, isToday, isTomorrow } from '../../utils/util-complete'
 import { courseApi, storeApi, teacherApi } from '../../utils/api-complete'
+import { CDN_CONFIG } from '../../utils/cdn-config'
 import type { Course, Store, Teacher } from '../../utils/types'
 
 const app = getApp<IAppOption>()
@@ -16,11 +17,7 @@ Component({
     currentStore: null as Store | null,
     
     // Banner数据
-    banners: [
-      'https://picsum.photos/seed/fitness1/800/400.jpg',
-      'https://picsum.photos/seed/yoga2/800/400.jpg',
-      'https://picsum.photos/seed/gym3/800/400.jpg'
-    ],
+    banners: CDN_CONFIG.BANNERS,
     currentBannerIndex: 0,
     
     // 导师数据

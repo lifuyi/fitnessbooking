@@ -64,7 +64,7 @@ Component({
       if (!adminToken || !adminInfo) {
         showToast('请先登录')
         wx.redirectTo({
-          url: '/pages/admin/login'
+          url: '/subpackage/admin/pages/login'
         })
         return
       }
@@ -237,7 +237,7 @@ Component({
     viewStudentBookings(e: any) {
       const { userId } = e.currentTarget.dataset
       wx.navigateTo({
-        url: `/pages/admin/studentbookings?userId=${userId}`
+        url: `/subpackage/admin/pages/studentbookings?userId=${userId}`
       })
     },
     

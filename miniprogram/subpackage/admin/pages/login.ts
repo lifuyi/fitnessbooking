@@ -167,7 +167,7 @@ Component({
         // 跳转到管理首页
         setTimeout(() => {
           wx.redirectTo({
-            url: '/pages/admin/coursemanage'
+            url: '/subpackage/admin/pages/coursemanage'
           })
         }, 1500)
       } catch (error) {
@@ -191,7 +191,7 @@ Component({
     // 跳转到系统设置
     navigateToSettings() {
       wx.navigateTo({
-        url: '/pages/admin/settings'
+        url: '/subpackage/admin/pages/settings'
       })
     },
     

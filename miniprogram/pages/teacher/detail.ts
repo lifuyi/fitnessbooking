@@ -64,7 +64,7 @@ Component({
       try {
         const pages = getCurrentPages()
         const currentPage = pages[pages.length - 1]
-        const teacherId = currentPage.options?.teacherId
+        const teacherId = currentPage.options && currentPage.options.teacherId
         
         if (!teacherId) {
           showToast('导师ID不存在')

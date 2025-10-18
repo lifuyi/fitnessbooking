@@ -191,7 +191,7 @@ export const checkLogin = (): boolean => {
  */
 export const navigateToLogin = () => {
   wx.navigateTo({
-    url: '/pages/admin/login'
+    url: '/subpackage/admin/pages/login'
   })
 }
 

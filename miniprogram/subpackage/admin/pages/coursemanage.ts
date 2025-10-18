@@ -75,7 +75,7 @@ Component({
       if (!adminToken || !adminInfo) {
         showToast('请先登录')
         wx.redirectTo({
-          url: '/pages/admin/login'
+          url: '/subpackage/admin/pages/login'
         })
         return
       }
@@ -229,7 +229,7 @@ Component({
     // 创建课程
     createCourse() {
       wx.navigateTo({
-        url: '/pages/admin/courseedit'
+        url: '/subpackage/admin/pages/courseedit'
       })
     },
     
@@ -237,7 +237,7 @@ Component({
     editCourse(e: any) {
       const { courseId } = e.currentTarget.dataset
       wx.navigateTo({
-        url: `/pages/admin/courseedit?courseId=${courseId}`
+        url: `/subpackage/admin/pages/courseedit?courseId=${courseId}`
       })
     },
     
@@ -285,7 +285,7 @@ Component({
     viewCourseBookings(e: any) {
       const { courseId } = e.currentTarget.dataset
       wx.navigateTo({
-        url: `/pages/admin/coursebookings?courseId=${courseId}`
+        url: `/subpackage/admin/pages/coursebookings?courseId=${courseId}`
       })
     },
     

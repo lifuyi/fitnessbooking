@@ -76,7 +76,7 @@ Component({
       if (!adminToken || !adminInfo) {
         showToast('请先登录')
         wx.redirectTo({
-          url: '/pages/admin/login'
+          url: '/subpackage/admin/pages/login'
         })
         return
       }
