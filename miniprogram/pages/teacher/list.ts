@@ -36,7 +36,7 @@ Component({
     loadMoreText: '',
     loadingText: '',
     noMoreText: '',
-    headerTitleText: ''
+    headerTitleText: '',
     
     // 当前筛选选项文本
     currentDanceTypeText: '',

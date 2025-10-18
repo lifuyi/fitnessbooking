@@ -30,7 +30,7 @@ Component({
     // 翻译文本
     loadingText: '',
     emptyText: '',
-    noMoreText: ''
+    noMoreText: '',
     
     // 课程列表
     courses: [] as Course[],

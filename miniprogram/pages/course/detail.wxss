@@ -349,7 +349,7 @@
 }
 
 .booking-btn {
-  width: 240rpx;
+  width: 200rpx;
   height: 80rpx;
   border-radius: 40rpx;
   font-size: 32rpx;
