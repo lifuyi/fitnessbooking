@@ -285,6 +285,9 @@ export const adminApi = {
   // 获取验证码
   getSmsCode: (phone: string) => post<any>('/admin/sms-code', { phone }),
   
+  // 获取课程列表
+  getCourseList: (params?: any) => get<any>('/admin/courses', params),
+  
   // 创建课程
   createCourse: (courseData: any) => post<any>('/admin/course', courseData),
   

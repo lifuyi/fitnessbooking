@@ -39,6 +39,7 @@ export declare const teacherApi: {
 export declare const adminApi: {
   adminLogin: (phone: string, code: string) => Promise<any>;
   getAdminInfo: () => Promise<Admin>;
+  getCourseList: (params?: any) => Promise<any>;
   getStatistics: (params?: any) => Promise<Statistics>;
   getSystemConfig: () => Promise<any>;
   updateSystemConfig: (config: any) => Promise<any>;

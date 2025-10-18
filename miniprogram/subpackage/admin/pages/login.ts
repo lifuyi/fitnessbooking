@@ -136,46 +136,34 @@ Component({
       }
     },
     
-    // 登录
+    // 直接登录
     async login() {
-      const { phone, code } = this.data
-      
-      // 表单验证
-      if (!this.validatePhone(phone) || !this.validateCode(code)) {
-        return
+      // 设置管理员登录状态
+      const adminInfo = {
+        adminId: 'admin',
+        name: '管理员',
+        phone: 'admin'
       }
       
-      this.setData({ loading: true })
+      // 保存登录信息
+      wx.setStorageSync('adminToken', 'admin_token')
+      wx.setStorageSync('adminInfo', adminInfo)
       
-      try {
-        // 调用登录接口
-        const result = await adminApi.login(phone, code)
-        
-        // 保存登录信息
-        wx.setStorageSync('adminToken', result.token)
-        wx.setStorageSync('adminInfo', result.adminInfo)
-        
-        // 更新全局状态
-        app.globalData.token = result.token
-        app.globalData.userInfo = result.adminInfo
-        app.globalData.isLogin = true
-        app.globalData.userId = result.adminInfo.adminId
-        app.globalData.userRole = 'admin'
-        
-        showToast('登录成功', 'success')
-        
-        // 跳转到管理首页
-        setTimeout(() => {
-          wx.redirectTo({
-            url: '/subpackage/admin/pages/coursemanage'
-          })
-        }, 1500)
-      } catch (error) {
-        console.error('登录失败:', error)
-        showToast(i18n.t('error.network'))
-      } finally {
-        this.setData({ loading: false })
-      }
+      // 更新全局状态
+      app.globalData.token = 'admin_token'
+      app.globalData.userInfo = adminInfo
+      app.globalData.isLogin = true
+      app.globalData.userId = adminInfo.adminId
+      app.globalData.userRole = 'admin'
+      
+      showToast('登录成功', 'success')
+      
+      // 直接跳转到管理首页
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/subpackage/admin/pages/coursemanage'
+        })
+      }, 500)
     },
     
     // 返回上一页

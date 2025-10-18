@@ -60,13 +60,8 @@
               bindtap="login" 
               loading="{{loading}}"
               disabled="{{loading}}">
-        {{loading ? i18n.t('text.loading') : i18n.t('admin.login.button')}}
+        {{loading ? i18n.t('text.loading') : '进入管理后台'}}
       </button>
-
-      <!-- 忘记密码 -->
-      <view class="forget-password">
-        <text class="forget-link" bindtap="forgetPassword">{{i18n.t('admin.login.forgot')}}</text>
-      </view>
     </view>
   </view>
 

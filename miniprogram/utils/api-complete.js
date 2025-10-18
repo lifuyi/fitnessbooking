@@ -587,6 +587,7 @@ function getMockData(url, params) {
         hasMore: end < courses.length
       };
       
+    case '/api/admin/courses':
     case '/api/courses':
       var today = new Date().toISOString().split('T')[0];
       var tomorrow = new Date();
@@ -1360,6 +1361,9 @@ var adminApi = {
   },
   getAdminInfo: function() {
     return get('/api/admin/info');
+  },
+  getCourseList: function(params) {
+    return get('/api/admin/courses', params);
   },
   getStatistics: function(params) {
     return get('/api/admin/statistics', params);
