@@ -1,5 +1,4 @@
 // components/language-switch.ts
-const i18nInstance = require('../utils/i18n.js')
 
 Component({
   properties: {
@@ -7,12 +6,13 @@ Component({
   },
 
   data: {
-    i18n: i18nInstance
+    i18n: null
   },
 
   lifetimes: {
     attached() {
       // 组件实例进入页面节点树时执行
+      const i18nInstance = require('../utils/i18n.js')
       this.setData({
         i18n: i18nInstance
       })
@@ -22,12 +22,21 @@ Component({
   methods: {
     // 切换语言
     switchLanguage() {
+      console.log('语言切换按钮点击')
+      
       const currentLanguage = this.data.i18n.getLanguage()
       const newLanguage = currentLanguage === 'zh-CN' ? 'en' : 'zh-CN'
       
-      this.data.i18n.setLanguage(newLanguage)
+      console.log('切换语言:', currentLanguage, '->', newLanguage)
+      
+      // 切换语言
+      const i18nInstance = require('../utils/i18n.js')
+      const success = i18nInstance.setLanguage(newLanguage)
+      console.log('语言切换结果:', success)
+      
+      // 强制更新组件数据
       this.setData({
-        i18n: this.data.i18n
+        i18n: i18nInstance
       })
       
       // 更新tabBar语言
@@ -36,6 +45,7 @@ Component({
       
       // 触发自定义事件，通知页面语言已切换
       this.triggerEvent('languagechange', { language: newLanguage })
+      console.log('语言切换事件已触发')
     }
   }
 })

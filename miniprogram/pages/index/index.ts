@@ -1,7 +1,6 @@
 // index.ts
 import { checkLogin, showToast, formatTime, isToday, isTomorrow } from '../../utils/util-complete'
 import { courseApi, storeApi, teacherApi } from '../../utils/api-complete'
-const i18n = require('../../utils/i18n.js')
 import type { Course, Store, Teacher } from '../../utils/types'
 
 const app = getApp<IAppOption>()
@@ -34,11 +33,43 @@ Component({
     loading: false,
     
     // 国际化
-    i18n: i18n
+    i18n: null,
+    
+    // 翻译文本
+    welcomeText: '',
+    storeInfoText: '',
+    storeHoursText: '',
+    functionBookingText: '',
+    functionPurchaseText: '',
+    functionTeachersText: '',
+    functionShopText: '',
+    teachersSectionText: '',
+    coursesTodayText: '',
+    confirmButtonText: '',
+    entranceCodeText: '入场码',
+    
+    // 用于强制更新页面
+    updateFlag: 0
   },
   
   lifetimes: {
     attached() {
+      // 初始化i18n实例
+      const i18nInstance = require('../../utils/i18n.js')
+      this.setData({
+        i18n: i18nInstance,
+        welcomeText: i18nInstance.t('index.welcome'),
+        storeInfoText: i18nInstance.t('index.store.info'),
+        storeHoursText: i18nInstance.t('index.store.hours'),
+        functionBookingText: i18nInstance.t('index.function.booking'),
+        functionPurchaseText: i18nInstance.t('index.function.purchase'),
+        functionTeachersText: i18nInstance.t('index.function.teachers'),
+        functionShopText: i18nInstance.t('index.function.shop'),
+        teachersSectionText: i18nInstance.t('index.teachers.section'),
+        coursesTodayText: i18nInstance.t('index.courses.today'),
+        confirmButtonText: i18nInstance.t('button.confirm')
+      })
+      
       this.checkUserLogin()
       this.loadPageData()
     }
@@ -301,9 +332,40 @@ Component({
     },
     
     // 语言切换事件处理
-    onLanguageChange() {
+    onLanguageChange(e) {
+      console.log('语言切换事件触发:', e)
+      
+      // 获取当前的i18n实例并强制更新
+      const i18nInstance = require('../../utils/i18n.js')
+      const currentLang = i18nInstance.getLanguage()
+      console.log('当前语言:', currentLang)
+      
+      // 更新页面的i18n实例
+      this.setData({
+        i18n: i18nInstance,
+        // 强制更新所有翻译文本
+        welcomeText: i18nInstance.t('index.welcome'),
+        storeInfoText: i18nInstance.t('index.store.info'),
+        storeHoursText: i18nInstance.t('index.store.hours'),
+        functionBookingText: i18nInstance.t('index.function.booking'),
+        functionPurchaseText: i18nInstance.t('index.function.purchase'),
+        functionTeachersText: i18nInstance.t('index.function.teachers'),
+        functionShopText: i18nInstance.t('index.function.shop'),
+        teachersSectionText: i18nInstance.t('index.teachers.section'),
+        coursesTodayText: i18nInstance.t('index.courses.today'),
+        confirmButtonText: i18nInstance.t('button.confirm'),
+        entranceCodeText: '入场码'
+      })
+      
+      // 强制触发页面重新渲染
+      this.setData({
+        updateFlag: Date.now()
+      })
+      
       // 重新加载页面数据以更新显示
       this.loadPageData()
+      
+      console.log('语言切换完成，新语言:', i18nInstance.getLanguage())
     }
   }
 })

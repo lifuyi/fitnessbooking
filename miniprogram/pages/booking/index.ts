@@ -429,6 +429,20 @@ Component({
     // 翻译文本
     t(key: string, params: any = {}) {
       return this.data.i18n.t(key, params)
+    },
+    
+    // 语言切换事件处理
+    onLanguageChange() {
+      // 重新获取最新的i18n实例
+      const i18nInstance = require('../../utils/i18n.js')
+      
+      // 更新页面的i18n实例
+      this.setData({
+        i18n: i18nInstance
+      })
+      
+      // 重新加载页面数据以更新显示
+      this.refreshData()
     }
   }
 })

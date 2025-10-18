@@ -52,33 +52,33 @@
       <view class="entry-icon brand-bg">
         <text class="iconfont icon-calendar"></text>
       </view>
-      <text class="entry-title">{{i18n.t('index.function.booking')}}</text>
+      <text class="entry-title">{{functionBookingText}}</text>
     </view>
     <view class="entry-item disabled">
       <view class="entry-icon">
         <text class="iconfont icon-card"></text>
       </view>
-      <text class="entry-title">{{i18n.t('index.function.purchase')}}</text>
+      <text class="entry-title">{{functionPurchaseText}}</text>
     </view>
     <view class="entry-item" bindtap="viewAllTeachers">
       <view class="entry-icon">
         <text class="iconfont icon-user"></text>
       </view>
-      <text class="entry-title">{{i18n.t('index.function.teachers')}}</text>
+      <text class="entry-title">{{functionTeachersText}}</text>
     </view>
     <view class="entry-item disabled">
       <view class="entry-icon">
         <text class="iconfont icon-shop"></text>
       </view>
-      <text class="entry-title">{{i18n.t('index.function.shop')}}</text>
+      <text class="entry-title">{{functionShopText}}</text>
     </view>
   </view>
 
   <!-- 导师展示区 -->
   <view class="teachers-section">
     <view class="section-header">
-      <text class="section-title">{{i18n.t('index.teachers.section')}}</text>
-      <text class="section-more" bindtap="viewAllTeachers">{{i18n.t('button.confirm')}}</text>
+      <text class="section-title">{{teachersSectionText}}</text>
+      <text class="section-more" bindtap="viewAllTeachers">{{confirmButtonText}}</text>
     </view>
     <scroll-view class="teachers-scroll" scroll-x="true" show-scrollbar="false">
       <view class="teacher-item" wx:for="{{teachers}}" wx:key="teacherId" bindtap="navigateToTeacherDetail" data-teacher-id="{{item.teacherId}}">
@@ -91,8 +91,8 @@
   <!-- 今日课程 -->
   <view class="courses-section">
     <view class="section-header">
-      <text class="section-title">{{i18n.t('index.courses.today')}}</text>
-      <text class="section-more" bindtap="viewAllCourses">{{i18n.t('button.confirm')}}</text>
+      <text class="section-title">{{coursesTodayText}}</text>
+      <text class="section-more" bindtap="viewAllCourses">{{confirmButtonText}}</text>
     </view>
     <view class="course-list">
       <view class="course-item card card-padding" wx:for="{{todayCourses}}" wx:key="courseId" bindtap="navigateToCourseDetail" data-course-id="{{item.courseId}}">
@@ -118,11 +118,11 @@
   <!-- 登录提示 -->
   <view class="login-prompt card card-padding" wx:if="{{!hasUserInfo}}">
     <view class="prompt-content">
-      <text class="prompt-title">{{i18n.t('index.login.prompt.title')}}</text>
-      <text class="prompt-desc text-small">{{i18n.t('index.login.prompt.desc')}}</text>
+      <text>登录后体验更多功能</text>
+      <text class="prompt-desc text-small"><text>查看预约记录、剩余课程次数等</text></text>
     </view>
     <button class="login-btn btn-primary" wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile">
-      {{i18n.t('index.login.button')}}
+      <text>立即登录</text>
     </button>
   </view>
 
