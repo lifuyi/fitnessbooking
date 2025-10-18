@@ -43,6 +43,7 @@ Component({
     teachersSectionText: '',
     coursesTodayText: '',
     confirmButtonText: '',
+    allButtonText: '',
     entranceCodeText: '入场码',
     
     // 用于强制更新页面
@@ -64,7 +65,8 @@ Component({
         functionShopText: i18nInstance.t('index.function.shop'),
         teachersSectionText: i18nInstance.t('index.teachers.section'),
         coursesTodayText: i18nInstance.t('index.courses.today'),
-        confirmButtonText: i18nInstance.t('button.confirm')
+        confirmButtonText: i18nInstance.t('button.confirm'),
+        allButtonText: i18nInstance.t('button.all')
       })
       
       this.checkUserLogin()
@@ -125,8 +127,26 @@ Component({
     // 加载导师列表
     async loadTeachers() {
       try {
+        console.log('开始加载导师列表...')
         const teachers = await teacherApi.getTeacherList()
-        this.setData({ teachers: teachers.slice(0, 6) }) // 只显示前6个导师
+        console.log('获取到的导师列表:', teachers)
+        
+        // 确保每个导师都有必要的字段
+        const processedTeachers = teachers.map(teacher => {
+          const processedTeacher = { ...teacher }
+          // 确保有teacherId
+          if (!processedTeacher.teacherId && processedTeacher.id) {
+            processedTeacher.teacherId = String(processedTeacher.id)
+          }
+          // 确保有头像
+          if (!processedTeacher.avatar) {
+            processedTeacher.avatar = '/images/default-avatar.png'
+          }
+          return processedTeacher
+        })
+        
+        console.log('处理后的导师列表:', processedTeachers)
+        this.setData({ teachers: processedTeachers.slice(0, 6) }) // 只显示前6个导师
       } catch (error) {
         console.error('加载导师列表失败:', error)
       }
@@ -136,14 +156,62 @@ Component({
     async loadTodayCourses() {
       try {
         const today = formatTime(new Date(), 'YYYY-MM-DD')
-        const courses = await courseApi.getCourseList({
+        const result = await courseApi.getCourseList({
           date: today,
           limit: 3
         })
+        
+        console.log('课程API返回的数据:', result)
+        
+        // 处理API返回的数据格式
+        let courses = result
+        if (result && result.list) {
+          courses = result.list
+        }
+        
+        // 确保courses是数组
+        if (!Array.isArray(courses)) {
+          console.error('课程数据不是数组:', courses)
+          courses = []
+        }
+        
+        // 预处理课程数据
+        courses = this.preprocessCourses(courses)
+        
         this.setData({ todayCourses: courses })
       } catch (error) {
         console.error('加载今日课程失败:', error)
       }
+    },
+    
+    // 预处理课程数据
+    preprocessCourses(courses: Course[]) {
+      return courses.map(course => {
+        // 确保课程有必要的字段
+        const processedCourse = { ...course }
+        
+        // 如果没有课程ID，生成一个
+        if (!processedCourse.courseId && processedCourse.id) {
+          processedCourse.courseId = String(processedCourse.id)
+        }
+        
+        // 如果没有老师头像，使用默认头像
+        if (!processedCourse.teacherAvatar) {
+          processedCourse.teacherAvatar = '/images/default-avatar.png'
+        }
+        
+        // 如果没有舞种类型，使用默认值
+        if (!processedCourse.danceTypeName) {
+          processedCourse.danceTypeName = '课程'
+        }
+        
+        // 确保预约人数不超过容量
+        if (processedCourse.bookedCount > processedCourse.capacity) {
+          processedCourse.bookedCount = processedCourse.capacity
+        }
+        
+        return processedCourse
+      })
     },
     
     // 获取用户信息
@@ -229,6 +297,9 @@ Component({
     // 跳转到导师详情
     navigateToTeacherDetail(e: any) {
       const { teacherId } = e.currentTarget.dataset
+      console.log('点击导师头像，导师ID:', teacherId)
+      console.log('导师数据:', this.data.teachers.find(t => t.teacherId === teacherId))
+      
       wx.navigateTo({
         url: `/pages/teacher/detail?teacherId=${teacherId}`
       })
@@ -244,6 +315,9 @@ Component({
     // 跳转到课程详情
     navigateToCourseDetail(e: any) {
       const { courseId } = e.currentTarget.dataset
+      console.log('点击课程，courseId:', courseId)
+      console.log('课程数据:', this.data.todayCourses.find(c => c.courseId === courseId))
+      
       wx.navigateTo({
         url: `/pages/course/detail?courseId=${courseId}`
       })
@@ -351,6 +425,7 @@ Component({
         teachersSectionText: i18nInstance.t('index.teachers.section'),
         coursesTodayText: i18nInstance.t('index.courses.today'),
         confirmButtonText: i18nInstance.t('button.confirm'),
+        allButtonText: i18nInstance.t('button.all'),
         entranceCodeText: '入场码'
       })
       

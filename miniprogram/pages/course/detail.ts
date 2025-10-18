@@ -7,6 +7,13 @@ import type { Course, Teacher } from '../../utils/types'
 const app = getApp<IAppOption>()
 
 Component({
+  properties: {
+    // 接收页面参数
+    courseId: {
+      type: String,
+      value: ''
+    }
+  },
   data: {
     // 课程信息
     course: null as Course | null,
@@ -24,26 +31,96 @@ Component({
     remainingClasses: 0,
     
     // 国际化
-    i18n: i18n
+    i18n: i18n,
+    
+    // 响应式翻译变量
+    courseIntroduceText: '',
+    courseDifficultyText: '',
+    courseContentText: '',
+    courseNoticeText: '',
+    courseBookingAttireText: '',
+    courseTeacherText: '',
+    courseStoreInfoText: '',
+    appNameText: '',
+    indexStoreHoursText: '',
+    buttonCallText: '',
+    buttonNavigateText: '',
+    courseBookingNoticeText: '',
+    courseBookingCancelText: '',
+    courseBookingLateText: '',
+    textLoadingText: '',
   },
   
   lifetimes: {
     attached() {
-      this.loadCourseDetail()
+      // 初始化i18n实例
+      const i18nInstance = require('../../utils/i18n.js')
+      
+      // 初始化翻译变量
+      this.updateTranslationTexts(i18nInstance)
+      
+      this.setData({
+        i18n: i18nInstance
+      })
+      
+      // 延迟加载以确保页面参数已经传递
+      setTimeout(() => {
+        this.loadCourseDetail()
+      }, 100)
     }
   },
   
   methods: {
+    // 更新翻译文本
+    updateTranslationTexts(i18nInstance: any) {
+      this.setData({
+        courseIntroduceText: i18nInstance.t('course.introduction'),
+        courseDifficultyText: i18nInstance.t('course.difficulty'),
+        courseContentText: i18nInstance.t('course.content'),
+        courseNoticeText: i18nInstance.t('course.notice'),
+        courseBookingAttireText: i18nInstance.t('course.booking.attire'),
+        courseTeacherText: i18nInstance.t('course.teacher'),
+        courseStoreInfoText: i18nInstance.t('course.store.info'),
+        appNameText: i18nInstance.t('app.name'),
+        indexStoreHoursText: i18nInstance.t('index.store.hours'),
+        buttonCallText: i18nInstance.t('button.call'),
+        buttonNavigateText: i18nInstance.t('button.navigate'),
+        courseBookingNoticeText: i18nInstance.t('course.booking.notice'),
+        courseBookingCancelText: i18nInstance.t('course.booking.cancel'),
+        courseBookingLateText: i18nInstance.t('course.booking.late'),
+        textLoadingText: i18nInstance.t('text.loading')
+      })
+    },
     // 加载课程详情
     async loadCourseDetail() {
       try {
-        const pages = getCurrentPages()
-        const currentPage = pages[pages.length - 1]
-        const courseId = currentPage.options && currentPage.options.courseId
+        // 获取页面参数的多种方式
+        let courseId = this.data.courseId
+        
+        // 如果properties中没有，尝试从页面options获取
+        if (!courseId) {
+          const pages = getCurrentPages()
+          const currentPage = pages[pages.length - 1]
+          
+          console.log('当前页面信息:', {
+            route: currentPage.route,
+            options: currentPage.options
+          })
+          
+          if (currentPage.options) {
+            courseId = currentPage.options.courseId
+          }
+        }
+        
+        console.log('课程详情页加载，获取到的courseId:', courseId)
+        console.log('properties中的courseId:', this.data.courseId)
         
         if (!courseId) {
+          console.error('课程ID不存在')
           showToast('课程ID不存在')
-          wx.navigateBack()
+          setTimeout(() => {
+            wx.navigateBack()
+          }, 1500)
           return
         }
         
@@ -330,8 +407,15 @@ Component({
     
     // 语言切换事件处理
     onLanguageChange() {
+      // 重新获取最新的i18n实例
+      const i18nInstance = require('../../utils/i18n.js')
+      
+      // 更新翻译文本
+      this.updateTranslationTexts(i18nInstance)
+      
+      // 更新页面的i18n实例
       this.setData({
-        i18n: i18n
+        i18n: i18nInstance
       })
     }
   }

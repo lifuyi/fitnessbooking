@@ -37,6 +37,12 @@ Component({
     loadingText: '',
     noMoreText: '',
     
+    // 当前筛选选项文本
+    currentDanceTypeText: '',
+    currentStoreText: '',
+    danceTypeOptions: [],
+    storeOptions: [],
+    
     // 加载状态
     loading: false,
     loadingMore: false,
@@ -56,21 +62,29 @@ Component({
       this.updateTranslationTexts(i18nInstance)
       
       // 初始化筛选选项
+      const danceTypes = [
+        { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.dance.type') },
+        { value: 'jazz', text: '爵士舞' },
+        { value: 'kpop', text: '韩舞' },
+        { value: 'hiphop', text: '街舞' },
+        { value: 'waacking', text: 'Waacking' }
+      ]
+      
+      const stores = [
+        { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.store') },
+        { value: 'nanshan', text: '南山店' },
+        { value: 'futian', text: '福田店' },
+        { value: 'baoan', text: '宝安店' }
+      ]
+      
       this.setData({
         i18n: i18nInstance,
-        'filterOptions.danceTypes': [
-          { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.dance.type') },
-          { value: 'jazz', text: '爵士舞' },
-          { value: 'kpop', text: '韩舞' },
-          { value: 'hiphop', text: '街舞' },
-          { value: 'waacking', text: 'Waacking' }
-        ],
-        'filterOptions.stores': [
-          { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.store') },
-          { value: 'nanshan', text: '南山店' },
-          { value: 'futian', text: '福田店' },
-          { value: 'baoan', text: '宝安店' }
-        ]
+        'filterOptions.danceTypes': danceTypes,
+        'filterOptions.stores': stores,
+        currentDanceTypeText: danceTypes[0].text,
+        currentStoreText: stores[0].text,
+        danceTypeOptions: danceTypes.map(item => item.text),
+        storeOptions: stores.map(item => item.text)
       })
       
       this.loadTeachers()
@@ -232,10 +246,11 @@ Component({
     // 切换舞种筛选
     switchDanceType(e: any) {
       const index = e.detail.value
-      const danceType = this.data.filterOptions.danceTypes[index].value
+      const danceTypeOption = this.data.filterOptions.danceTypes[index]
       
       this.setData({
-        'filters.danceType': danceType
+        'filters.danceType': danceTypeOption.value,
+        currentDanceTypeText: danceTypeOption.text
       })
       
       this.refreshData()
@@ -244,37 +259,17 @@ Component({
     // 切换门店筛选
     switchStore(e: any) {
       const index = e.detail.value
-      const store = this.data.filterOptions.stores[index].value
+      const storeOption = this.data.filterOptions.stores[index]
       
       this.setData({
-        'filters.store': store
+        'filters.store': storeOption.value,
+        currentStoreText: storeOption.text
       })
       
       this.refreshData()
     },
     
-    // 获取当前筛选选项文本
-    getCurrentDanceTypeText() {
-      const { filters, filterOptions } = this.data
-      const danceType = filterOptions.danceTypes.find(item => item.value === filters.danceType)
-      return danceType ? danceType.text : '全部舞种'
-    },
     
-    getCurrentStoreText() {
-      const { filters, filterOptions } = this.data
-      const store = filterOptions.stores.find(item => item.value === filters.store)
-      return store ? store.text : '全部门店'
-    },
-    
-    // 舞种筛选选项
-    getDanceTypeOptions() {
-      return this.data.filterOptions.danceTypes.map(item => item.text)
-    },
-    
-    // 门店筛选选项
-    getStoreOptions() {
-      return this.data.filterOptions.stores.map(item => item.text)
-    },
     
     // 跳转到导师详情
     navigateToTeacherDetail(e: any) {
@@ -361,22 +356,35 @@ Component({
       // 更新翻译文本
       this.updateTranslationTexts(i18nInstance)
       
+      // 更新筛选选项
+      const danceTypes = [
+        { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.dance.type') },
+        { value: 'jazz', text: '爵士舞' },
+        { value: 'kpop', text: '韩舞' },
+        { value: 'hiphop', text: '街舞' },
+        { value: 'waacking', text: 'Waacking' }
+      ]
+      
+      const stores = [
+        { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.store') },
+        { value: 'nanshan', text: '南山店' },
+        { value: 'futian', text: '福田店' },
+        { value: 'baoan', text: '宝安店' }
+      ]
+      
+      // 更新当前选中的选项文本
+      const currentDanceType = this.data.filterOptions.danceTypes.find(item => item.value === this.data.filters.danceType)
+      const currentStore = this.data.filterOptions.stores.find(item => item.value === this.data.filters.store)
+      
       // 更新页面的i18n实例和筛选选项
       this.setData({
         i18n: i18nInstance,
-        'filterOptions.danceTypes': [
-          { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.dance.type') },
-          { value: 'jazz', text: '爵士舞' },
-          { value: 'kpop', text: '韩舞' },
-          { value: 'hiphop', text: '街舞' },
-          { value: 'waacking', text: 'Waacking' }
-        ],
-        'filterOptions.stores': [
-          { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.store') },
-          { value: 'nanshan', text: '南山店' },
-          { value: 'futian', text: '福田店' },
-          { value: 'baoan', text: '宝安店' }
-        ]
+        'filterOptions.danceTypes': danceTypes,
+        'filterOptions.stores': stores,
+        currentDanceTypeText: currentDanceType ? currentDanceType.text : danceTypes[0].text,
+        currentStoreText: currentStore ? currentStore.text : stores[0].text,
+        danceTypeOptions: danceTypes.map(item => item.text),
+        storeOptions: stores.map(item => item.text)
       })
       
       // 重新加载页面数据以更新显示

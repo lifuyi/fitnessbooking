@@ -47,10 +47,10 @@
 
   <!-- 课程介绍 -->
   <view class="course-intro card card-padding">
-    <view class="section-title">{{i18n.t('course.introduction')}}</view>
+    <view class="section-title">{{courseIntroduceText}}</view>
     
     <view class="intro-item">
-      <text class="intro-label">{{i18n.t('course.difficulty')}}</text>
+      <text class="intro-label">{{courseDifficultyText}}</text>
       <view class="difficulty-stars">
         <text class="iconfont icon-star {{item ? 'active' : ''}}" wx:for="{{getDifficultyStars(course.difficulty)}}" wx:key="*this"></text>
         <text class="difficulty-text">{{course.difficulty === 1 ? '入门' : course.difficulty === 2 ? '初级' : course.difficulty === 3 ? '进阶' : course.difficulty === 4 ? '高级' : '专业'}}</text>
@@ -58,19 +58,19 @@
     </view>
     
     <view class="intro-item">
-      <text class="intro-label">{{i18n.t('course.content')}}</text>
+      <text class="intro-label">{{courseContentText}}</text>
       <text class="intro-content">{{course.description}}</text>
     </view>
     
     <view class="intro-item">
-      <text class="intro-label">{{i18n.t('course.notice')}}</text>
-      <text class="intro-content">{{i18n.t('course.booking.attire')}}</text>
+      <text class="intro-label">{{courseNoticeText}}</text>
+      <text class="intro-content">{{courseBookingAttireText}}</text>
     </view>
   </view>
 
   <!-- 导师信息 -->
   <view class="teacher-info card card-padding" bindtap="navigateToTeacherDetail">
-    <view class="section-title">{{i18n.t('course.teacher')}}</view>
+    <view class="section-title">{{courseTeacherText}}</view>
     <view class="teacher-card">
       <image class="teacher-avatar-large radius-circle" src="{{teacher.avatar}}" mode="aspectFill"></image>
       <view class="teacher-details">
@@ -88,21 +88,21 @@
 
   <!-- 门店信息 -->
   <view class="store-info card card-padding">
-    <view class="section-title">{{i18n.t('course.store.info')}}</view>
+    <view class="section-title">{{courseStoreInfoText}}</view>
     <view class="store-card">
-      <view class="store-name">{{i18n.t('app.name')}}（{{course.storeName}}）</view>
+      <view class="store-name">{{appNameText}}（{{course.storeName}}）</view>
       <view class="store-meta text-small">
         <text class="iconfont icon-time"></text>
-        <text>{{i18n.t('index.store.hours')}} 10:30-22:00</text>
+        <text>{{indexStoreHoursText}} 10:30-22:00</text>
       </view>
       <view class="store-actions">
         <view class="action-btn" bindtap="makePhoneCall">
           <text class="iconfont icon-phone"></text>
-          <text>{{i18n.t('button.call')}}</text>
+          <text>{{buttonCallText}}</text>
         </view>
         <view class="action-btn" bindtap="openLocation">
           <text class="iconfont icon-navigation"></text>
-          <text>{{i18n.t('button.navigate')}}</text>
+          <text>{{buttonNavigateText}}</text>
         </view>
       </view>
     </view>
@@ -110,19 +110,19 @@
 
   <!-- 预约须知 -->
   <view class="booking-notice card card-padding">
-    <view class="section-title">{{i18n.t('course.booking.notice')}}</view>
+    <view class="section-title">{{courseBookingNoticeText}}</view>
     <view class="notice-list">
       <view class="notice-item">
         <text class="notice-bullet">•</text>
-        <text>{{i18n.t('course.booking.cancel')}}</text>
+        <text>{{courseBookingCancelText}}</text>
       </view>
       <view class="notice-item">
         <text class="notice-bullet">•</text>
-        <text>{{i18n.t('course.booking.late')}}</text>
+        <text>{{courseBookingLateText}}</text>
       </view>
       <view class="notice-item">
         <text class="notice-bullet">•</text>
-        <text>{{i18n.t('course.booking.attire')}}</text>
+        <text>{{courseBookingAttireText}}</text>
       </view>
     </view>
   </view>
@@ -134,7 +134,7 @@
 <!-- 加载状态 -->
 <view class="loading-container" wx:if="{{loading}}">
   <view class="loading">
-    <text>{{i18n.t('text.loading')}}</text>
+    <text>{{textLoadingText}}</text>
   </view>
 </view>
 

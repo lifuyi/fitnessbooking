@@ -125,6 +125,7 @@ const en = {
   'button.share': 'Share',
   'button.call': 'Call',
   'button.navigate': 'Navigate',
+  'button.all': 'List All',
   'text.loading': 'Loading...',
   'text.empty': 'No data available',
   

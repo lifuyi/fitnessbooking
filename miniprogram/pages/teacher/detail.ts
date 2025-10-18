@@ -6,6 +6,13 @@ import type { Teacher, Course } from '../../utils/types'
 const app = getApp<IAppOption>()
 
 Component({
+  properties: {
+    // 接收页面参数
+    teacherId: {
+      type: String,
+      value: ''
+    }
+  },
   data: {
     // 导师信息
     teacher: null as Teacher | null,
@@ -54,28 +61,67 @@ Component({
         i18n: i18nInstance
       })
       
-      this.loadTeacherDetail()
+      // 延迟加载以确保页面参数已经传递
+      setTimeout(() => {
+        this.loadTeacherDetail()
+      }, 100)
     }
   },
   
   methods: {
+    // 获取页面参数
+    getPageParams() {
+      const pages = getCurrentPages()
+      const currentPage = pages[pages.length - 1]
+      
+      // 从页面路径中解析参数
+      const path = currentPage.route || ''
+      const options = currentPage.options || {}
+      
+      // 合并所有可能的参数来源
+      return { ...options }
+    },
     // 加载导师详情
     async loadTeacherDetail() {
       try {
-        const pages = getCurrentPages()
-        const currentPage = pages[pages.length - 1]
-        const teacherId = currentPage.options && currentPage.options.teacherId
+        // 获取页面参数的多种方式
+        let teacherId = this.data.teacherId
+        
+        // 如果properties中没有，尝试从页面options获取
+        if (!teacherId) {
+          const pages = getCurrentPages()
+          const currentPage = pages[pages.length - 1]
+          
+          if (currentPage.options) {
+            teacherId = currentPage.options.teacherId
+          }
+        }
+        
+        console.log('导师详情页加载，获取到的teacherId:', teacherId)
+        console.log('properties中的teacherId:', this.data.teacherId)
         
         if (!teacherId) {
+          console.error('导师ID不存在')
           showToast('导师ID不存在')
-          wx.navigateBack()
+          setTimeout(() => {
+            wx.navigateBack()
+          }, 1500)
           return
         }
         
         this.setData({ loading: true })
+        console.log('开始获取导师详情，ID:', teacherId)
         
         // 获取导师详情
         const teacher = await teacherApi.getTeacherDetail(teacherId)
+        console.log('获取到的导师详情:', teacher)
+        
+        if (!teacher) {
+          console.error('导师详情为空')
+          showToast('导师不存在')
+          this.setData({ loading: false })
+          return
+        }
         
         // 获取导师课程列表
         await this.loadTeacherCourses(teacherId, true)
@@ -93,6 +139,7 @@ Component({
         console.error('加载导师详情失败:', error)
         showToast('加载失败，请重试')
         this.setData({ loading: false })
+        // 不自动返回，让用户决定是否返回
       }
     },
     

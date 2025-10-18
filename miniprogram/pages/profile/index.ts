@@ -37,27 +37,39 @@ Component({
   
   lifetimes: {
     attached() {
-      this.loadUserInfo()
-      this.loadBookings()
-      this.loadCourseCards()
+      this.setData({ loading: true })
+      
+      Promise.all([
+        this.loadUserInfo(),
+        this.loadBookings(),
+        this.loadCourseCards()
+      ]).finally(() => {
+        this.setData({ loading: false })
+      })
     }
   },
   
   pageLifetimes: {
     show() {
       // 页面显示时刷新用户信息
-      this.loadUserInfo()
+      this.loadUserInfo().then(() => {
+        // 可以在这里添加其他需要刷新的数据
+      })
     }
   },
   
   methods: {
     // 加载用户信息
     loadUserInfo() {
-      const userInfo = app.globalData.userInfo
-      
-      if (userInfo) {
-        this.setData({ userInfo })
-      }
+      return new Promise<void>((resolve) => {
+        const userInfo = app.globalData.userInfo
+        
+        if (userInfo) {
+          this.setData({ userInfo })
+        }
+        
+        resolve()
+      })
     },
     
     // 加载我的预约

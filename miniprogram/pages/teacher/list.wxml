@@ -14,18 +14,18 @@
   <view class="filter-bar">
     <view class="filter-item">
       <text class="filter-label">{{danceTypeText}}</text>
-      <picker mode="selector" range="{{getDanceTypeOptions()}}" bindchange="switchDanceType">
+      <picker mode="selector" range="{{danceTypeOptions}}" bindchange="switchDanceType">
         <view class="picker-value">
-          {{getCurrentDanceTypeText()}}
+          {{currentDanceTypeText}}
           <text class="iconfont icon-arrow-down"></text>
         </view>
       </picker>
     </view>
     <view class="filter-item">
       <text class="filter-label">{{storeText}}</text>
-      <picker mode="selector" range="{{getStoreOptions()}}" bindchange="switchStore">
+      <picker mode="selector" range="{{storeOptions}}" bindchange="switchStore">
         <view class="picker-value">
-          {{getCurrentStoreText()}}
+          {{currentStoreText}}
           <text class="iconfont icon-arrow-down"></text>
         </view>
       </picker>

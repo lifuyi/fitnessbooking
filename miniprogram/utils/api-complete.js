@@ -110,7 +110,7 @@ function getMockData(url, params) {
         {
           id: 1,
           name: '南山店',
-          address: '深圳市南山区科技园',
+          address: '石厦北二街新天世纪a座614',
           phone: '0755-88888888',
           latitude: 22.53168,
           longitude: 113.93278,
@@ -120,7 +120,7 @@ function getMockData(url, params) {
         {
           id: 2,
           name: '福田店',
-          address: '深圳市福田区中心区',
+          address: '石厦北二街新天世纪a座614',
           phone: '0755-99999999',
           latitude: 22.53788,
           longitude: 114.05788,
@@ -130,7 +130,8 @@ function getMockData(url, params) {
       ];
       
     case '/api/teachers':
-      return [
+      console.log('API: 获取导师列表')
+      const teachers = [
         {
           teacherId: '1',
           name: '张教练',
@@ -187,6 +188,9 @@ function getMockData(url, params) {
         }
       ];
       
+      console.log('API: 返回导师列表:', teachers)
+      return teachers;
+        
     case '/api/teachers/t1':
       return {
         teacherId: 't1',
@@ -244,7 +248,9 @@ function getMockData(url, params) {
       };
       
     case '/api/teachers/1':
-      return {
+    case '/api/teachers/t1':
+      console.log('API: 获取导师详情，ID: 1')
+      const teacher1 = {
         teacherId: '1',
         name: '张教练',
         avatar: CDN_CONFIG.TEACHER_AVATARS['1'],
@@ -255,9 +261,13 @@ function getMockData(url, params) {
         classCount: 156,
         intro: '专业瑜伽教练，擅长多种瑜伽流派'
       };
+      console.log('API: 返回导师详情:', teacher1)
+      return teacher1;
       
     case '/api/teachers/2':
-      return {
+    case '/api/teachers/t2':
+      console.log('API: 获取导师详情，ID: 2')
+      const teacher2 = {
         teacherId: '2',
         name: '李教练',
         avatar: CDN_CONFIG.TEACHER_AVATARS['2'],
@@ -268,8 +278,11 @@ function getMockData(url, params) {
         classCount: 203,
         intro: '资深健身教练，专注于力量训练'
       };
+      console.log('API: 返回导师详情:', teacher2)
+      return teacher2;
       
     case '/api/teachers/3':
+    case '/api/teachers/t3':
       return {
         teacherId: '3',
         name: '王教练',
@@ -283,6 +296,7 @@ function getMockData(url, params) {
       };
       
     case '/api/teachers/4':
+    case '/api/teachers/t4':
       return {
         teacherId: '4',
         name: '刘教练',
@@ -296,6 +310,7 @@ function getMockData(url, params) {
       };
       
     case '/api/teachers/5':
+    case '/api/teachers/t5':
       return {
         teacherId: '5',
         name: '陈教练',
@@ -309,6 +324,7 @@ function getMockData(url, params) {
       };
       
     case '/api/teachers/6':
+    case '/api/teachers/t6':
       return {
         teacherId: '6',
         name: '赵教练',
@@ -322,12 +338,22 @@ function getMockData(url, params) {
       };
       
     case '/api/teachers/1/courses':
+    case '/api/teachers/t1/courses':
     case '/api/teachers/2/courses':
+    case '/api/teachers/t2/courses':
     case '/api/teachers/3/courses':
+    case '/api/teachers/t3/courses':
     case '/api/teachers/4/courses':
+    case '/api/teachers/t4/courses':
     case '/api/teachers/5/courses':
+    case '/api/teachers/t5/courses':
     case '/api/teachers/6/courses':
+    case '/api/teachers/t6/courses':
       var teacherId = url.split('/')[3];
+      // 处理带t前缀的ID，如't1'转换为'1'
+      if (teacherId.startsWith('t')) {
+        teacherId = teacherId.substring(1);
+      }
       var today = new Date().toISOString().split('T')[0];
       var tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -551,21 +577,32 @@ function getMockData(url, params) {
       
     case '/api/courses':
       var today = new Date().toISOString().split('T')[0];
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      var tomorrowStr = tomorrow.toISOString().split('T')[0];
+      var dayAfterTomorrow = new Date();
+      dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+      var dayAfterTomorrowStr = dayAfterTomorrow.toISOString().split('T')[0];
+      
       var courses = [
+        // 今天课程
         {
           id: 1,
           name: '瑜伽基础班',
           date: today,
           startTime: '09:00',
           endTime: '10:00',
-          teacherId: 1,
+          teacherId: '1',
           teacherName: '张教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['1'],
           storeId: 1,
           storeName: '南山店',
           capacity: 20,
           bookedCount: 12,
           price: 88,
-          description: '适合初学者的瑜伽课程'
+          description: '适合初学者的瑜伽课程',
+          danceTypeName: '瑜伽',
+          difficulty: 1
         },
         {
           id: 2,
@@ -573,14 +610,17 @@ function getMockData(url, params) {
           date: today,
           startTime: '14:00',
           endTime: '15:30',
-          teacherId: 2,
+          teacherId: '2',
           teacherName: '李教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['2'],
           storeId: 1,
           storeName: '南山店',
           capacity: 15,
           bookedCount: 8,
           price: 128,
-          description: '增强肌肉力量，塑造完美身材'
+          description: '增强肌肉力量，塑造完美身材',
+          danceTypeName: '健身',
+          difficulty: 3
         },
         {
           id: 3,
@@ -588,14 +628,17 @@ function getMockData(url, params) {
           date: today,
           startTime: '16:00',
           endTime: '17:00',
-          teacherId: 3,
+          teacherId: '3',
           teacherName: '王教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['3'],
           storeId: 2,
           storeName: '福田店',
           capacity: 10,
           bookedCount: 7,
           price: 158,
-          description: '学习正确的游泳技巧'
+          description: '学习正确的游泳技巧',
+          danceTypeName: '游泳',
+          difficulty: 2
         },
         {
           id: 4,
@@ -603,14 +646,17 @@ function getMockData(url, params) {
           date: today,
           startTime: '10:00',
           endTime: '11:30',
-          teacherId: 4,
+          teacherId: '4',
           teacherName: '刘教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['4'],
           storeId: 1,
           storeName: '南山店',
           capacity: 25,
           bookedCount: 18,
           price: 98,
-          description: '学习基础爵士舞步'
+          description: '学习基础爵士舞步',
+          danceTypeName: '爵士舞',
+          difficulty: 2
         },
         {
           id: 5,
@@ -618,14 +664,17 @@ function getMockData(url, params) {
           date: today,
           startTime: '19:00',
           endTime: '20:30',
-          teacherId: 5,
+          teacherId: '5',
           teacherName: '陈教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['5'],
           storeId: 2,
           storeName: '福田店',
           capacity: 12,
           bookedCount: 10,
           price: 138,
-          description: '专业拳击技巧训练'
+          description: '专业拳击技巧训练',
+          danceTypeName: '拳击',
+          difficulty: 4
         },
         {
           id: 6,
@@ -633,14 +682,235 @@ function getMockData(url, params) {
           date: today,
           startTime: '18:00',
           endTime: '19:00',
-          teacherId: 6,
+          teacherId: '6',
           teacherName: '赵教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['6'],
           storeId: 1,
           storeName: '南山店',
           capacity: 15,
           bookedCount: 9,
           price: 108,
-          description: '强化核心肌群训练'
+          description: '强化核心肌群训练',
+          danceTypeName: '普拉提',
+          difficulty: 3
+        },
+        // 明天课程
+        {
+          id: 7,
+          name: '流瑜伽进阶',
+          date: tomorrowStr,
+          startTime: '09:00',
+          endTime: '10:30',
+          teacherId: '1',
+          teacherName: '张教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['1'],
+          storeId: 2,
+          storeName: '福田店',
+          capacity: 18,
+          bookedCount: 14,
+          price: 108,
+          description: '流瑜伽进阶课程，适合有一定基础的学员',
+          danceTypeName: '瑜伽',
+          difficulty: 3
+        },
+        {
+          id: 8,
+          name: 'HIIT燃脂',
+          date: tomorrowStr,
+          startTime: '07:00',
+          endTime: '08:00',
+          teacherId: '2',
+          teacherName: '李教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['2'],
+          storeId: 1,
+          storeName: '南山店',
+          capacity: 20,
+          bookedCount: 19,
+          price: 98,
+          description: '高强度间歇训练，快速燃烧脂肪',
+          danceTypeName: '健身',
+          difficulty: 4
+        },
+        {
+          id: 9,
+          name: '自由泳技巧',
+          date: tomorrowStr,
+          startTime: '15:00',
+          endTime: '16:30',
+          teacherId: '3',
+          teacherName: '王教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['3'],
+          storeId: 3,
+          storeName: '宝安店',
+          capacity: 8,
+          bookedCount: 5,
+          price: 168,
+          description: '提升自由泳速度和技巧',
+          danceTypeName: '游泳',
+          difficulty: 3
+        },
+        {
+          id: 10,
+          name: '韩舞女团',
+          date: tomorrowStr,
+          startTime: '19:30',
+          endTime: '21:00',
+          teacherId: '4',
+          teacherName: '刘教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['4'],
+          storeId: 2,
+          storeName: '福田店',
+          capacity: 30,
+          bookedCount: 25,
+          price: 118,
+          description: '学习韩流女团舞蹈，提升舞台表现力',
+          danceTypeName: '韩舞',
+          difficulty: 3
+        },
+        {
+          id: 11,
+          name: '拳击实战',
+          date: tomorrowStr,
+          startTime: '20:00',
+          endTime: '21:30',
+          teacherId: '5',
+          teacherName: '陈教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['5'],
+          storeId: 3,
+          storeName: '宝安店',
+          capacity: 10,
+          bookedCount: 8,
+          price: 148,
+          description: '拳击实战技巧训练，包含对练环节',
+          danceTypeName: '拳击',
+          difficulty: 5
+        },
+        {
+          id: 12,
+          name: '器械普拉提',
+          date: tomorrowStr,
+          startTime: '10:30',
+          endTime: '12:00',
+          teacherId: '6',
+          teacherName: '赵教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['6'],
+          storeId: 2,
+          storeName: '福田店',
+          capacity: 12,
+          bookedCount: 10,
+          price: 138,
+          description: '使用专业普拉提器械进行训练',
+          danceTypeName: '普拉提',
+          difficulty: 3
+        },
+        // 后天课程
+        {
+          id: 13,
+          name: '阴瑜伽放松',
+          date: dayAfterTomorrowStr,
+          startTime: '20:00',
+          endTime: '21:00',
+          teacherId: '1',
+          teacherName: '张教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['1'],
+          storeId: 3,
+          storeName: '宝安店',
+          capacity: 15,
+          bookedCount: 8,
+          price: 88,
+          description: '舒缓身心，改善睡眠质量',
+          danceTypeName: '瑜伽',
+          difficulty: 1
+        },
+        {
+          id: 14,
+          name: '功能性训练',
+          date: dayAfterTomorrowStr,
+          startTime: '18:30',
+          endTime: '20:00',
+          teacherId: '2',
+          teacherName: '李教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['2'],
+          storeId: 2,
+          storeName: '福田店',
+          capacity: 16,
+          bookedCount: 12,
+          price: 118,
+          description: '提升日常生活中的身体功能',
+          danceTypeName: '健身',
+          difficulty: 3
+        },
+        {
+          id: 15,
+          name: '蝶泳入门',
+          date: dayAfterTomorrowStr,
+          startTime: '14:00',
+          endTime: '15:30',
+          teacherId: '3',
+          teacherName: '王教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['3'],
+          storeId: 1,
+          storeName: '南山店',
+          capacity: 6,
+          bookedCount: 3,
+          price: 188,
+          description: '学习蝶泳基础技巧',
+          danceTypeName: '游泳',
+          difficulty: 4
+        },
+        {
+          id: 16,
+          name: '街舞基础',
+          date: dayAfterTomorrowStr,
+          startTime: '16:00',
+          endTime: '17:30',
+          teacherId: '4',
+          teacherName: '刘教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['4'],
+          storeId: 3,
+          storeName: '宝安店',
+          capacity: 20,
+          bookedCount: 15,
+          price: 108,
+          description: '学习街舞基础动作和节奏感',
+          danceTypeName: '街舞',
+          difficulty: 2
+        },
+        {
+          id: 17,
+          name: '女子拳击',
+          date: dayAfterTomorrowStr,
+          startTime: '19:00',
+          endTime: '20:30',
+          teacherId: '5',
+          teacherName: '陈教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['5'],
+          storeId: 1,
+          storeName: '南山店',
+          capacity: 15,
+          bookedCount: 12,
+          price: 128,
+          description: '专为女性设计的拳击课程',
+          danceTypeName: '拳击',
+          difficulty: 3
+        },
+        {
+          id: 18,
+          name: '孕产普拉提',
+          date: dayAfterTomorrowStr,
+          startTime: '11:00',
+          endTime: '12:30',
+          teacherId: '6',
+          teacherName: '赵教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['6'],
+          storeId: 3,
+          storeName: '宝安店',
+          capacity: 10,
+          bookedCount: 7,
+          price: 128,
+          description: '适合孕期和产后恢复的普拉提课程',
+          danceTypeName: '普拉提',
+          difficulty: 2
         }
       ];
       
@@ -658,6 +928,81 @@ function getMockData(url, params) {
         hasMore: end < courses.length
       };
       
+    case '/api/courses/1':
+      console.log('API: 获取课程详情，ID: 1')
+      const course1 = {
+        courseId: '1',
+        name: '瑜伽基础班',
+        date: new Date().toISOString().split('T')[0],
+        startTime: '09:00',
+        endTime: '10:00',
+        teacherId: '1',
+        teacherName: '张教练',
+        teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['1'],
+        storeId: 1,
+        storeName: '南山店',
+        capacity: 20,
+        bookedCount: 12,
+        price: 88,
+        description: '适合初学者的瑜伽课程，通过基础体式练习，帮助您放松身心，提升柔韧性。',
+        danceTypeName: '瑜伽',
+        difficulty: 1,
+        consumeType: 'class_card',
+        coverImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=300&fit=crop'
+      };
+      console.log('API: 返回课程详情:', course1)
+      return course1;
+      
+    case '/api/courses/2':
+      console.log('API: 获取课程详情，ID: 2')
+      const course2 = {
+        courseId: '2',
+        name: '力量训练',
+        date: new Date().toISOString().split('T')[0],
+        startTime: '14:00',
+        endTime: '15:30',
+        teacherId: '2',
+        teacherName: '李教练',
+        teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['2'],
+        storeId: 1,
+        storeName: '南山店',
+        capacity: 15,
+        bookedCount: 8,
+        price: 128,
+        description: '增强肌肉力量，塑造完美身材。适合有一定基础的学员。',
+        danceTypeName: '健身',
+        difficulty: 3,
+        consumeType: 'class_card',
+        coverImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop'
+      };
+      console.log('API: 返回课程详情:', course2)
+      return course2;
+      
+    case '/api/courses/3':
+      console.log('API: 获取课程详情，ID: 3')
+      const course3 = {
+        courseId: '3',
+        name: '游泳课',
+        date: new Date().toISOString().split('T')[0],
+        startTime: '16:00',
+        endTime: '17:00',
+        teacherId: '3',
+        teacherName: '王教练',
+        teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['3'],
+        storeId: 2,
+        storeName: '福田店',
+        capacity: 10,
+        bookedCount: 7,
+        price: 158,
+        description: '学习正确的游泳技巧，提升水性，享受水中运动的乐趣。',
+        danceTypeName: '游泳',
+        difficulty: 2,
+        consumeType: 'class_card',
+        coverImage: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=400&h=300&fit=crop'
+      };
+      console.log('API: 返回课程详情:', course3)
+      return course3;
+      
     case '/api/user/bookings':
       var today = new Date().toISOString().split('T')[0];
       var tomorrow = new Date();
@@ -666,67 +1011,177 @@ function getMockData(url, params) {
       var yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       var yesterdayStr = yesterday.toISOString().split('T')[0];
+      var dayBeforeYesterday = new Date();
+      dayBeforeYesterday.setDate(dayBeforeYesterday.getDate() - 2);
+      var dayBeforeYesterdayStr = dayBeforeYesterday.toISOString().split('T')[0];
+      var dayAfterTomorrow = new Date();
+      dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+      var dayAfterTomorrowStr = dayAfterTomorrow.toISOString().split('T')[0];
       
       var allBookings = [
+        // 已完成的课程
         {
           bookingId: 'b1',
           courseId: 'c1',
-          courseName: '爵士舞基础',
-          danceTypeName: '爵士舞',
-          teacherName: 'BOA',
-          teacherAvatar: 'https://picsum.photos/seed/boa/100/100.jpg',
+          courseName: '瑜伽基础班',
+          danceTypeName: '瑜伽',
+          teacherName: '张教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['1'],
           storeName: '南山店',
-          date: today,
-          startTime: '19:00',
-          endTime: '20:30',
-          status: 'booked',
-          price: 98,
-          bookedAt: today + ' 18:00:00'
+          date: dayBeforeYesterdayStr,
+          startTime: '09:00',
+          endTime: '10:00',
+          status: 'completed',
+          price: 88,
+          bookedAt: dayBeforeYesterdayStr + ' 08:30:00',
+          checkInTime: dayBeforeYesterdayStr + ' 08:55:00',
+          rating: 5,
+          comment: '课程很棒，教练很专业！'
         },
         {
           bookingId: 'b2',
           courseId: 'c2',
-          courseName: '瑜伽进阶',
-          danceTypeName: '瑜伽',
-          teacherName: 'LISA',
-          teacherAvatar: 'https://picsum.photos/seed/lisa/100/100.jpg',
-          storeName: '福田店',
-          date: tomorrowStr,
-          startTime: '10:00',
-          endTime: '11:30',
-          status: 'booked',
-          price: 88,
-          bookedAt: today + ' 09:00:00'
-        },
-        {
-          bookingId: 'b3',
-          courseId: 'c3',
           courseName: '力量训练',
           danceTypeName: '健身',
-          teacherName: 'QURY',
-          teacherAvatar: 'https://picsum.photos/seed/qury/100/100.jpg',
+          teacherName: '李教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['2'],
           storeName: '南山店',
           date: yesterdayStr,
           startTime: '14:00',
           endTime: '15:30',
           status: 'completed',
           price: 128,
-          bookedAt: yesterdayStr + ' 13:00:00'
+          bookedAt: yesterdayStr + ' 13:00:00',
+          checkInTime: yesterdayStr + ' 13:50:00',
+          rating: 4,
+          comment: '训练强度适中，效果不错'
         },
+        {
+          bookingId: 'b3',
+          courseId: 'c3',
+          courseName: '游泳课',
+          danceTypeName: '游泳',
+          teacherName: '王教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['3'],
+          storeName: '福田店',
+          date: dayBeforeYesterdayStr,
+          startTime: '16:00',
+          endTime: '17:00',
+          status: 'completed',
+          price: 158,
+          bookedAt: dayBeforeYesterdayStr + ' 15:30:00',
+          checkInTime: dayBeforeYesterdayStr + ' 15:45:00',
+          rating: 5,
+          comment: '教练很有耐心，学到了很多技巧'
+        },
+        // 已取消的课程
         {
           bookingId: 'b4',
           courseId: 'c4',
-          courseName: '游泳课',
-          danceTypeName: '游泳',
-          teacherName: '张教练',
-          teacherAvatar: 'https://picsum.photos/seed/teacher1/100/100.jpg',
-          storeName: '福田店',
+          courseName: '爵士舞入门',
+          danceTypeName: '爵士舞',
+          teacherName: '刘教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['4'],
+          storeName: '南山店',
           date: yesterdayStr,
-          startTime: '16:00',
-          endTime: '17:00',
+          startTime: '10:00',
+          endTime: '11:30',
           status: 'cancelled',
-          price: 158,
-          bookedAt: yesterdayStr + ' 15:00:00'
+          price: 98,
+          bookedAt: dayBeforeYesterdayStr + ' 20:00:00',
+          cancelledAt: yesterdayStr + ' 08:00:00',
+          cancelReason: '临时有事，无法参加'
+        },
+        // 已预约的课程
+        {
+          bookingId: 'b5',
+          courseId: 'c5',
+          courseName: '拳击训练',
+          danceTypeName: '拳击',
+          teacherName: '陈教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['5'],
+          storeName: '福田店',
+          date: today,
+          startTime: '19:00',
+          endTime: '20:30',
+          status: 'booked',
+          price: 138,
+          bookedAt: yesterdayStr + ' 18:30:00'
+        },
+        {
+          bookingId: 'b6',
+          courseId: 'c6',
+          courseName: '普拉提核心',
+          danceTypeName: '普拉提',
+          teacherName: '赵教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['6'],
+          storeName: '南山店',
+          date: today,
+          startTime: '18:00',
+          endTime: '19:00',
+          status: 'booked',
+          price: 108,
+          bookedAt: today + ' 07:00:00'
+        },
+        {
+          bookingId: 'b7',
+          courseId: 'c7',
+          courseName: '流瑜伽进阶',
+          danceTypeName: '瑜伽',
+          teacherName: '张教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['1'],
+          storeName: '福田店',
+          date: tomorrowStr,
+          startTime: '09:00',
+          endTime: '10:30',
+          status: 'booked',
+          price: 108,
+          bookedAt: today + ' 12:00:00'
+        },
+        {
+          bookingId: 'b8',
+          courseId: 'c8',
+          courseName: '韩舞女团',
+          danceTypeName: '韩舞',
+          teacherName: '刘教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['4'],
+          storeName: '福田店',
+          date: tomorrowStr,
+          startTime: '19:30',
+          endTime: '21:00',
+          status: 'booked',
+          price: 118,
+          bookedAt: yesterdayStr + ' 21:00:00'
+        },
+        {
+          bookingId: 'b9',
+          courseId: 'c9',
+          courseName: '自由泳技巧',
+          danceTypeName: '游泳',
+          teacherName: '王教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['3'],
+          storeName: '宝安店',
+          date: dayAfterTomorrowStr,
+          startTime: '15:00',
+          endTime: '16:30',
+          status: 'booked',
+          price: 168,
+          bookedAt: today + ' 15:00:00'
+        },
+        {
+          bookingId: 'b10',
+          courseId: 'c10',
+          courseName: '阴瑜伽放松',
+          danceTypeName: '瑜伽',
+          teacherName: '张教练',
+          teacherAvatar: CDN_CONFIG.TEACHER_AVATARS['1'],
+          storeName: '宝安店',
+          date: dayAfterTomorrowStr,
+          startTime: '20:00',
+          endTime: '21:00',
+          status: 'booked',
+          price: 88,
+          bookedAt: today + ' 09:30:00'
         }
       ];
       

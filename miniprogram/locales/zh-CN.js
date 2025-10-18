@@ -125,6 +125,7 @@ const zhCN = {
   'button.share': '分享',
   'button.call': '电话',
   'button.navigate': '导航',
+  'button.all': '全部',
   'text.loading': '加载中...',
   'text.empty': '暂无数据',
   

@@ -78,7 +78,7 @@
   <view class="teachers-section">
     <view class="section-header">
       <text class="section-title">{{teachersSectionText}}</text>
-      <text class="section-more" bindtap="viewAllTeachers">{{confirmButtonText}}</text>
+      <text class="section-more" bindtap="viewAllTeachers">{{allButtonText}}</text>
     </view>
     <scroll-view class="teachers-scroll" scroll-x="true" show-scrollbar="false">
       <view class="teacher-item" wx:for="{{teachers}}" wx:key="teacherId" bindtap="navigateToTeacherDetail" data-teacher-id="{{item.teacherId}}">
