@@ -31,7 +31,7 @@ Component({
     remainingClasses: 0,
     
     // 国际化
-    i18n: i18n,
+    i18n: null,
     
     // 响应式翻译变量
     courseIntroduceText: '',
@@ -49,12 +49,15 @@ Component({
     courseBookingCancelText: '',
     courseBookingLateText: '',
     textLoadingText: '',
+    teacherLabel: '',
+    remainingSlotsText: '',
   },
   
   lifetimes: {
     attached() {
-      // 初始化i18n实例
-      const i18nInstance = require('../../utils/i18n.js')
+      // 使用全局i18n实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
       
       // 初始化翻译变量
       this.updateTranslationTexts(i18nInstance)
@@ -67,7 +70,14 @@ Component({
   
   pageLifetimes: {
     show() {
-      // 页面显示时加载课程详情
+      // 页面显示时刷新语言设置并加载课程详情
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
+      
+      // 更新翻译文本
+      this.updateTranslationTexts(i18nInstance)
+      this.setData({ i18n: i18nInstance })
+      
       // 延迟加载以确保页面参数已经传递
       setTimeout(() => {
         this.loadCourseDetail()
@@ -93,7 +103,9 @@ Component({
         courseBookingNoticeText: i18nInstance.t('course.booking.notice'),
         courseBookingCancelText: i18nInstance.t('course.booking.cancel'),
         courseBookingLateText: i18nInstance.t('course.booking.late'),
-        textLoadingText: i18nInstance.t('text.loading')
+        textLoadingText: i18nInstance.t('text.loading'),
+        teacherLabel: i18nInstance.t('course.teacher.label'),
+        remainingSlotsText: i18nInstance.t('course.remaining.slots')
       })
     },
     // 加载课程详情
@@ -426,17 +438,18 @@ Component({
     
     // 切换语言
     switchLanguage() {
+      const app = getApp<IAppOption>()
       const currentLanguage = this.data.i18n.getLanguage()
       const newLanguage = currentLanguage === 'zh-CN' ? 'en' : 'zh-CN'
       
-      this.data.i18n.setLanguage(newLanguage)
+      // 使用全局方法切换语言
+      app.switchLanguage(newLanguage)
       this.setData({
-        i18n: this.data.i18n
+        i18n: app.globalData.i18n
       })
       
-      // 更新tabBar语言
-      const { setTabBarLanguage } = require('../../utils/language.js')
-      setTabBarLanguage()
+      // 更新翻译文本
+      this.updateTranslationTexts(app.globalData.i18n)
     },
     
     // 翻译文本
@@ -446,8 +459,9 @@ Component({
     
     // 语言切换事件处理
     onLanguageChange() {
-      // 重新获取最新的i18n实例
-      const i18nInstance = require('../../utils/i18n.js')
+      // 使用全局app实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
       
       // 更新翻译文本
       this.updateTranslationTexts(i18nInstance)

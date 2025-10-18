@@ -1,10 +1,5 @@
 <!-- course/detail.wxml -->
 <view class="container" wx:if="{{!loading}}">
-  <!-- 语言切换 -->
-  <view class="language-switch-container">
-    <language-switch bind:languagechange="onLanguageChange"></language-switch>
-  </view>
-  
   <!-- 课程封面 -->
   <view class="course-cover">
     <image class="cover-image" src="{{course.coverImage}}" mode="aspectFill"></image>
@@ -32,7 +27,7 @@
       </view>
       <view class="meta-item" bindtap="navigateToTeacherDetail">
         <image class="teacher-avatar radius-circle" src="{{teacher.avatar}}" mode="aspectFill"></image>
-        <text>导师：{{teacher.name}}</text>
+        <text>{{teacherLabel}}：{{teacher.name}}</text>
       </view>
       <view class="meta-item">
         <text class="iconfont icon-location"></text>
@@ -40,7 +35,7 @@
       </view>
       <view class="meta-item">
         <text class="iconfont icon-users"></text>
-        <text class="text-warning">剩余{{course.capacity - course.bookedCount}}名额</text>
+        <text class="text-warning">{{remainingSlotsText}}{{course.capacity - course.bookedCount}}</text>
       </view>
     </view>
   </view>

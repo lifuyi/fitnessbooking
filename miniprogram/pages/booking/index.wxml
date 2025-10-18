@@ -5,30 +5,30 @@
     <view class="nav-left">
       <view class="nav-btn" bindtap="switchStore">
         <text class="iconfont icon-store"></text>
-        <text>切换门店</text>
+        <text>{{switchStoreText}}</text>
       </view>
     </view>
     <view class="nav-center">
       <view class="nav-btn" bindtap="showQRCode">
         <text class="iconfont icon-qrcode"></text>
-        <text>入场码</text>
+        <text>{{entranceCodeText}}</text>
       </view>
     </view>
     <view class="nav-right">
-      <text class="page-title">预约</text>
+      <text class="page-title">{{bookingText}}</text>
     </view>
   </view>
 
   <!-- 课程类型筛选 -->
   <view class="course-type-tabs">
     <view class="type-tab {{currentType === 'regular' ? 'active' : ''}}" bindtap="switchCourseType" data-type="regular">
-      <text>常规课</text>
+      <text>{{regularCourseText}}</text>
     </view>
     <view class="type-tab {{currentType === 'private' ? 'active' : ''}}" bindtap="switchCourseType" data-type="private">
-      <text>私教课</text>
+      <text>{{privateCourseText}}</text>
     </view>
     <view class="type-tab {{currentType === 'intensive' ? 'active' : ''}}" bindtap="switchCourseType" data-type="intensive">
-      <text>集训课</text>
+      <text>{{intensiveCourseText}}</text>
     </view>
   </view>
 
@@ -77,7 +77,7 @@
           <!-- 可以预约 -->
           <block wx:if="{{item.canBook}}">
             <button class="book-btn" bindtap="bookCourse" data-course-id="{{item.courseId}}">
-              预约
+              {{bookText}}
             </button>
           </block>
           
@@ -85,7 +85,7 @@
           <block wx:elif="{{item.isFull}}">
             <view class="status-badge full">
               <text class="badge-icon">👥</text>
-              <text class="badge-text">满员</text>
+              <text class="badge-text">{{fullyBookedText}}</text>
             </view>
           </block>
           
@@ -96,14 +96,14 @@
             </button>
             <view class="status-badge tense">
               <text class="badge-icon">🔥</text>
-              <text class="badge-text">紧张</text>
+              <text class="badge-text">{{tenseText}}</text>
             </view>
           </block>
           
           <!-- 未开放预约 -->
           <block wx:else>
             <view class="booking-time">
-              <text>{{item.bookingOpenTime}}开始预约</text>
+              <text>{{item.bookingOpenTime}}{{bookingOpenText}}</text>
             </view>
           </block>
         </view>
@@ -114,7 +114,7 @@
   <!-- 加载状态 -->
   <view class="loading-container" wx:if="{{loading}}">
     <view class="loading">
-      <text>加载中...</text>
+      <text>{{loadingText}}</text>
     </view>
   </view>
 
@@ -122,9 +122,9 @@
   <view class="empty-container" wx:if="{{!loading && courses.length === 0}}">
     <view class="empty">
       <text class="empty-icon">📅</text>
-      <text class="empty-text">暂无课程</text>
+      <text class="empty-text">{{noCoursesText}}</text>
       <button class="empty-action-btn" bindtap="navigateToCourseList">
-        查看全部课程
+        {{viewAllCoursesText}}
       </button>
     </view>
   </view>

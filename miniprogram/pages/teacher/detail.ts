@@ -46,19 +46,22 @@ Component({
     noMoreCoursesText: '',
     teacherTitleText: '',
     confirmBookingText: '',
-    confirmBookingContentText: ''
+    confirmBookingContentText: '',
+    loadingText: ''
   },
   
   lifetimes: {
     attached() {
-      // 初始化i18n实例
-      const i18nInstance = require('../../utils/i18n.js')
+      // 使用全局i18n实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
       
       // 初始化翻译变量
       this.updateTranslationTexts(i18nInstance)
       
       this.setData({
-        i18n: i18nInstance
+        i18n: i18nInstance,
+        loadingText: i18nInstance.t('text.loading')
       })
       
       // 延迟加载以确保页面参数已经传递
@@ -289,15 +292,17 @@ Component({
     
     // 语言切换事件处理
     onLanguageChange() {
-      // 重新获取最新的i18n实例
-      const i18nInstance = require('../../utils/i18n.js')
+      // 使用全局app实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
       
       // 更新翻译文本
       this.updateTranslationTexts(i18nInstance)
       
       // 更新页面的i18n实例
       this.setData({
-        i18n: i18nInstance
+        i18n: i18nInstance,
+        loadingText: i18nInstance.t('text.loading')
       })
       
       // 重新加载数据以更新显示

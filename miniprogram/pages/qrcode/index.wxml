@@ -1,16 +1,11 @@
 <!-- qrcode/index.wxml -->
 <view class="container">
-  <!-- 语言切换 -->
-  <view class="language-switch-container">
-    <language-switch bind:languagechange="onLanguageChange"></language-switch>
-  </view>
-  
   <!-- 头部 -->
   <view class="header">
     <view class="back-btn" bindtap="navigateBack">
       <text class="iconfont icon-back"></text>
     </view>
-    <text class="header-title">入场码</text>
+    <text class="header-title">{{entranceCodeTitle}}</text>
     <view class="refresh-btn" bindtap="refreshQRCode">
       <text class="iconfont icon-refresh"></text>
     </view>
@@ -31,7 +26,7 @@
   <view class="qrcode-section">
     <view class="qrcode-card card card-padding">
       <view class="qrcode-header">
-        <text class="qrcode-title">我的入场码</text>
+        <text class="qrcode-title">{{entranceCodeTitle}}</text>
         <text class="qrcode-desc">请在课程开始前向工作人员出示</text>
       </view>
       
@@ -52,11 +47,11 @@
         <view class="qrcode-actions">
           <view class="action-btn" bindtap="refreshQRCode">
             <text class="iconfont icon-refresh"></text>
-            <text>刷新</text>
+            <text>{{refreshText}}</text>
           </view>
           <view class="action-btn" bindtap="saveQRCode">
             <text class="iconfont icon-download"></text>
-            <text>保存</text>
+            <text>{{saveText}}</text>
           </view>
         </view>
       </view>
@@ -65,7 +60,7 @@
 
   <!-- 使用说明 -->
   <view class="usage-tips card card-padding">
-    <view class="tips-title">使用说明</view>
+    <view class="tips-title">{{usageTitleText}}</view>
     <view class="tips-list">
       <view class="tips-item">
         <text class="tips-bullet">1.</text>
@@ -91,10 +86,10 @@
     <view class="contact-card card card-padding">
       <view class="contact-header">
         <text class="iconfont icon-service"></text>
-        <text class="contact-title">需要帮助？</text>
+        <text class="contact-title">{{needHelpText}}</text>
       </view>
       <view class="contact-content">
-        <text class="contact-desc">如有任何问题，请联系我们的客服</text>
+        <text class="contact-desc">{{contactDescText}}</text>
         <view class="contact-info">
           <text class="contact-item">客服电话：19925187494</text>
           <text class="contact-item">客服微信：icondance</text>
@@ -107,6 +102,6 @@
 <!-- 加载状态 -->
 <view class="loading-container" wx:if="{{loading}}">
   <view class="loading">
-    <text>生成中...</text>
+    <text>{{loadingText}}</text>
   </view>
 </view>

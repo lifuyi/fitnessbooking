@@ -145,7 +145,32 @@ const en = {
   'error.course.expired': 'Course has expired',
   'error.course.full': 'Course is full',
   'error.course.booked': 'You have already booked this course',
-  'error.classes.insufficient': 'Insufficient class credits. Please purchase a card offline or contact customer service'
+  'error.classes.insufficient': 'Insufficient class credits. Please purchase a card offline or contact customer service',
+  
+  // 新增翻译键
+  'button.switch.store': 'Switch Store',
+  'button.book': 'Book',
+  'button.refresh': 'Refresh',
+  'button.save': 'Save',
+  'button.view.all.courses': 'View All Courses',
+  'status.tense': 'Tense',
+  'booking.open.time': 'Booking opens at ',
+  'text.no.courses': 'No courses available',
+  'course.type.regular': 'Regular',
+  'course.type.private': 'Private',
+  'course.type.intensive': 'Intensive',
+  'course.teacher.label': 'Instructor',
+  'course.remaining.slots': 'Remaining slots: ',
+  'profile.not.logged.in': 'Not Logged In',
+  'profile.login.title': 'Not logged in',
+  'profile.login.desc': 'Click to login for more services',
+  'profile.wechat.login': 'WeChat Login',
+  'qrcode.entrance.code': 'Entrance Code',
+  'qrcode.generate.code': 'My Entrance Code',
+  'qrcode.usage.title': 'Usage Instructions',
+  'qrcode.need.help': 'Need Help?',
+  'qrcode.contact.desc': 'If you have any questions, please contact our customer service',
+  'unit.times': 'times'
 }
 
 module.exports = en

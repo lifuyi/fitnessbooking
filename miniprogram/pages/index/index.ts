@@ -52,8 +52,9 @@ Component({
   
   lifetimes: {
     attached() {
-      // 初始化i18n实例
-      const i18nInstance = require('../../utils/i18n.js')
+      // 使用全局i18n实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
       this.setData({
         i18n: i18nInstance,
         welcomeText: i18nInstance.t('index.welcome'),
@@ -413,17 +414,15 @@ Component({
     
     // 切换语言
     switchLanguage() {
+      const app = getApp<IAppOption>()
       const currentLanguage = this.data.i18n.getLanguage()
       const newLanguage = currentLanguage === 'zh-CN' ? 'en' : 'zh-CN'
       
-      this.data.i18n.setLanguage(newLanguage)
+      // 使用全局方法切换语言
+      app.switchLanguage(newLanguage)
       this.setData({
-        i18n: this.data.i18n
+        i18n: app.globalData.i18n
       })
-      
-      // 更新tabBar语言
-      const { setTabBarLanguage } = require('../../utils/language.js')
-      setTabBarLanguage()
       
       // 重新加载页面数据以更新显示
       this.loadPageData()
@@ -438,8 +437,9 @@ Component({
     onLanguageChange(e) {
       console.log('语言切换事件触发:', e)
       
-      // 获取当前的i18n实例并强制更新
-      const i18nInstance = require('../../utils/i18n.js')
+      // 使用全局app实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
       const currentLang = i18nInstance.getLanguage()
       console.log('当前语言:', currentLang)
       

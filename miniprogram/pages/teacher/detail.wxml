@@ -1,10 +1,5 @@
 <!-- teacher/detail.wxml -->
 <view class="container" wx:if="{{!loading}}">
-  <!-- 语言切换 -->
-  <view class="language-switch-container">
-    <language-switch bind:languagechange="onLanguageChange"></language-switch>
-  </view>
-  
   <!-- 导师封面 -->
   <view class="teacher-cover">
     <image class="cover-image" src="{{teacher.avatar}}" mode="aspectFill"></image>

@@ -18,19 +18,19 @@ Component({
     
     // 筛选选项
     filterOptions: {
-      dates: [
-        { label: i18n.t('filter.all'), value: 'all' },
-        { label: i18n.t('filter.today'), value: 'today' },
-        { label: i18n.t('filter.tomorrow'), value: 'tomorrow' },
-        { label: i18n.t('filter.this.week'), value: 'this_week' }
-      ],
+      dates: [] as any[],
       danceTypes: [] as DanceType[],
       teachers: [] as any[],
       stores: [] as Store[]
     },
     
     // 国际化
-    i18n: i18n,
+    i18n: null,
+    
+    // 翻译文本
+    loadingText: '',
+    emptyText: '',
+    noMoreText: ''
     
     // 课程列表
     courses: [] as Course[],
@@ -50,6 +50,26 @@ Component({
   
   lifetimes: {
     attached() {
+      // 使用全局i18n实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
+      
+      // 初始化筛选选项的日期标签
+      const dates = [
+        { label: i18nInstance.t('filter.all'), value: 'all' },
+        { label: i18nInstance.t('filter.today'), value: 'today' },
+        { label: i18nInstance.t('filter.tomorrow'), value: 'tomorrow' },
+        { label: i18nInstance.t('filter.this.week'), value: 'this_week' }
+      ]
+      
+      this.setData({
+        i18n: i18nInstance,
+        'filterOptions.dates': dates,
+        loadingText: i18nInstance.t('text.loading'),
+        emptyText: i18nInstance.t('text.empty'),
+        noMoreText: i18nInstance.t('course.no.more')
+      })
+      
       this.loadFilterOptions()
       this.loadCourses()
     }
@@ -57,7 +77,15 @@ Component({
   
   pageLifetimes: {
     show() {
-      // 页面显示时刷新数据
+      // 页面显示时刷新数据和语言设置
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
+      this.setData({ 
+        i18n: i18nInstance,
+        loadingText: i18nInstance.t('text.loading'),
+        emptyText: i18nInstance.t('text.empty'),
+        noMoreText: i18nInstance.t('course.no.more')
+      })
       this.refreshCourses()
     }
   },
@@ -320,17 +348,15 @@ Component({
     
     // 切换语言
     switchLanguage() {
+      const app = getApp<IAppOption>()
       const currentLanguage = this.data.i18n.getLanguage()
       const newLanguage = currentLanguage === 'zh-CN' ? 'en' : 'zh-CN'
       
-      this.data.i18n.setLanguage(newLanguage)
+      // 使用全局方法切换语言
+      app.switchLanguage(newLanguage)
       this.setData({
-        i18n: this.data.i18n
+        i18n: app.globalData.i18n
       })
-      
-      // 更新tabBar语言
-      const { setTabBarLanguage } = require('../../utils/language.js')
-      setTabBarLanguage()
     },
     
     // 翻译文本
@@ -340,8 +366,9 @@ Component({
     
     // 语言切换事件处理
     onLanguageChange() {
-      // 重新获取最新的i18n实例
-      const i18nInstance = require('../../utils/i18n.js')
+      // 使用全局app实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
       
       // 更新页面的i18n实例
       this.setData({

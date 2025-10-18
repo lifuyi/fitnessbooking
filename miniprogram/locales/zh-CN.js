@@ -145,7 +145,32 @@ const zhCN = {
   'error.course.expired': '课程已过期',
   'error.course.full': '课程已满员',
   'error.course.booked': '您已预约此课程',
-  'error.classes.insufficient': '您的课程次数不足，请线下购卡或联系客服'
+  'error.classes.insufficient': '您的课程次数不足，请线下购卡或联系客服',
+  
+  // 新增翻译键
+  'button.switch.store': '切换门店',
+  'button.book': '预约',
+  'button.refresh': '刷新',
+  'button.save': '保存',
+  'button.view.all.courses': '查看全部课程',
+  'status.tense': '紧张',
+  'booking.open.time': '开始预约',
+  'text.no.courses': '暂无课程',
+  'course.type.regular': '常规课',
+  'course.type.private': '私教课',
+  'course.type.intensive': '集训课',
+  'course.teacher.label': '导师',
+  'course.remaining.slots': '剩余',
+  'profile.not.logged.in': '未登录',
+  'profile.login.title': '未登录',
+  'profile.login.desc': '点击登录，享受更多服务',
+  'profile.wechat.login': '微信登录',
+  'qrcode.entrance.code': '入场码',
+  'qrcode.generate.code': '我的入场码',
+  'qrcode.usage.title': '使用说明',
+  'qrcode.need.help': '需要帮助？',
+  'qrcode.contact.desc': '如有任何问题，请联系我们的客服',
+  'unit.times': '次'
 }
 
 module.exports = zhCN

@@ -24,6 +24,17 @@ class I18n {
       this.messages = SUPPORTED_LANGUAGES[language]
       // 保存到本地存储
       wx.setStorageSync('language', language)
+      
+      // 尝试更新全局app实例中的语言设置
+      try {
+        const app = getApp()
+        if (app && app.globalData) {
+          app.globalData.language = language
+        }
+      } catch (e) {
+        // 如果app还未初始化，忽略错误
+      }
+      
       return true
     }
     return false

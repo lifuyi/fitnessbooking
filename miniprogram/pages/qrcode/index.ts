@@ -22,11 +22,36 @@ Component({
     loading: false,
     
     // 国际化
-    i18n: i18n
+    i18n: null,
+    
+    // 翻译文本
+    entranceCodeTitle: '',
+    generateCodeText: '',
+    refreshText: '',
+    saveText: '',
+    usageTitleText: '',
+    needHelpText: '',
+    contactDescText: '',
+    loadingText: ''
   },
   
   lifetimes: {
     attached() {
+      // 使用全局i18n实例
+      const app = getApp<IAppOption>()
+      const i18nInstance = app.globalData.i18n
+      this.setData({ 
+        i18n: i18nInstance,
+        entranceCodeTitle: i18nInstance.t('qrcode.entrance.code'),
+        generateCodeText: i18nInstance.t('qrcode.generate.code'),
+        refreshText: i18nInstance.t('button.refresh'),
+        saveText: i18nInstance.t('button.save'),
+        usageTitleText: i18nInstance.t('qrcode.usage.title'),
+        needHelpText: i18nInstance.t('qrcode.need.help'),
+        contactDescText: i18nInstance.t('qrcode.contact.desc'),
+        loadingText: i18nInstance.t('text.loading')
+      })
+      
       this.loadUserInfo()
       this.generateQRCode()
       this.startCountdown()
@@ -124,8 +149,9 @@ Component({
     
     // 语言切换事件处理
     onLanguageChange() {
+      const app = getApp<IAppOption>()
       this.setData({
-        i18n: i18n
+        i18n: app.globalData.i18n
       })
     }
   }

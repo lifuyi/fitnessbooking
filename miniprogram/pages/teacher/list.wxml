@@ -1,13 +1,8 @@
 <!-- teacher/list.wxml -->
 <view class="container">
-  <!-- 语言切换 -->
-  <view class="language-switch-container">
-    <language-switch bind:languagechange="onLanguageChange"></language-switch>
-  </view>
-  
   <!-- 头部 -->
   <view class="header">
-    <text class="header-title">{{teachersTitleText}}</text>
+    <text class="header-title">{{headerTitleText}}</text>
   </view>
 
   <!-- 筛选条件 -->
@@ -66,7 +61,7 @@
   <!-- 加载状态 -->
   <view class="loading-container" wx:if="{{loading}}">
     <view class="loading">
-      <text>加载中...</text>
+      <text>{{loadingText}}</text>
     </view>
   </view>
 

@@ -10,6 +10,7 @@ interface IAppOption {
     userId?: string,
     userRole?: 'student' | 'admin',
     i18n: typeof i18nModule,
+    language?: string,
     systemInfo?: WechatMiniprogram.SystemInfo
   }
   userInfoReadyCallback?: WechatMiniprogram.GetUserInfoSuccessCallback,
@@ -30,6 +31,7 @@ App<IAppOption>({
     userId: '',
     userRole: 'student',
     i18n: i18nModule,
+    language: 'zh-CN',
   },
   
   onLaunch() {
@@ -46,6 +48,9 @@ App<IAppOption>({
     // 初始化语言设置
     const { initLanguage } = require('./utils/language.js')
     initLanguage()
+    
+    // 初始化全局语言设置
+    this.globalData.language = this.globalData.i18n.getLanguage()
   },
   
   checkLoginStatus() {
@@ -128,5 +133,17 @@ App<IAppOption>({
   switchStore(storeName: string) {
     this.globalData.currentStore = storeName
     wx.setStorageSync('currentStore', storeName)
+  },
+  
+  // 切换语言
+  switchLanguage(language: string) {
+    const success = this.globalData.i18n.setLanguage(language)
+    if (success) {
+      this.globalData.language = language
+      // 更新tabBar语言
+      const { setTabBarLanguage } = require('./utils/language.js')
+      setTabBarLanguage()
+    }
+    return success
   }
 })

@@ -1,10 +1,5 @@
 <!-- course/list.wxml -->
 <view class="container">
-  <!-- 语言切换 -->
-  <view class="language-switch-container">
-    <language-switch bind:languagechange="onLanguageChange"></language-switch>
-  </view>
-  
   <!-- 筛选栏 -->
   <view class="filter-bar">
     <view class="filter-item" bindtap="showFilterPanel" data-type="date">
@@ -64,13 +59,13 @@
     <!-- 空状态 -->
     <view class="empty" wx:if="{{courses.length === 0 && !loading}}">
       <text class="empty-icon iconfont icon-empty"></text>
-      <text>{{i18n.t('text.empty')}}</text>
+      <text>{{emptyText}}</text>
     </view>
 
     <!-- 加载更多 -->
     <view class="load-more" wx:if="{{courses.length > 0}}">
-      <text wx:if="{{loading}}">{{i18n.t('text.loading')}}</text>
-      <text wx:elif="{{!hasMore}}">{{i18n.t('course.no.more')}}</text>
+      <text wx:if="{{loading}}">{{loadingText}}</text>
+      <text wx:elif="{{!hasMore}}">{{noMoreText}}</text>
     </view>
   </scroll-view>
 </view>

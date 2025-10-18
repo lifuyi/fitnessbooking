@@ -1,10 +1,5 @@
 <!-- profile/index.wxml -->
 <view class="container">
-  <!-- 语言切换 -->
-  <view class="language-switch-container">
-    <language-switch bind:languagechange="onLanguageChange"></language-switch>
-  </view>
-  
   <!-- 用户信息 -->
   <view class="user-header">
     <block wx:if="{{userInfo}}">
@@ -26,10 +21,10 @@
       <view class="login-prompt">
         <view class="default-avatar radius-circle"></view>
         <view class="login-text">
-          <text class="login-title">未登录</text>
-          <text class="login-desc">点击登录，享受更多服务</text>
+          <text class="login-title">{{notLoggedInText}}</text>
+          <text class="login-desc">{{loginDescText}}</text>
         </view>
-        <button class="login-btn" bindtap="wxLogin">微信登录</button>
+        <button class="login-btn" bindtap="wxLogin">{{wechatLoginText}}</button>
       </view>
     </block>
   </view>
@@ -113,7 +108,7 @@
           <view class="card-title">{{item.cardName}}</view>
           <view class="card-count">
             <text class="count-number">{{item.remainingCount}}</text>
-            <text class="count-unit">次</text>
+            <text class="count-unit">{{unitText}}</text>
             <text class="count-total">/ {{item.totalCount}}</text>
           </view>
         </view>
@@ -133,6 +128,6 @@
 <!-- 加载状态 -->
 <view class="loading-container" wx:if="{{loading}}">
   <view class="loading">
-    <text>加载中...</text>
-  </view>
+      <text>{{i18n.t('text.loading')}}</text>
+    </view>
 </view>

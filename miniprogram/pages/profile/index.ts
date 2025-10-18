@@ -31,16 +31,30 @@ Page({
     // 国际化
     i18n: null as any,
     
+    // 翻译文本
+    notLoggedInText: '',
+    loginTitleText: '',
+    loginDescText: '',
+    wechatLoginText: '',
+    unitText: '',
+    
     // 当前门店
     currentStore: '南山店'
   },
   
   onLoad() {
-    // Initialize i18n
-    const i18n = require('../../utils/i18n.js')
+    // Use global i18n instance
+    const app = getApp<IAppOption>()
+    const i18nInstance = app.globalData.i18n
+    
     this.setData({ 
       loading: true,
-      i18n: i18n
+      i18n: i18nInstance,
+      notLoggedInText: i18nInstance.t('profile.not.logged.in'),
+      loginTitleText: i18nInstance.t('profile.login.title'),
+      loginDescText: i18nInstance.t('profile.login.desc'),
+      wechatLoginText: i18nInstance.t('profile.wechat.login'),
+      unitText: i18nInstance.t('unit.times')
     })
     
     Promise.all([
@@ -53,7 +67,19 @@ Page({
   },
   
   onShow() {
-    // 页面显示时刷新用户信息
+    // 页面显示时刷新用户信息和语言设置
+    const app = getApp<IAppOption>()
+    const i18nInstance = app.globalData.i18n
+    
+    this.setData({ 
+      i18n: i18nInstance,
+      notLoggedInText: i18nInstance.t('profile.not.logged.in'),
+      loginTitleText: i18nInstance.t('profile.login.title'),
+      loginDescText: i18nInstance.t('profile.login.desc'),
+      wechatLoginText: i18nInstance.t('profile.wechat.login'),
+      unitText: i18nInstance.t('unit.times')
+    })
+    
     this.loadUserInfo().then(() => {
       // 如果已登录，刷新相关数据
       if (app.globalData.isLogin) {
@@ -408,17 +434,15 @@ Page({
   
   // 切换语言
   switchLanguage() {
+    const app = getApp<IAppOption>()
     const currentLanguage = this.data.i18n.getLanguage()
     const newLanguage = currentLanguage === 'zh-CN' ? 'en' : 'zh-CN'
     
-    this.data.i18n.setLanguage(newLanguage)
+    // 使用全局方法切换语言
+    app.switchLanguage(newLanguage)
     this.setData({
-      i18n: this.data.i18n
+      i18n: app.globalData.i18n
     })
-    
-    // 更新tabBar语言
-    const { setTabBarLanguage } = require('../../utils/language.js')
-    setTabBarLanguage()
   },
   
   // 翻译文本
@@ -428,8 +452,9 @@ Page({
   
   // 语言切换事件处理
   onLanguageChange() {
-    // 重新获取最新的i18n实例
-    const i18nInstance = require('../../utils/i18n.js')
+    // 使用全局app实例
+    const app = getApp<IAppOption>()
+    const i18nInstance = app.globalData.i18n
     
     // 更新页面的i18n实例
     this.setData({

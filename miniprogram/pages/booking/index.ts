@@ -22,13 +22,46 @@ Page({
     loading: false,
     
     // 国际化
-    i18n: null
+    i18n: null,
+    
+    // 翻译文本
+    switchStoreText: '',
+    entranceCodeText: '',
+    bookingText: '',
+    regularCourseText: '',
+    privateCourseText: '',
+    intensiveCourseText: '',
+    bookText: '',
+    fullyBookedText: '',
+    tenseText: '',
+    bookingOpenText: '',
+    loadingText: '',
+    noCoursesText: '',
+    viewAllCoursesText: ''
   },
   
   onLoad() {
-    // Initialize i18n
-    const i18n = require('../../utils/i18n.js')
-    this.setData({ i18n })
+    // Use global i18n instance
+    const app = getApp<IAppOption>()
+    const i18nInstance = app.globalData.i18n
+    
+    // Initialize translation texts
+    this.setData({ 
+      i18n: i18nInstance,
+      switchStoreText: i18nInstance.t('button.switch.store'),
+      entranceCodeText: i18nInstance.t('profile.entrance.code'),
+      bookingText: i18nInstance.t('navbar.booking'),
+      regularCourseText: i18nInstance.t('course.type.regular'),
+      privateCourseText: i18nInstance.t('course.type.private'),
+      intensiveCourseText: i18nInstance.t('course.type.intensive'),
+      bookText: i18nInstance.t('button.book'),
+      fullyBookedText: i18nInstance.t('status.full'),
+      tenseText: i18nInstance.t('status.tense'),
+      bookingOpenText: i18nInstance.t('booking.open.time'),
+      loadingText: i18nInstance.t('text.loading'),
+      noCoursesText: i18nInstance.t('text.no.courses'),
+      viewAllCoursesText: i18nInstance.t('button.view.all.courses')
+    })
     
     this.checkUserLogin()
     this.initDateOptions()
@@ -36,7 +69,27 @@ Page({
   },
 
   onShow() {
-    // 页面显示时刷新数据
+    // 页面显示时刷新数据和语言设置
+    const app = getApp<IAppOption>()
+    const i18nInstance = app.globalData.i18n
+    
+    this.setData({ 
+      i18n: i18nInstance,
+      switchStoreText: i18nInstance.t('button.switch.store'),
+      entranceCodeText: i18nInstance.t('profile.entrance.code'),
+      bookingText: i18nInstance.t('navbar.booking'),
+      regularCourseText: i18nInstance.t('course.type.regular'),
+      privateCourseText: i18nInstance.t('course.type.private'),
+      intensiveCourseText: i18nInstance.t('course.type.intensive'),
+      bookText: i18nInstance.t('button.book'),
+      fullyBookedText: i18nInstance.t('status.full'),
+      tenseText: i18nInstance.t('status.tense'),
+      bookingOpenText: i18nInstance.t('booking.open.time'),
+      loadingText: i18nInstance.t('text.loading'),
+      noCoursesText: i18nInstance.t('text.no.courses'),
+      viewAllCoursesText: i18nInstance.t('button.view.all.courses')
+    })
+    
     this.loadCourses()
   },
   
