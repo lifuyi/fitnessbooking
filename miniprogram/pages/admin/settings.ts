@@ -1,7 +1,7 @@
 // admin/settings.ts
-import { showToast, showModal } from '../../../utils/util.js'
-import { adminApi } from '../../../utils/api.js'
-const i18n = require('../../../utils/i18n.js')
+import { showToast, showModal } from '../../utils/util-complete'
+import { adminApi } from '../../utils/api-complete'
+const i18n = require('../../utils/i18n.js')
 
 const app = getApp<IAppOption>()
 

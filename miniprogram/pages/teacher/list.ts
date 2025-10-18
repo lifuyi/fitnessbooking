@@ -1,8 +1,8 @@
 // teacher/list.ts
-import { showToast } from '../../../utils/util'
-import { teacherApi } from '../../../utils/api'
-const i18n = require('../../../utils/i18n.js')
-import type { Teacher } from '../../../utils/types'
+import { showToast } from '../../utils/util-complete'
+import { teacherApi } from '../../utils/api-complete'
+const i18n = require('../../utils/i18n.js')
+import type { Teacher } from '../../utils/types'
 
 Component({
   data: {
@@ -17,23 +17,12 @@ Component({
     
     // 筛选选项
     filterOptions: {
-      danceTypes: [
-        { value: 'all', text: i18n.t('filter.all') + i18n.t('course.dance.type') },
-        { value: 'jazz', text: '爵士舞' },
-        { value: 'kpop', text: '韩舞' },
-        { value: 'hiphop', text: '街舞' },
-        { value: 'waacking', text: 'Waacking' }
-      ],
-      stores: [
-        { value: 'all', text: i18n.t('filter.all') + i18n.t('course.store') },
-        { value: 'nanshan', text: '南山店' },
-        { value: 'futian', text: '福田店' },
-        { value: 'baoan', text: '宝安店' }
-      ]
+      danceTypes: [],
+      stores: []
     },
     
     // 国际化
-    i18n: i18n,
+    i18n: null,
     
     // 加载状态
     loading: false,
@@ -47,6 +36,27 @@ Component({
   
   lifetimes: {
     attached() {
+      // 初始化i18n实例
+      const i18nInstance = require('../../utils/i18n.js')
+      
+      // 初始化筛选选项
+      this.setData({
+        i18n: i18nInstance,
+        'filterOptions.danceTypes': [
+          { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.dance.type') },
+          { value: 'jazz', text: '爵士舞' },
+          { value: 'kpop', text: '韩舞' },
+          { value: 'hiphop', text: '街舞' },
+          { value: 'waacking', text: 'Waacking' }
+        ],
+        'filterOptions.stores': [
+          { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.store') },
+          { value: 'nanshan', text: '南山店' },
+          { value: 'futian', text: '福田店' },
+          { value: 'baoan', text: '宝安店' }
+        ]
+      })
+      
       this.loadTeachers()
     }
   },
@@ -312,6 +322,27 @@ Component({
     
     // 语言切换事件处理
     onLanguageChange() {
+      // 重新获取最新的i18n实例
+      const i18nInstance = require('../../utils/i18n.js')
+      
+      // 更新页面的i18n实例和筛选选项
+      this.setData({
+        i18n: i18nInstance,
+        'filterOptions.danceTypes': [
+          { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.dance.type') },
+          { value: 'jazz', text: '爵士舞' },
+          { value: 'kpop', text: '韩舞' },
+          { value: 'hiphop', text: '街舞' },
+          { value: 'waacking', text: 'Waacking' }
+        ],
+        'filterOptions.stores': [
+          { value: 'all', text: i18nInstance.t('filter.all') + i18nInstance.t('course.store') },
+          { value: 'nanshan', text: '南山店' },
+          { value: 'futian', text: '福田店' },
+          { value: 'baoan', text: '宝安店' }
+        ]
+      })
+      
       // 重新加载页面数据以更新显示
       this.loadTeachers()
     }

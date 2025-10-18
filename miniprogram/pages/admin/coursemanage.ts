@@ -1,8 +1,8 @@
 // admin/coursemanage.ts
-import { showToast, showModal, formatTime } from '../../../utils/util.js'
-import { adminApi, storeApi, teacherApi } from '../../../utils/api.js'
-import type { Course, Store, Teacher } from '../../../utils/types'
-const i18n = require('../../../utils/i18n.js')
+import { showToast, showModal, formatTime } from '../../utils/util-complete'
+import { adminApi, storeApi, teacherApi } from '../../utils/api-complete'
+import type { Course, Store, Teacher } from '../../utils/types'
+const i18n = require('../../utils/i18n.js')
 
 const app = getApp<IAppOption>()
 

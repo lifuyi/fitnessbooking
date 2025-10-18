@@ -1,7 +1,7 @@
 // teacher/detail.ts
-import { showToast, formatTime, isToday, isTomorrow } from '../../../utils/util'
-import { teacherApi, courseApi } from '../../../utils/api'
-import type { Teacher, Course } from '../../../utils/types'
+import { showToast, formatTime, isToday, isTomorrow } from '../../utils/util-complete'
+import { teacherApi, courseApi } from '../../utils/api-complete'
+import type { Teacher, Course } from '../../utils/types'
 
 const app = getApp<IAppOption>()
 
@@ -22,11 +22,17 @@ Component({
     hasMore: true,
     
     // 国际化
-    i18n: i18n
+    i18n: null
   },
   
   lifetimes: {
     attached() {
+      // 初始化i18n实例
+      const i18nInstance = require('../../utils/i18n.js')
+      this.setData({
+        i18n: i18nInstance
+      })
+      
       this.loadTeacherDetail()
     }
   },
@@ -194,8 +200,12 @@ Component({
     
     // 语言切换事件处理
     onLanguageChange() {
+      // 重新获取最新的i18n实例
+      const i18nInstance = require('../../utils/i18n.js')
+      
+      // 更新页面的i18n实例
       this.setData({
-        i18n: i18n
+        i18n: i18nInstance
       })
     }
   }

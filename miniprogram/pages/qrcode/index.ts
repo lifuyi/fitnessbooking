@@ -1,6 +1,6 @@
 // qrcode/index.ts
-import { showToast } from '../../../utils/util'
-const i18n = require('../../../utils/i18n.js')
+import { showToast } from '../../utils/util-complete'
+const i18n = require('../../utils/i18n.js')
 
 const app = getApp<IAppOption>()
 

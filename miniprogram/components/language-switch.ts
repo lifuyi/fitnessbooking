@@ -6,15 +6,18 @@ Component({
   },
 
   data: {
-    i18n: null
+    i18n: null,
+    languageText: 'EN'
   },
 
   lifetimes: {
     attached() {
       // 组件实例进入页面节点树时执行
       const i18nInstance = require('../utils/i18n.js')
+      const currentLang = i18nInstance.getLanguage()
       this.setData({
-        i18n: i18nInstance
+        i18n: i18nInstance,
+        languageText: currentLang === 'zh-CN' ? 'EN' : '中文'
       })
     }
   },
@@ -36,7 +39,8 @@ Component({
       
       // 强制更新组件数据
       this.setData({
-        i18n: i18nInstance
+        i18n: i18nInstance,
+        languageText: newLanguage === 'zh-CN' ? 'EN' : '中文'
       })
       
       // 更新tabBar语言

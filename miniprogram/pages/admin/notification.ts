@@ -1,8 +1,8 @@
 // admin/notification.ts
-import { showToast, showModal, formatTime } from '../../../utils/util'
-import { adminApi, courseApi } from '../../../utils/api'
-import type { Notification, Course } from '../../../utils/types'
-const i18n = require('../../../utils/i18n.js')
+import { showToast, showModal, formatTime } from '../../utils/util-complete'
+import { adminApi, courseApi } from '../../utils/api-complete'
+import type { Notification, Course } from '../../utils/types'
+const i18n = require('../../utils/i18n.js')
 const app = getApp<IAppOption>()
 
 Component({
