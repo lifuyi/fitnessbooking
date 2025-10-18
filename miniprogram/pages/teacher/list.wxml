@@ -7,13 +7,13 @@
   
   <!-- 头部 -->
   <view class="header">
-    <text class="header-title">{{i18n.t('index.function.teachers')}}</text>
+    <text class="header-title">{{teachersTitleText}}</text>
   </view>
 
   <!-- 筛选条件 -->
   <view class="filter-bar">
     <view class="filter-item">
-      <text class="filter-label">{{i18n.t('course.dance.type')}}</text>
+      <text class="filter-label">{{danceTypeText}}</text>
       <picker mode="selector" range="{{getDanceTypeOptions()}}" bindchange="switchDanceType">
         <view class="picker-value">
           {{getCurrentDanceTypeText()}}
@@ -22,7 +22,7 @@
       </picker>
     </view>
     <view class="filter-item">
-      <text class="filter-label">{{i18n.t('course.store')}}</text>
+      <text class="filter-label">{{storeText}}</text>
       <picker mode="selector" range="{{getStoreOptions()}}" bindchange="switchStore">
         <view class="picker-value">
           {{getCurrentStoreText()}}
@@ -50,11 +50,11 @@
           <text class="dance-type tag tag-primary" wx:for="{{item.danceTypes}}" wx:key="*this" wx:for-item="danceType">{{danceType}}</text>
         </view>
         <view class="teacher-specialties text-small">
-          <text>{{i18n.t('teacher.specialties')}}：{{item.specialties.join('、')}}</text>
+          <text>{{specialtiesText}}：{{item.specialties.join('、')}}</text>
         </view>
         <view class="teacher-meta">
-          <text class="meta-item">{{i18n.t('teacher.experience')}} {{item.experience}}</text>
-          <text class="meta-item">{{i18n.t('teacher.courses')}} {{item.classCount}} {{i18n.t('teacher.sessions')}}</text>
+          <text class="meta-item">{{experienceText}} {{item.experience}}</text>
+          <text class="meta-item">{{coursesText}} {{item.classCount}} {{sessionsText}}</text>
         </view>
         <view class="teacher-intro text-small">
           <text>{{item.intro}}</text>
@@ -74,20 +74,20 @@
   <view class="empty-container" wx:if="{{!loading && teachers.length === 0}}">
     <view class="empty">
       <text class="empty-icon">👨‍🏫</text>
-      <text class="empty-text">{{i18n.t('teacher.no.info')}}</text>
+      <text class="empty-text">{{noInfoText}}</text>
     </view>
   </view>
 
   <!-- 加载更多 -->
   <view class="load-more" wx:if="{{!loading && hasMore}}">
     <view class="load-more-btn {{loadingMore ? 'loading' : ''}}" bindtap="loadMoreTeachers">
-      <text wx:if="{{!loadingMore}}">{{i18n.t('teacher.load.more')}}</text>
-      <text wx:else>{{i18n.t('text.loading')}}</text>
+      <text wx:if="{{!loadingMore}}">{{loadMoreText}}</text>
+      <text wx:else>{{loadingText}}</text>
     </view>
   </view>
 
   <!-- 没有更多 -->
   <view class="no-more" wx:if="{{!loading && !hasMore && teachers.length > 0}}">
-    <text class="no-more-text">{{i18n.t('teacher.no.more')}}</text>
+    <text class="no-more-text">{{noMoreText}}</text>
   </view>
 </view>

@@ -80,6 +80,14 @@ const zhCN = {
   'teacher.no.info': '暂无导师信息',
   'teacher.no.more': '没有更多导师了',
   'teacher.load.more': '加载更多',
+  'teacher.introduction': '导师介绍',
+  'teacher.dance.types': '擅长舞种',
+  'teacher.years.experience': '年教龄',
+  'teacher.classes': '节课程',
+  'teacher.rating': '评分',
+  'teacher.no.courses': '暂无课程安排',
+  'teacher.no.more.courses': '没有更多课程了',
+  'teacher.title': '导师',
   
   // 课程相关
   'course.detail': '课程详情',
@@ -96,6 +104,8 @@ const zhCN = {
   'course.consume.free': '免费体验',
   'course.consume.card': '消耗1次{danceType}课程卡',
   'course.remaining': '剩余{count}次',
+  'course.book.now': '立即预约',
+  'course.fully.booked': '已满员',
   
   // 管理员登录
   'admin.login.title': '管理员登录',
@@ -123,6 +133,10 @@ const zhCN = {
   'status.full': '已满员',
   'status.booked': '已预约',
   'status.available': '立即预约',
+  
+  // 预约相关
+  'booking.confirm': '确认预约',
+  'booking.confirm.content': '确认预约这节课程吗？',
   
   // 错误提示
   'error.network': '网络连接失败，请检查网络设置',

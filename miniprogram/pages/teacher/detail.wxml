@@ -20,17 +20,17 @@
       <view class="teacher-stats">
         <view class="stat-item">
           <text class="stat-number">{{teacher.experience}}</text>
-          <text class="stat-label">年教龄</text>
+          <text class="stat-label">{{yearsExperienceText}}</text>
         </view>
         <view class="stat-divider"></view>
         <view class="stat-item">
           <text class="stat-number">{{teacher.classCount}}</text>
-          <text class="stat-label">节课程</text>
+          <text class="stat-label">{{classesText}}</text>
         </view>
         <view class="stat-divider"></view>
         <view class="stat-item">
           <text class="stat-number">{{teacher.rating}}</text>
-          <text class="stat-label">评分</text>
+          <text class="stat-label">{{ratingText}}</text>
         </view>
       </view>
     </view>
@@ -38,13 +38,13 @@
 
   <!-- 导师介绍 -->
   <view class="teacher-intro card card-padding">
-    <view class="section-title">导师介绍</view>
+    <view class="section-title">{{teacherIntroText}}</view>
     <text class="intro-content">{{teacher.introduction}}</text>
   </view>
 
   <!-- 擅长舞种 -->
   <view class="dance-types card card-padding">
-    <view class="section-title">擅长舞种</view>
+    <view class="section-title">{{danceTypesText}}</view>
     <view class="dance-list">
       <text class="dance-item tag tag-primary" wx:for="{{teacher.danceTypes}}" wx:key="*this">{{item}}</text>
     </view>
@@ -53,7 +53,7 @@
   <!-- 导师课程 -->
   <view class="teacher-courses">
     <view class="section-header">
-      <text class="section-title">导师课程</text>
+      <text class="section-title">{{teacherCoursesText}}</text>
     </view>
     
     <scroll-view class="course-list" scroll-y="true" bindscrolltolower="loadMore">
@@ -77,14 +77,14 @@
         
         <view class="course-footer">
           <view class="course-difficulty">
-            <text class="text-small">难度：</text>
+            <text class="text-small">{{difficultyText}}：</text>
             <view class="difficulty-stars">
               <text class="iconfont icon-star {{index < item.difficulty ? 'active' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:key="*this"></text>
             </view>
           </view>
           <view class="course-action">
             <button class="btn-primary btn-small" bindtap="bookCourse" data-course-id="{{item.courseId}}" disabled="{{item.capacity - item.bookedCount <= 0}}">
-              {{item.capacity - item.bookedCount > 0 ? '立即预约' : '已满员'}}
+              {{item.capacity - item.bookedCount > 0 ? bookNowText : fullyBookedText}}
             </button>
           </view>
         </view>
@@ -93,13 +93,13 @@
       <!-- 空状态 -->
       <view class="empty" wx:if="{{courses.length === 0 && !loading}}">
         <text class="empty-icon iconfont icon-empty"></text>
-        <text>暂无课程安排</text>
+        <text>{{noCoursesText}}</text>
       </view>
 
       <!-- 加载更多 -->
       <view class="load-more" wx:if="{{courses.length > 0}}">
-        <text wx:if="{{loading}}">加载中...</text>
-        <text wx:elif="{{!hasMore}}">没有更多课程了</text>
+        <text wx:if="{{loading}}">{{loadingText}}</text>
+        <text wx:elif="{{!hasMore}}">{{noMoreCoursesText}}</text>
       </view>
     </scroll-view>
   </view>
@@ -108,6 +108,6 @@
 <!-- 加载状态 -->
 <view class="loading-container" wx:if="{{loading}}">
   <view class="loading">
-    <text>加载中...</text>
+    <text>{{loadingText}}</text>
   </view>
 </view>

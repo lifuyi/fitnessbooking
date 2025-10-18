@@ -80,6 +80,14 @@ const en = {
   'teacher.no.info': 'No instructor information',
   'teacher.no.more': 'No more instructors',
   'teacher.load.more': 'Load More',
+  'teacher.introduction': 'Instructor Introduction',
+  'teacher.dance.types': 'Dance Types',
+  'teacher.years.experience': 'Years Experience',
+  'teacher.classes': 'classes',
+  'teacher.rating': 'Rating',
+  'teacher.no.courses': 'No courses available',
+  'teacher.no.more.courses': 'No more courses',
+  'teacher.title': 'Instructor',
   
   // 课程相关
   'course.detail': 'Course Details',
@@ -96,6 +104,8 @@ const en = {
   'course.consume.free': 'Free Trial',
   'course.consume.card': 'Consume 1 {danceType} class card',
   'course.remaining': '{count} remaining',
+  'course.book.now': 'Book Now',
+  'course.fully.booked': 'Fully Booked',
   
   // 管理员登录
   'admin.login.title': 'Admin Login',
@@ -123,6 +133,10 @@ const en = {
   'status.full': 'Full',
   'status.booked': 'Booked',
   'status.available': 'Book Now',
+  
+  // 预约相关
+  'booking.confirm': 'Confirm Booking',
+  'booking.confirm.content': 'Confirm booking this course?',
   
   // 错误提示
   'error.network': 'Network connection failed, please check your network settings',

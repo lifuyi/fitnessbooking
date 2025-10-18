@@ -24,6 +24,19 @@ Component({
     // 国际化
     i18n: null,
     
+    // 响应式翻译变量
+    teachersTitleText: '',
+    danceTypeText: '',
+    storeText: '',
+    specialtiesText: '',
+    experienceText: '',
+    coursesText: '',
+    sessionsText: '',
+    noInfoText: '',
+    loadMoreText: '',
+    loadingText: '',
+    noMoreText: '',
+    
     // 加载状态
     loading: false,
     loadingMore: false,
@@ -38,6 +51,9 @@ Component({
     attached() {
       // 初始化i18n实例
       const i18nInstance = require('../../utils/i18n.js')
+      
+      // 初始化翻译变量
+      this.updateTranslationTexts(i18nInstance)
       
       // 初始化筛选选项
       this.setData({
@@ -320,10 +336,30 @@ Component({
       return this.data.i18n.t(key, params)
     },
     
+    // 更新翻译文本
+    updateTranslationTexts(i18nInstance: any) {
+      this.setData({
+        teachersTitleText: i18nInstance.t('index.function.teachers'),
+        danceTypeText: i18nInstance.t('course.dance.type'),
+        storeText: i18nInstance.t('course.store'),
+        specialtiesText: i18nInstance.t('teacher.specialties'),
+        experienceText: i18nInstance.t('teacher.experience'),
+        coursesText: i18nInstance.t('teacher.courses'),
+        sessionsText: i18nInstance.t('teacher.sessions'),
+        noInfoText: i18nInstance.t('teacher.no.info'),
+        loadMoreText: i18nInstance.t('teacher.load.more'),
+        loadingText: i18nInstance.t('text.loading'),
+        noMoreText: i18nInstance.t('teacher.no.more')
+      })
+    },
+    
     // 语言切换事件处理
     onLanguageChange() {
       // 重新获取最新的i18n实例
       const i18nInstance = require('../../utils/i18n.js')
+      
+      // 更新翻译文本
+      this.updateTranslationTexts(i18nInstance)
       
       // 更新页面的i18n实例和筛选选项
       this.setData({

@@ -22,13 +22,34 @@ Component({
     hasMore: true,
     
     // 国际化
-    i18n: null
+    i18n: null,
+    
+    // 响应式翻译变量
+    teacherIntroText: '',
+    danceTypesText: '',
+    teacherCoursesText: '',
+    yearsExperienceText: '',
+    classesText: '',
+    ratingText: '',
+    difficultyText: '',
+    bookNowText: '',
+    fullyBookedText: '',
+    noCoursesText: '',
+    loadingText: '',
+    noMoreCoursesText: '',
+    teacherTitleText: '',
+    confirmBookingText: '',
+    confirmBookingContentText: ''
   },
   
   lifetimes: {
     attached() {
       // 初始化i18n实例
       const i18nInstance = require('../../utils/i18n.js')
+      
+      // 初始化翻译变量
+      this.updateTranslationTexts(i18nInstance)
+      
       this.setData({
         i18n: i18nInstance
       })
@@ -66,7 +87,7 @@ Component({
         
         // 设置页面标题
         wx.setNavigationBarTitle({
-          title: `${teacher.name}导师`
+          title: `${teacher.name}${this.data.teacherTitleText}`
         })
       } catch (error) {
         console.error('加载导师详情失败:', error)
@@ -117,8 +138,8 @@ Component({
       try {
         // 确认预约
         const confirmed = await wx.showModal({
-          title: '确认预约',
-          content: '确认预约这节课程吗？'
+          title: this.data.confirmBookingText,
+          content: this.data.confirmBookingContentText
         })
         
         if (!confirmed) return
@@ -198,15 +219,44 @@ Component({
       }
     },
     
+    // 更新翻译文本
+    updateTranslationTexts(i18nInstance: any) {
+      this.setData({
+        teacherIntroText: i18nInstance.t('teacher.introduction'),
+        danceTypesText: i18nInstance.t('teacher.dance.types'),
+        teacherCoursesText: i18nInstance.t('teacher.courses'),
+        yearsExperienceText: i18nInstance.t('teacher.years.experience'),
+        classesText: i18nInstance.t('teacher.classes'),
+        ratingText: i18nInstance.t('teacher.rating'),
+        difficultyText: i18nInstance.t('course.difficulty'),
+        bookNowText: i18nInstance.t('course.book.now'),
+        fullyBookedText: i18nInstance.t('course.fully.booked'),
+        noCoursesText: i18nInstance.t('teacher.no.courses'),
+        loadingText: i18nInstance.t('text.loading'),
+        noMoreCoursesText: i18nInstance.t('teacher.no.more.courses'),
+        teacherTitleText: i18nInstance.t('teacher.title'),
+        confirmBookingText: i18nInstance.t('booking.confirm'),
+        confirmBookingContentText: i18nInstance.t('booking.confirm.content')
+      })
+    },
+    
     // 语言切换事件处理
     onLanguageChange() {
       // 重新获取最新的i18n实例
       const i18nInstance = require('../../utils/i18n.js')
       
+      // 更新翻译文本
+      this.updateTranslationTexts(i18nInstance)
+      
       // 更新页面的i18n实例
       this.setData({
         i18n: i18nInstance
       })
+      
+      // 重新加载数据以更新显示
+      if (this.data.teacher) {
+        this.loadTeacherDetail()
+      }
     }
   }
 })
