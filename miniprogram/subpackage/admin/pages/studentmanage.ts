@@ -1,8 +1,8 @@
 // admin/studentmanage.ts
-import { showToast, showModal, formatTime } from '../../utils/util-complete'
-import { adminApi } from '../../utils/api-complete'
-import type { UserInfo } from '../../utils/types'
-const i18n = require('../../utils/i18n.js')
+import { showToast, showModal, formatTime } from '../../../utils/util-complete'
+import { adminApi } from '../../../utils/api-complete'
+import type { UserInfo } from '../../../utils/types'
+const i18n = require('../../../utils/i18n.js')
 const app = getApp<IAppOption>()
 
 Component({

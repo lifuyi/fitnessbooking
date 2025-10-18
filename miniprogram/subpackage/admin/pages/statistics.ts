@@ -1,8 +1,8 @@
 // admin/statistics.ts
-import { showToast, formatTime } from '../../utils/util-complete'
-import { adminApi, storeApi } from '../../utils/api-complete'
-import type { Statistics, Store } from '../../utils/types'
-const i18n = require('../../utils/i18n.js')
+import { showToast, formatTime } from '../../../utils/util-complete'
+import { adminApi, storeApi } from '../../../utils/api-complete'
+import type { Statistics, Store } from '../../../utils/types'
+const i18n = require('../../../utils/i18n.js')
 const app = getApp<IAppOption>()
 
 Component({

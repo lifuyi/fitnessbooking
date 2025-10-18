@@ -1,54 +1,275 @@
 /* booking/index.wxss */
 .container {
-  background-color: #F5F5F5;
+  background-color: #FFFFFF;
   min-height: 100vh;
-  padding-bottom: 40rpx;
+  padding-bottom: 120rpx;
 }
 
-/* 头部 */
-.header {
+/* 头部导航栏 */
+.header-nav {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background-color: #FFFFFF;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.nav-left, .nav-center {
+  flex: 1;
+}
+
+.nav-right {
+  flex: 2;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 30rpx;
-  background-color: #FFFFFF;
-  border-bottom: 1rpx solid #E0E0E0;
 }
 
-.header-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #333333;
-}
-
-/* 标签页 */
-.tab-bar {
+.nav-btn {
   display: flex;
-  background-color: #FFFFFF;
-  border-bottom: 1rpx solid #E0E0E0;
+  align-items: center;
+  font-size: 28rpx;
+  color: #666666;
 }
 
-.tab-item {
-  flex: 1;
-  padding: 30rpx 0;
-  text-align: center;
+.nav-btn .iconfont {
+  font-size: 32rpx;
+  margin-right: 8rpx;
+}
+
+.page-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* 课程类型筛选 */
+.course-type-tabs {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background-color: #FFFFFF;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.type-tab {
+  padding: 16rpx 32rpx;
+  margin-right: 20rpx;
   font-size: 30rpx;
   color: #666666;
-  position: relative;
+  border-radius: 40rpx;
+  background-color: #F5F5F5;
 }
 
-.tab-item.active {
-  color: #FF6B35;
+.type-tab.active {
+  background-color: #E0E0E0;
+  color: #333333;
+  font-weight: 500;
+  border-bottom: 6rpx solid #000000;
+  border-radius: 40rpx 40rpx 0 0;
+}
+
+.filter-btn {
+  margin-left: auto;
+  font-size: 28rpx;
+  color: #666666;
+  padding: 16rpx 24rpx;
+}
+
+/* 日期选择 */
+.date-selector {
+  background-color: #FFFFFF;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.date-scroll {
+  white-space: nowrap;
+  padding: 20rpx 30rpx;
+}
+
+.date-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 32rpx;
+  margin-right: 20rpx;
+  border-radius: 8rpx;
+}
+
+.date-item.active {
+  border-bottom: 4rpx solid #FF6B35;
+}
+
+.date-week {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.date-day {
+  font-size: 32rpx;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.date-month {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+/* 课程列表 */
+.course-list {
+  background-color: #FFFFFF;
+}
+
+.course-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.course-time {
+  width: 120rpx;
+  padding-right: 30rpx;
+}
+
+.time-range {
+  font-size: 28rpx;
+  color: #333333;
   font-weight: 500;
 }
 
-.tab-item.active::after {
+.course-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.teacher-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.teacher-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  border: 1rpx solid #E0E0E0;
+}
+
+.teacher-name {
+  font-size: 32rpx;
+  color: #000000;
+  font-weight: 500;
+}
+
+.course-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-name {
+  font-size: 30rpx;
+  color: #000000;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.course-type {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.booking-info {
+  width: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.booking-status {
+  margin-bottom: 16rpx;
+}
+
+.booking-count {
+  font-size: 24rpx;
+  color: #888888;
+}
+
+.booking-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.book-btn {
+  background-color: #6C6C7A;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  padding: 16rpx 40rpx;
+  border-radius: 40rpx;
+  border: none;
+  margin-bottom: 12rpx;
+  font-weight: 500;
+}
+
+.book-btn:active {
+  background-color: #5A5A68;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  padding: 8rpx 16rpx;
+  border-radius: 24rpx;
+  font-size: 24rpx;
+}
+
+.status-badge.tense {
+  background-color: #FFD8D8;
+  color: #FF5C5C;
+}
+
+.status-badge.full {
+  background-color: #FFE0B2;
+  color: #FF9800;
+}
+
+.badge-icon {
+  font-size: 20rpx;
+  margin-right: 6rpx;
+}
+
+.badge-text {
+  font-size: 24rpx;
+}
+
+.booking-time {
+  font-size: 24rpx;
+  color: #888888;
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* 图标字体 */
+.iconfont {
+  font-family: 'iconfont';
+}
+
+.icon-store:before { content: '\e601'; }
+.icon-qrcode:before { content: '\e603'; }
+
+/* 活跃标签下划线 */
+.type-tab.active::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60rpx;
+  left: 0;
+  width: 100%;
   height: 4rpx;
   background-color: #FF6B35;
   border-radius: 2rpx;

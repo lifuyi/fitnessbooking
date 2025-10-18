@@ -15,6 +15,7 @@ interface IAppOption {
   userInfoReadyCallback?: WechatMiniprogram.GetUserInfoSuccessCallback,
   checkLoginStatus(): void,
   wxLogin(): Promise<any>,
+  wxLoginWithUserInfo(code: string, userInfo: any): Promise<any>,
   simulateApiCall(code: string, userInfo: any): Promise<any>,
   logout(): void,
   switchStore(storeName: string): void
@@ -60,6 +61,19 @@ App<IAppOption>({
   },
   
   // 微信授权登录（仅处理登录凭证和用户信息）
+  wxLogin(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      wx.login({
+        success: (res) => {
+          resolve(res)
+        },
+        fail: (error) => {
+          reject(error)
+        }
+      })
+    })
+  },
+
   wxLoginWithUserInfo(code: string, userInfo: any) {
     return new Promise((resolve, reject) => {
       // 调用真实API接口，发送code和userInfo
@@ -81,6 +95,21 @@ App<IAppOption>({
           console.error('登录失败:', error)
           reject(error)
         })
+    })
+  },
+
+  simulateApiCall(code: string, userInfo: any): Promise<any> {
+    return new Promise((resolve) => {
+      // Simulate API response
+      setTimeout(() => {
+        resolve({
+          token: 'mock-token-' + Date.now(),
+          userInfo: {
+            userId: 'user-' + Date.now(),
+            ...userInfo
+          }
+        })
+      }, 1000)
     })
   },
   

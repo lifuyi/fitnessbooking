@@ -1015,6 +1015,38 @@ function getMockData(url, params) {
       console.log('API: 返回课程详情:', course3)
       return course3;
       
+    case '/api/courses/1/book':
+    case '/api/courses/2/book':
+    case '/api/courses/3/book':
+    case '/api/courses/4/book':
+    case '/api/courses/5/book':
+    case '/api/courses/6/book':
+      var courseId = url.split('/')[3];
+      var bookingId = 'booking_' + Date.now();
+      return {
+        bookingId: bookingId,
+        courseId: courseId,
+        status: 'booked',
+        bookingTime: new Date().toISOString()
+      };
+
+    case '/api/bookings/cancel':
+    case '/api/bookings/*/cancel':
+      // 模拟取消预约
+      return {
+        success: true,
+        message: '预约已取消'
+      };
+
+    case '/api/bookings/checkin':
+    case '/api/bookings/*/checkin':
+      // 模拟签到
+      return {
+        success: true,
+        message: '签到成功',
+        checkInTime: new Date().toISOString()
+      };
+
     case '/api/user/bookings':
       var today = new Date().toISOString().split('T')[0];
       var tomorrow = new Date();

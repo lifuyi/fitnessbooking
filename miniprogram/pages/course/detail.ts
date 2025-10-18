@@ -62,7 +62,12 @@ Component({
       this.setData({
         i18n: i18nInstance
       })
-      
+    }
+  },
+  
+  pageLifetimes: {
+    show() {
+      // 页面显示时加载课程详情
       // 延迟加载以确保页面参数已经传递
       setTimeout(() => {
         this.loadCourseDetail()
@@ -94,22 +99,25 @@ Component({
     // 加载课程详情
     async loadCourseDetail() {
       try {
-        // 获取页面参数的多种方式
-        let courseId = this.data.courseId
+        // 获取页面参数
+        const pages = getCurrentPages()
+        const currentPage = pages[pages.length - 1]
         
-        // 如果properties中没有，尝试从页面options获取
-        if (!courseId) {
-          const pages = getCurrentPages()
-          const currentPage = pages[pages.length - 1]
-          
-          console.log('当前页面信息:', {
-            route: currentPage.route,
-            options: currentPage.options
-          })
-          
-          if (currentPage.options) {
-            courseId = currentPage.options.courseId
-          }
+        console.log('当前页面信息:', {
+          route: currentPage.route,
+          options: currentPage.options,
+          allOptions: JSON.stringify(currentPage.options)
+        })
+        
+        let courseId = ''
+        
+        // 从页面options获取courseId
+        if (currentPage.options) {
+          console.log('页面options存在，包含的键:', Object.keys(currentPage.options))
+          courseId = currentPage.options.courseId || currentPage.options.id || ''
+          console.log('尝试获取courseId:', courseId)
+        } else {
+          console.log('页面options不存在')
         }
         
         console.log('课程详情页加载，获取到的courseId:', courseId)

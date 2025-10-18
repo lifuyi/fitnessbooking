@@ -212,7 +212,7 @@ export interface Booking {
   date: string
   startTime: string
   endTime: string
-  status: 'booked' | 'completed' | 'cancelled'
+  status: 'booked' | 'cancelled' | 'completed' | 'no_show'
   bookingTime: string
   checkedIn: boolean
   cancelTime?: string

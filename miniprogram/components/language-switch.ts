@@ -27,7 +27,7 @@ Component({
     switchLanguage() {
       console.log('语言切换按钮点击')
       
-      const currentLanguage = this.data.i18n.getLanguage()
+      const currentLanguage = this.data.i18n?.getLanguage() || 'zh-CN'
       const newLanguage = currentLanguage === 'zh-CN' ? 'en' : 'zh-CN'
       
       console.log('切换语言:', currentLanguage, '->', newLanguage)

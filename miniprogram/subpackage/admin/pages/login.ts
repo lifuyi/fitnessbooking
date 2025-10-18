@@ -1,7 +1,7 @@
 // admin/login.ts
-import { showToast, showModal } from '../../utils/util-complete'
-import { adminApi } from '../../utils/api-complete'
-const i18n = require('../../utils/i18n.js')
+import { showToast, showModal } from '../../../utils/util-complete'
+import { adminApi } from '../../../utils/api-complete'
+const i18n = require('../../../utils/i18n.js')
 const app = getApp<IAppOption>()
 
 Component({
@@ -205,6 +205,7 @@ Component({
         i18n: this.data.i18n
       })
       
+      const { setTabBarLanguage } = require('../../../utils/language.js')
       setTabBarLanguage()
     },
     
