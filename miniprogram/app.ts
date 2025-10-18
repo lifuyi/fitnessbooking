@@ -59,62 +59,28 @@ App<IAppOption>({
     }
   },
   
-  // 微信授权登录
-  wxLogin() {
+  // 微信授权登录（仅处理登录凭证和用户信息）
+  wxLoginWithUserInfo(code: string, userInfo: any) {
     return new Promise((resolve, reject) => {
-      wx.login({
-        success: (loginRes) => {
-          if (loginRes.code) {
-            // 获取用户信息
-            wx.getUserProfile({
-              desc: '用于完善会员资料',
-              success: (profileRes) => {
-                const userInfo = profileRes.userInfo
-                
-                // 这里应该调用后端接口，发送code和userInfo
-                // 模拟接口调用
-                this.simulateApiCall(loginRes.code, userInfo)
-                  .then((res: any) => {
-                    // 保存登录信息
-                    wx.setStorageSync('token', res.token)
-                    wx.setStorageSync('userInfo', res.userInfo)
-                    
-                    this.globalData.token = res.token
-                    this.globalData.userInfo = res.userInfo
-                    this.globalData.isLogin = true
-                    this.globalData.userId = res.userInfo.userId
-                    
-                    resolve(res)
-                  })
-                  .catch(reject)
-              },
-              fail: reject
-            })
-          } else {
-            reject(new Error('获取微信登录凭证失败'))
-          }
-        },
-        fail: reject
-      })
-    })
-  },
-  
-  // 模拟API调用
-  simulateApiCall(code: string, userInfo: any) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          token: 'mock_token_' + Date.now(),
-          userInfo: {
-            ...userInfo,
-            userId: 'user_' + Date.now(),
-            remainingClasses: {
-              '爵士舞': 5,
-              '韩舞': 3
-            }
-          }
+      // 调用真实API接口，发送code和userInfo
+      const { userApi } = require('./utils/api-complete')
+      userApi.wxLogin(code, userInfo)
+        .then((res: any) => {
+          // 保存登录信息
+          wx.setStorageSync('token', res.token)
+          wx.setStorageSync('userInfo', res.userInfo)
+          
+          this.globalData.token = res.token
+          this.globalData.userInfo = res.userInfo
+          this.globalData.isLogin = true
+          this.globalData.userId = res.userInfo.userId
+          
+          resolve(res)
         })
-      }, 1000)
+        .catch((error: any) => {
+          console.error('登录失败:', error)
+          reject(error)
+        })
     })
   },
   

@@ -217,15 +217,47 @@ Component({
     // 获取用户信息
     async getUserProfile() {
       try {
-        const res = await app.wxLogin()
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+        // 直接调用getUserProfile获取用户信息
+        wx.getUserProfile({
+          desc: '用于完善会员资料',
+          success: (profileRes) => {
+            const userInfo = profileRes.userInfo
+            
+            // 获取微信登录凭证
+            wx.login({
+              success: (loginRes) => {
+                if (loginRes.code) {
+                  // 调用app中的登录方法
+                  app.wxLoginWithUserInfo(loginRes.code, userInfo)
+                    .then((res: any) => {
+                      this.setData({
+                        userInfo: res.userInfo,
+                        hasUserInfo: true
+                      })
+                      showToast('登录成功', 'success')
+                      
+                      // 重新加载页面数据
+                      this.loadPageData()
+                    })
+                    .catch((error: any) => {
+                      console.error('登录失败:', error)
+                      showToast('登录失败，请重试')
+                    })
+                } else {
+                  showToast('获取登录凭证失败', 'error')
+                }
+              },
+              fail: (error) => {
+                console.error('微信登录失败:', error)
+                showToast('微信登录失败', 'error')
+              }
+            })
+          },
+          fail: (error) => {
+            console.error('获取用户信息失败:', error)
+            showToast('获取用户信息失败', 'error')
+          }
         })
-        showToast('登录成功', 'success')
-        
-        // 重新加载页面数据
-        this.loadPageData()
       } catch (error) {
         console.error('登录失败:', error)
         showToast('登录失败，请重试')

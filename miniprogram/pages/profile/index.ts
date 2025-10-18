@@ -53,7 +53,15 @@ Component({
     show() {
       // 页面显示时刷新用户信息
       this.loadUserInfo().then(() => {
-        // 可以在这里添加其他需要刷新的数据
+        // 如果已登录，刷新相关数据
+        if (app.globalData.isLogin) {
+          Promise.all([
+            this.loadBookings(),
+            this.loadCourseCards()
+          ]).catch(error => {
+            console.error('刷新数据失败:', error)
+          })
+        }
       })
     }
   },
@@ -69,6 +77,67 @@ Component({
         }
         
         resolve()
+      })
+    },
+
+    // 微信登录
+    wxLogin() {
+      const app = getApp<IAppOption>()
+      
+      if (app.globalData.isLogin) {
+        return
+      }
+      
+      const { showToast } = require('../../utils/util-complete')
+      
+      this.setData({ loading: true })
+      
+      // 直接调用getUserProfile获取用户信息
+      wx.getUserProfile({
+        desc: '用于完善会员资料',
+        success: (profileRes) => {
+          const userInfo = profileRes.userInfo
+          
+          // 获取微信登录凭证
+          wx.login({
+            success: (loginRes) => {
+              if (loginRes.code) {
+                // 调用app中的登录方法
+                app.wxLoginWithUserInfo(loginRes.code, userInfo)
+                  .then((res: any) => {
+                    showToast('登录成功', 'success')
+                    this.setData({ userInfo: res.userInfo })
+                    
+                    // 登录成功后，加载用户数据
+                    Promise.all([
+                      this.loadBookings(true),
+                      this.loadCourseCards()
+                    ]).finally(() => {
+                      this.setData({ loading: false })
+                    })
+                  })
+                  .catch((error: any) => {
+                    console.error('登录失败:', error)
+                    showToast('登录失败，请重试', 'error')
+                    this.setData({ loading: false })
+                  })
+              } else {
+                showToast('获取登录凭证失败', 'error')
+                this.setData({ loading: false })
+              }
+            },
+            fail: (error) => {
+              console.error('微信登录失败:', error)
+              showToast('微信登录失败', 'error')
+              this.setData({ loading: false })
+            }
+          })
+        },
+        fail: (error) => {
+          console.error('获取用户信息失败:', error)
+          showToast('获取用户信息失败', 'error')
+          this.setData({ loading: false })
+        }
       })
     },
     
@@ -209,6 +278,13 @@ Component({
         
         // 清除本地登录状态
         app.logout()
+        
+        // 清除页面数据
+        this.setData({
+          userInfo: null,
+          bookings: [],
+          courseCards: []
+        })
         
         showToast('已退出登录')
         

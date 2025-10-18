@@ -7,23 +7,36 @@
   
   <!-- 用户信息 -->
   <view class="user-header">
-    <view class="user-info">
-      <image class="user-avatar radius-circle" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
-      <view class="user-details">
-        <view class="user-name">{{userInfo.nickName}}</view>
-        <view class="user-meta text-small">
-          <text>{{i18n.t('index.store.info')}}：{{currentStore}}</text>
+    <block wx:if="{{userInfo}}">
+      <view class="user-info">
+        <image class="user-avatar radius-circle" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+        <view class="user-details">
+          <view class="user-name">{{userInfo.nickName}}</view>
+          <view class="user-meta text-small">
+            <text>{{i18n.t('index.store.info')}}：{{currentStore}}</text>
+          </view>
         </view>
       </view>
-    </view>
-    <view class="settings-btn" bindtap="navigateToSettings">
-      <text class="iconfont icon-settings"></text>
-    </view>
+      <view class="settings-btn" bindtap="navigateToSettings">
+        <text class="iconfont icon-settings"></text>
+      </view>
+    </block>
+    
+    <block wx:else>
+      <view class="login-prompt">
+        <view class="default-avatar radius-circle"></view>
+        <view class="login-text">
+          <text class="login-title">未登录</text>
+          <text class="login-desc">点击登录，享受更多服务</text>
+        </view>
+        <button class="login-btn" bindtap="wxLogin">微信登录</button>
+      </view>
+    </block>
   </view>
 
   <!-- 功能模块 -->
   <view class="function-modules">
-    <view class="module-item" bindtap="navigateToBookings">
+    <view class="module-item" bindtap="navigateToBookings" wx:if="{{userInfo}}">
       <view class="module-icon">
         <text class="iconfont icon-calendar"></text>
       </view>
@@ -34,7 +47,7 @@
       <text class="iconfont icon-arrow-right"></text>
     </view>
 
-    <view class="module-item" bindtap="navigateToCourseCards">
+    <view class="module-item" bindtap="navigateToCourseCards" wx:if="{{userInfo}}">
       <view class="module-icon">
         <text class="iconfont icon-card"></text>
       </view>
@@ -45,7 +58,7 @@
       <text class="iconfont icon-arrow-right"></text>
     </view>
 
-    <view class="module-item" bindtap="showQRCode">
+    <view class="module-item" bindtap="showQRCode" wx:if="{{userInfo}}">
       <view class="module-icon">
         <text class="iconfont icon-qrcode"></text>
       </view>
@@ -112,7 +125,7 @@
   </view>
 
   <!-- 退出登录 -->
-  <view class="logout-section">
+  <view class="logout-section" wx:if="{{userInfo}}">
     <button class="logout-btn" bindtap="logout">{{i18n.t('profile.logout')}}</button>
   </view>
 </view>

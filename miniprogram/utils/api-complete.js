@@ -10,7 +10,7 @@ function get(url, params, options) {
   return new Promise(function(resolve, reject) {
     // 添加基础URL或使用模拟数据
     var fullUrl = url;
-    if (url.startsWith('/api/')) {
+    if (url.startsWith('/api/') || url.startsWith('/auth/')) {
       // 在开发环境中使用模拟数据
       if (typeof wx !== 'undefined') {
         // 微信小程序环境，返回模拟数据
@@ -57,7 +57,7 @@ function post(url, data, options) {
   return new Promise(function(resolve, reject) {
     // 添加基础URL或使用模拟数据
     var fullUrl = url;
-    if (url.startsWith('/api/')) {
+    if (url.startsWith('/api/') || url.startsWith('/auth/')) {
       // 在开发环境中使用模拟数据
       if (typeof wx !== 'undefined') {
         // 微信小程序环境，返回模拟数据
@@ -105,6 +105,18 @@ function getMockData(url, params) {
   const { CDN_CONFIG } = require('./cdn-config.js');
   
   switch(url) {
+    case '/auth/wx-login':
+      return {
+        token: 'mock_token_' + Date.now(),
+        userInfo: {
+          ...params.userInfo,
+          userId: 'user_' + Date.now(),
+          remainingClasses: {
+            '爵士舞': 5,
+            '韩舞': 3
+          }
+        }
+      };
     case '/api/stores':
       return [
         {
@@ -1216,6 +1228,10 @@ function getMockData(url, params) {
  * 用户API
  */
 var userApi = {
+  // 微信登录
+  wxLogin: function(code, userInfo) {
+    return post('/auth/wx-login', { code: code, userInfo: userInfo });
+  },
   getUserInfo: function() {
     return get('/api/user/info');
   },

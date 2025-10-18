@@ -26,6 +26,23 @@
   margin-right: 24rpx;
 }
 
+.default-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  margin-right: 24rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 48rpx;
+}
+
+.default-avatar::after {
+  content: "未";
+}
+
 .user-details {
   color: #FFFFFF;
 }
@@ -51,6 +68,47 @@
 
 .settings-btn .icon-settings {
   font-size: 36rpx;
+}
+
+/* 登录提示 */
+.login-prompt {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.login-text {
+  flex: 1;
+  color: #FFFFFF;
+  margin-right: 20rpx;
+}
+
+.login-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.login-desc {
+  font-size: 28rpx;
+  opacity: 0.8;
+  display: block;
+}
+
+.login-btn {
+  background-color: #FFFFFF;
+  color: #FF6B35;
+  border: none;
+  border-radius: 40rpx;
+  padding: 16rpx 32rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.login-btn:active {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 /* 功能模块 */

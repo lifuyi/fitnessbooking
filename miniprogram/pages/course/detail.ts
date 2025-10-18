@@ -195,9 +195,40 @@ Component({
         if (confirmed) {
           // 跳转到登录页面或触发登录
           try {
-            await app.wxLogin()
-            // 重新检查预约状态
-            this.loadCourseDetail()
+            // 直接调用getUserProfile获取用户信息
+            wx.getUserProfile({
+              desc: '用于完善会员资料',
+              success: (profileRes) => {
+                const userInfo = profileRes.userInfo
+                
+                // 获取微信登录凭证
+                wx.login({
+                  success: (loginRes) => {
+                    if (loginRes.code) {
+                      // 调用app中的登录方法
+                      app.wxLoginWithUserInfo(loginRes.code, userInfo)
+                        .then(() => {
+                          // 重新检查预约状态
+                          this.loadCourseDetail()
+                        })
+                        .catch((error: any) => {
+                          console.error('登录失败:', error)
+                        })
+                    } else {
+                      showToast('获取登录凭证失败', 'error')
+                    }
+                  },
+                  fail: (error) => {
+                    console.error('微信登录失败:', error)
+                    showToast('微信登录失败', 'error')
+                  }
+                })
+              },
+              fail: (error) => {
+                console.error('获取用户信息失败:', error)
+                showToast('获取用户信息失败', 'error')
+              }
+            })
           } catch (error) {
             console.error('登录失败:', error)
           }
