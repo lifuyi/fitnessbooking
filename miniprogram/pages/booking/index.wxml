@@ -30,9 +30,6 @@
     <view class="type-tab {{currentType === 'intensive' ? 'active' : ''}}" bindtap="switchCourseType" data-type="intensive">
       <text>集训课</text>
     </view>
-    <view class="filter-btn" bindtap="showFilter">
-      <text>筛选了</text>
-    </view>
   </view>
 
   <!-- 日期选择 -->

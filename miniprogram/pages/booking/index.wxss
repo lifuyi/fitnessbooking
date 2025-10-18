@@ -68,12 +68,6 @@
   border-radius: 40rpx 40rpx 0 0;
 }
 
-.filter-btn {
-  margin-left: auto;
-  font-size: 28rpx;
-  color: #666666;
-  padding: 16rpx 24rpx;
-}
 
 /* 日期选择 */
 .date-selector {

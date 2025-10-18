@@ -98,7 +98,7 @@ App<IAppOption>({
     })
   },
 
-  simulateApiCall(code: string, userInfo: any): Promise<any> {
+  simulateApiCall(_code: string, userInfo: any): Promise<any> {
     return new Promise((resolve) => {
       // Simulate API response
       setTimeout(() => {

@@ -46,7 +46,7 @@
         "selectedIconPath": "images/tab/home-active.png"
       },
       {
-        "pagePath": "pages/course/list",
+        "pagePath": "pages/booking/index",
         "text": "预约",
         "iconPath": "images/tab/booking.png",
         "selectedIconPath": "images/tab/booking-active.png"
