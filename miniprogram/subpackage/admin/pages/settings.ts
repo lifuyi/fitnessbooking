@@ -384,29 +384,34 @@ Component({
     },
     
     // 退出登录
-    logout() {
-      showModal('提示', '确定要退出登录吗？')
-        .then(() => {
-          // 清除管理员登录信息
-          wx.removeStorageSync('adminToken')
-          wx.removeStorageSync('adminInfo')
-          
-          // 清除全局状态
-          app.globalData.token = ''
-          app.globalData.userInfo = undefined
-          app.globalData.isLogin = false
-          app.globalData.userRole = 'student'
-          
-          // 跳转到登录页
-          wx.redirectTo({
-            url: '/subpackage/admin/pages/login'
-          })
-          
-          showToast('已退出登录')
+    async logout() {
+      try {
+        const confirmed = await showModal('提示', '确定要退出登录吗？')
+        if (!confirmed) return
+        
+        // 调用管理员退出登录接口
+        await adminApi.logout()
+        
+        // 清除管理员登录信息
+        wx.removeStorageSync('adminToken')
+        wx.removeStorageSync('adminInfo')
+        
+        // 清除全局状态
+        app.globalData.token = ''
+        app.globalData.userInfo = undefined
+        app.globalData.isLogin = false
+        app.globalData.userRole = 'student'
+        
+        showToast('已退出登录')
+        
+        // 跳转到登录页
+        wx.redirectTo({
+          url: '/subpackage/admin/pages/login'
         })
-        .catch(() => {
-          // 用户取消，不做任何操作
-        })
+      } catch (error) {
+        console.error('退出登录失败:', error)
+        showToast('退出登录失败，请重试')
+      }
     },
     
     // 语言切换事件处理

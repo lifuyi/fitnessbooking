@@ -1502,6 +1502,18 @@ function getMockData(url, params) {
         hasMore: bookingEnd < filteredBookings.length
       };
       
+    case '/api/user/logout':
+      return {
+        success: true,
+        message: '退出登录成功'
+      };
+      
+    case '/api/admin/logout':
+      return {
+        success: true,
+        message: '管理员退出登录成功'
+      };
+      
     default:
       return { success: true, data: {} };
   }
@@ -1668,6 +1680,9 @@ var adminApi = {
   },
   updateSystemConfig: function(config) {
     return post('/api/admin/system-config', config);
+  },
+  logout: function() {
+    return post('/api/admin/logout');
   }
 };
 

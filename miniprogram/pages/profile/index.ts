@@ -107,12 +107,20 @@ Page({
   // 加载用户信息
   loadUserInfo() {
     return new Promise<void>((resolve) => {
-      const userInfo = app.globalData.userInfo
+      // 先从全局状态获取
+      let userInfo = app.globalData.userInfo
       
-      if (userInfo) {
-        this.setData({ userInfo })
+      // 如果全局状态没有，尝试从本地存储获取
+      if (!userInfo) {
+        userInfo = wx.getStorageSync('userInfo')
+        if (userInfo) {
+          app.globalData.userInfo = userInfo
+          app.globalData.isLogin = true
+          app.globalData.token = wx.getStorageSync('token') || ''
+        }
       }
       
+      this.setData({ userInfo })
       resolve()
     })
   },
@@ -331,6 +339,7 @@ Page({
       })
     } catch (error) {
       console.error('退出登录失败:', error)
+      showToast('退出登录失败，请重试')
     }
   },
   
