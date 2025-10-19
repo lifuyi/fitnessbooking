@@ -1,0 +1,27 @@
+<!-- settings/index.wxml -->
+<view class="container">
+  <view class="settings-list">
+    <view class="settings-item" bindtap="switchLanguage">
+      <view class="item-content">
+        <text class="item-title">语言设置</text>
+        <text class="item-desc">{{currentLanguage}}</text>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
+    
+    <view class="settings-item" bindtap="switchStore">
+      <view class="item-content">
+        <text class="item-title">门店切换</text>
+        <text class="item-desc">{{currentStore}}</text>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
+    
+    <view class="settings-item" bindtap="showAbout">
+      <view class="item-content">
+        <text class="item-title">关于我们</text>
+      </view>
+      <text class="iconfont icon-arrow-right"></text>
+    </view>
+  </view>
+</view>

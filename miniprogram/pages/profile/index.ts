@@ -37,29 +37,35 @@ Page({
     loginDescText: '',
     wechatLoginText: '',
     unitText: '',
+    storeInfoText: '',
+    myBookingsText: '',
+    viewBookingsText: '',
+    myCourseCardsText: '',
+    viewCourseCardsText: '',
+    entranceCodeText: '',
+    generateCodeText: '',
+    customerServiceText: '',
+    contactServiceText: '',
+    recentBookingsText: '',
+    viewAllText: '',
+    myCardsText: '',
+    logoutText: '',
+    loadingText: '',
     
     // 当前门店
     currentStore: '南山店'
   },
   
   onLoad() {
-    // Use global i18n instance
-    const app = getApp<IAppOption>()
-    const i18nInstance = app.globalData.i18n
+    // 直接导入i18n实例
+    const i18nInstance = require('../../utils/i18n.js')
     
-    // 设置导航栏标题
-    wx.setNavigationBarTitle({
-      title: i18nInstance.t('profile.title')
-    })
+    // 根据当前语言设置文本
+    this.updatePageTexts(i18nInstance)
     
     this.setData({ 
       loading: true,
-      i18n: i18nInstance,
-      notLoggedInText: i18nInstance.t('profile.not.logged.in'),
-      loginTitleText: i18nInstance.t('profile.login.title'),
-      loginDescText: i18nInstance.t('profile.login.desc'),
-      wechatLoginText: i18nInstance.t('profile.wechat.login'),
-      unitText: i18nInstance.t('unit.times')
+      i18n: i18nInstance
     })
     
     Promise.all([
@@ -73,21 +79,13 @@ Page({
   
   onShow() {
     // 页面显示时刷新用户信息和语言设置
-    const app = getApp<IAppOption>()
-    const i18nInstance = app.globalData.i18n
+    const i18nInstance = require('../../utils/i18n.js')
     
-    // 更新导航栏标题
-    wx.setNavigationBarTitle({
-      title: i18nInstance.t('profile.title')
-    })
+    // 根据当前语言设置文本
+    this.updatePageTexts(i18nInstance)
     
     this.setData({ 
-      i18n: i18nInstance,
-      notLoggedInText: i18nInstance.t('profile.not.logged.in'),
-      loginTitleText: i18nInstance.t('profile.login.title'),
-      loginDescText: i18nInstance.t('profile.login.desc'),
-      wechatLoginText: i18nInstance.t('profile.wechat.login'),
-      unitText: i18nInstance.t('unit.times')
+      i18n: i18nInstance
     })
     
     this.loadUserInfo().then(() => {
@@ -100,6 +98,39 @@ Page({
           console.error('刷新数据失败:', error)
         })
       }
+    })
+  },
+  
+  // 根据语言更新页面文本
+  updatePageTexts(i18nInstance: any) {
+    const isEnglish = i18nInstance.getLanguage() === 'en'
+    
+    // 设置导航栏标题
+    wx.setNavigationBarTitle({
+      title: isEnglish ? 'Profile' : '个人中心'
+    })
+    
+    // 更新页面文本
+    this.setData({
+      notLoggedInText: isEnglish ? 'Not Logged In' : '未登录',
+      loginTitleText: isEnglish ? 'Not Logged In' : '未登录',
+      loginDescText: isEnglish ? 'Click to login for more services' : '点击登录，享受更多服务',
+      wechatLoginText: isEnglish ? 'WeChat Login' : '微信登录',
+      unitText: isEnglish ? 'times' : '次',
+      storeInfoText: isEnglish ? 'Store Info' : '门店信息',
+      myBookingsText: isEnglish ? 'My Bookings' : '我的预约',
+      viewBookingsText: isEnglish ? 'View Booking Records' : '查看预约记录',
+      myCourseCardsText: isEnglish ? 'My Course Cards' : '我的课程卡',
+      viewCourseCardsText: isEnglish ? 'View Remaining Classes' : '查看剩余次数',
+      entranceCodeText: isEnglish ? 'Entrance Code' : '入场码',
+      generateCodeText: isEnglish ? 'Click to Generate Code' : '点击生成核销码',
+      customerServiceText: isEnglish ? 'Customer Service' : '客服中心',
+      contactServiceText: isEnglish ? 'Contact Service' : '联系客服',
+      recentBookingsText: isEnglish ? 'Recent Bookings' : '近期预约',
+      viewAllText: isEnglish ? 'View All' : '查看全部',
+      myCardsText: isEnglish ? 'My Course Cards' : '我的课程卡',
+      logoutText: isEnglish ? 'Logout' : '退出登录',
+      loadingText: isEnglish ? 'Loading...' : '加载中...'
     })
   },
   
@@ -259,27 +290,27 @@ Page({
   },
   
   // 取消预约
-  async cancelBooking(e: any) {
+  cancelBooking(e: any) {
     const { bookingId } = e.currentTarget.dataset
     
-    try {
-      const confirmed = await showModal('确定要取消预约吗？')
+    showModal('提示', '确定要取消预约吗？').then(confirmed => {
       if (!confirmed) return
       
       // 调用取消预约接口
-      await courseApi.cancelBooking(bookingId)
-      
-      showToast('取消成功', 'success')
-      
-      // 刷新预约列表
-      this.setData({
-        page: 1,
-        hasMore: true
+      courseApi.cancelBooking(bookingId).then(() => {
+        showToast('取消成功', 'success')
+        
+        // 刷新预约列表
+        this.setData({
+          page: 1,
+          hasMore: true
+        })
+        this.loadBookings(true)
+      }).catch(error => {
+        console.error('取消预约失败:', error)
+        showToast('取消失败，请重试', 'error')
       })
-      this.loadBookings(true)
-    } catch (error) {
-      console.error('取消预约失败:', error)
-    }
+    })
   },
   
   // 跳转到课程详情
@@ -293,7 +324,7 @@ Page({
   // 显示入场码
   showQRCode() {
     if (!app.globalData.isLogin) {
-      showToast('请先登录')
+      showToast('请先登录', 'none')
       return
     }
     
@@ -313,34 +344,33 @@ Page({
   },
   
   // 退出登录
-  async logout() {
-    try {
-      const confirmed = await showModal('确定要退出登录吗？')
+  logout() {
+    showModal('提示', '确定要退出登录吗？').then(confirmed => {
       if (!confirmed) return
       
       // 调用退出登录接口
-      await userApi.logout()
-      
-      // 清除本地登录状态
-      app.logout()
-      
-      // 清除页面数据
-      this.setData({
-        userInfo: null,
-        bookings: [],
-        courseCards: []
+      userApi.logout().then(() => {
+        // 清除本地登录状态
+        app.logout()
+        
+        // 清除页面数据
+        this.setData({
+          userInfo: null,
+          bookings: [],
+          courseCards: []
+        })
+        
+        showToast('已退出登录', 'success')
+        
+        // 跳转到首页
+        wx.switchTab({
+          url: '/pages/index/index'
+        })
+      }).catch(error => {
+        console.error('退出登录失败:', error)
+        showToast('退出登录失败，请重试', 'error')
       })
-      
-      showToast('已退出登录')
-      
-      // 跳转到首页
-      wx.switchTab({
-        url: '/pages/index/index'
-      })
-    } catch (error) {
-      console.error('退出登录失败:', error)
-      showToast('退出登录失败，请重试')
-    }
+    })
   },
   
   // 格式化预约时间
@@ -482,10 +512,13 @@ Page({
     const app = getApp<IAppOption>()
     const i18nInstance = app.globalData.i18n
     
-    // 更新页面的i18n实例
+    // 更新页面的i18n实例和文本
     this.setData({
       i18n: i18nInstance
     })
+    
+    // 更新页面文本
+    this.updatePageTexts(i18nInstance)
     
     // 重新加载页面数据以更新显示
     Promise.all([

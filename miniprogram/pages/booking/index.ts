@@ -41,26 +41,14 @@ Page({
   },
   
   onLoad() {
-    // Use global i18n instance
-    const app = getApp<IAppOption>()
-    const i18nInstance = app.globalData.i18n
+    // 直接导入i18n实例
+    const i18nInstance = require('../../utils/i18n.js')
     
-    // Initialize translation texts
+    // 根据当前语言设置文本
+    this.updatePageTexts(i18nInstance)
+    
     this.setData({ 
-      i18n: i18nInstance,
-      switchStoreText: i18nInstance.t('button.switch.store'),
-      entranceCodeText: i18nInstance.t('profile.entrance.code'),
-      bookingText: i18nInstance.t('navbar.booking'),
-      regularCourseText: i18nInstance.t('course.type.regular'),
-      privateCourseText: i18nInstance.t('course.type.private'),
-      intensiveCourseText: i18nInstance.t('course.type.intensive'),
-      bookText: i18nInstance.t('button.book'),
-      fullyBookedText: i18nInstance.t('status.full'),
-      tenseText: i18nInstance.t('status.tense'),
-      bookingOpenText: i18nInstance.t('booking.open.time'),
-      loadingText: i18nInstance.t('text.loading'),
-      noCoursesText: i18nInstance.t('text.no.courses'),
-      viewAllCoursesText: i18nInstance.t('button.view.all.courses')
+      i18n: i18nInstance
     })
     
     this.checkUserLogin()
@@ -70,24 +58,13 @@ Page({
 
   onShow() {
     // 页面显示时刷新数据和语言设置
-    const app = getApp<IAppOption>()
-    const i18nInstance = app.globalData.i18n
+    const i18nInstance = require('../../utils/i18n.js')
+    
+    // 根据当前语言设置文本
+    this.updatePageTexts(i18nInstance)
     
     this.setData({ 
-      i18n: i18nInstance,
-      switchStoreText: i18nInstance.t('button.switch.store'),
-      entranceCodeText: i18nInstance.t('profile.entrance.code'),
-      bookingText: i18nInstance.t('navbar.booking'),
-      regularCourseText: i18nInstance.t('course.type.regular'),
-      privateCourseText: i18nInstance.t('course.type.private'),
-      intensiveCourseText: i18nInstance.t('course.type.intensive'),
-      bookText: i18nInstance.t('button.book'),
-      fullyBookedText: i18nInstance.t('status.full'),
-      tenseText: i18nInstance.t('status.tense'),
-      bookingOpenText: i18nInstance.t('booking.open.time'),
-      loadingText: i18nInstance.t('text.loading'),
-      noCoursesText: i18nInstance.t('text.no.courses'),
-      viewAllCoursesText: i18nInstance.t('button.view.all.courses')
+      i18n: i18nInstance
     })
     
     this.loadCourses()
@@ -112,41 +89,80 @@ Page({
     }
   },
   
+  // 根据语言更新页面文本
+  updatePageTexts(i18nInstance: any) {
+    const isEnglish = i18nInstance.getLanguage() === 'en'
+    
+    // 设置导航栏标题
+    wx.setNavigationBarTitle({
+      title: isEnglish ? 'Booking' : '预约'
+    })
+    
+    // 更新页面文本
+    this.setData({
+      switchStoreText: isEnglish ? 'Switch Store' : '切换门店',
+      entranceCodeText: isEnglish ? 'Entrance Code' : '入场码',
+      bookingText: isEnglish ? 'Booking' : '预约',
+      regularCourseText: isEnglish ? 'Regular' : '常规课',
+      privateCourseText: isEnglish ? 'Private' : '私教课',
+      intensiveCourseText: isEnglish ? 'Intensive' : '集训课',
+      bookText: isEnglish ? 'Book' : '预约',
+      fullyBookedText: isEnglish ? 'Fully Booked' : '已满员',
+      tenseText: isEnglish ? 'Tense' : '紧张',
+      bookingOpenText: isEnglish ? 'Booking opens at ' : '开始预约',
+      loadingText: isEnglish ? 'Loading...' : '加载中...',
+      noCoursesText: isEnglish ? 'No courses available' : '暂无课程',
+      viewAllCoursesText: isEnglish ? 'View All Courses' : '查看全部课程'
+    })
+  },
+  
   // 初始化日期选项
   initDateOptions() {
     const today = new Date()
     const dateOptions = []
+    const i18nInstance = require('../../utils/i18n.js')
+    const isEnglish = i18nInstance.getLanguage() === 'en'
     
     // 生成未来5天的日期选项
     for (let i = 0; i < 5; i++) {
       const date = new Date(today)
       date.setDate(today.getDate() + i)
       
-      const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+      const weekDaysCN = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+      const weekDaysEN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      const weekDays = isEnglish ? weekDaysEN : weekDaysCN
       const weekDay = weekDays[date.getDay()]
       const day = date.getDate()
       const month = date.getMonth() + 1
       
       let label = weekDay
       if (i === 0) {
-        label = '今天'
+        label = isEnglish ? 'Today' : '今天'
       } else if (i === 1) {
-        label = '明天'
+        label = isEnglish ? 'Tomorrow' : '明天'
       }
       
       dateOptions.push({
         date: this.formatDate(date),
         week: label,
         day: day,
-        month: month + '月'
+        month: isEnglish ? this.getMonthNameEN(month) : month + '月'
       })
     }
     
-    // 设置当前选中的日期为今天
-    this.setData({
-      dateOptions,
-      currentDate: dateOptions[0].date
-    })
+    // 设置默认选中今天
+    if (dateOptions.length > 0) {
+      this.setData({
+        currentDate: dateOptions[0].date,
+        dateOptions: dateOptions
+      })
+    }
+  },
+  
+  // 获取英文字份名称
+  getMonthNameEN(month: number) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    return months[month - 1]
   },
   
   // 格式化日期
@@ -359,5 +375,23 @@ Page({
     wx.switchTab({
       url: '/pages/course/list'
     })
+  },
+  
+  // 语言切换事件处理
+  onLanguageChange() {
+    // 使用全局app实例
+    const app = getApp<IAppOption>()
+    const i18nInstance = app.globalData.i18n
+    
+    // 更新页面的i18n实例和文本
+    this.setData({
+      i18n: i18nInstance
+    })
+    
+    // 更新页面文本
+    this.updatePageTexts(i18nInstance)
+    
+    // 更新日期选项
+    this.initDateOptions()
   }
 })

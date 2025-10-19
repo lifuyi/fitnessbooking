@@ -1,0 +1,183 @@
+/* cards/index.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding: 20rpx;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.card-item {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.card-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.card-status {
+  font-size: 24rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 20rpx;
+}
+
+.status-success {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+}
+
+.status-warning {
+  background-color: rgba(255, 149, 0, 0.1);
+  color: #FF9500;
+}
+
+.status-error {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+}
+
+.card-body {
+  padding: 30rpx;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #666666;
+  width: 160rpx;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333333;
+  flex: 1;
+}
+
+.info-value.highlight {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #FF6B35;
+}
+
+.card-footer {
+  display: flex;
+  padding: 0 30rpx 30rpx;
+  gap: 20rpx;
+}
+
+.btn-recharge,
+.btn-detail {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-recharge {
+  background-color: #FF6B35;
+  color: #FFFFFF;
+  border: none;
+}
+
+.btn-recharge:active {
+  background-color: #E55A2B;
+}
+
+.btn-detail {
+  background-color: #FFFFFF;
+  color: #FF6B35;
+  border: 1rpx solid #FF6B35;
+}
+
+.btn-detail:active {
+  background-color: rgba(255, 107, 53, 0.1);
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #666666;
+  margin-bottom: 40rpx;
+}
+
+.btn-buy {
+  width: 300rpx;
+  height: 80rpx;
+  background-color: #FF6B35;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-buy:active {
+  background-color: #E55A2B;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loading text {
+  font-size: 28rpx;
+  color: #666666;
+}

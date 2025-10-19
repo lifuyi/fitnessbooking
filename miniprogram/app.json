@@ -8,6 +8,8 @@
     "pages/profile/index",
     "pages/booking/index",
     "pages/qrcode/index",
+    "pages/settings/index",
+    "pages/cards/index",
     "pages/logs/logs"
   ],
   "subPackages": [

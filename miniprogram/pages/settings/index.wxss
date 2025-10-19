@@ -1,0 +1,53 @@
+/* settings/index.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding: 20rpx 0;
+}
+
+.settings-list {
+  background-color: #FFFFFF;
+  margin: 0 30rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.settings-item:last-child {
+  border-bottom: none;
+}
+
+.item-content {
+  flex: 1;
+}
+
+.item-title {
+  font-size: 32rpx;
+  color: #333333;
+  margin-bottom: 4rpx;
+  display: block;
+}
+
+.item-desc {
+  font-size: 26rpx;
+  color: #666666;
+  display: block;
+}
+
+.settings-item .icon-arrow-right {
+  font-size: 28rpx;
+  color: #CCCCCC;
+}
+
+/* 图标字体 */
+.iconfont {
+  font-family: 'iconfont';
+}
+
+.icon-arrow-right:before { content: '\e605'; }

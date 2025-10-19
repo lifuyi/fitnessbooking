@@ -1,0 +1,48 @@
+<!-- cards/index.wxml -->
+<view class="container">
+  <view class="card-list" wx:if="{{courseCards.length > 0}}">
+    <view class="card-item" wx:for="{{courseCards}}" wx:key="userCardId">
+      <view class="card-header">
+        <text class="card-title">{{item.cardName}}</text>
+        <text class="card-status {{getCourseCardStatusClass(item.status)}}">{{getCourseCardStatusText(item.status)}}</text>
+      </view>
+      <view class="card-body">
+        <view class="card-info">
+          <view class="info-item">
+            <text class="info-label">舞种：</text>
+            <text class="info-value">{{item.danceType}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">剩余次数：</text>
+            <text class="info-value highlight">{{item.remainingCount}}/{{item.totalCount}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">购买时间：</text>
+            <text class="info-value">{{item.purchaseTime}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">到期时间：</text>
+            <text class="info-value">{{item.expireTime}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="card-footer">
+        <button class="btn-recharge" bindtap="rechargeCard" data-card-id="{{item.cardId}}">续费</button>
+        <button class="btn-detail" bindtap="viewCardDetail" data-card-id="{{item.cardId}}">详情</button>
+      </view>
+    </view>
+  </view>
+  
+  <view class="empty-state" wx:else>
+    <view class="empty-icon">💳</view>
+    <text class="empty-text">暂无课程卡</text>
+    <button class="btn-buy" bindtap="buyCard">购买课程卡</button>
+  </view>
+  
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading">
+      <text>加载中...</text>
+    </view>
+  </view>
+</view>
