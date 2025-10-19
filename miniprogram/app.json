@@ -17,6 +17,8 @@
       "pages": [
         "pages/login",
         "pages/coursemanage",
+        "pages/teachermanage",
+        "pages/teacheredit",
         "pages/studentmanage",
         "pages/notification",
         "pages/statistics",

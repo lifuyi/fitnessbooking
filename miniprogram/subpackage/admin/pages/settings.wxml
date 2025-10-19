@@ -173,6 +173,52 @@
       </view>
     </view>
 
+    <!-- 数据管理 -->
+    <view class="settings-section">
+      <view class="section-header">
+        <text class="section-title">数据管理</text>
+        <text class="section-desc text-small">管理基础数据和内容</text>
+      </view>
+      <view class="setting-list">
+        <view class="setting-item" bindtap="navigateToTeacherManage">
+          <view class="setting-info">
+            <text class="setting-label">导师管理</text>
+            <text class="setting-desc text-small">添加、编辑和删除导师信息</text>
+          </view>
+          <view class="setting-action">
+            <text class="iconfont icon-arrow-right"></text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="navigateToCourseManage">
+          <view class="setting-info">
+            <text class="setting-label">课程管理</text>
+            <text class="setting-desc text-small">创建和管理课程安排</text>
+          </view>
+          <view class="setting-action">
+            <text class="iconfont icon-arrow-right"></text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="navigateToStudentManage">
+          <view class="setting-info">
+            <text class="setting-label">学员管理</text>
+            <text class="setting-desc text-small">查看和管理学员信息</text>
+          </view>
+          <view class="setting-action">
+            <text class="iconfont icon-arrow-right"></text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="navigateToNotification">
+          <view class="setting-info">
+            <text class="setting-label">通知管理</text>
+            <text class="setting-desc text-small">发送和管理系统通知</text>
+          </view>
+          <view class="setting-action">
+            <text class="iconfont icon-arrow-right"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+
     <!-- 系统管理 -->
     <view class="settings-section">
       <view class="section-header">

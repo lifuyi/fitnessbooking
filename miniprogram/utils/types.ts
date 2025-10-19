@@ -44,7 +44,10 @@ export interface DanceType {
 export interface Teacher {
   teacherId: string
   name: string
-  avatar: string
+  avatar: string | {
+    type: 'image'
+    path: string
+  }
   phone: string
   danceTypes: string[]
   stores: string[]

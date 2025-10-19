@@ -574,17 +574,267 @@ function getMockData(url, params) {
       }
       
       // 返回分页格式
-      var page = params && params.page ? params.page : 1;
-      var limit = params && params.limit ? params.limit : 10;
-      var start = (page - 1) * limit;
-      var end = start + limit;
+      let coursesPage = params && params.page ? params.page : 1;
+      let coursesLimit = params && params.limit ? params.limit : 10;
+      let coursesStart = (coursesPage - 1) * coursesLimit;
+      let coursesEnd = coursesStart + coursesLimit;
       
       return {
-        list: courses.slice(start, end),
+        list: courses.slice(coursesStart, coursesEnd),
         total: courses.length,
-        page: page,
-        limit: limit,
-        hasMore: end < courses.length
+        page: coursesPage,
+        limit: coursesLimit,
+        hasMore: coursesEnd < courses.length
+      };
+      
+    case '/api/admin/teachers':
+      console.log('API: 获取管理员导师列表')
+      const adminTeachers = [
+        {
+          teacherId: 't1',
+          name: 'BOA',
+          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b332c1ca?w=200&h=200&fit=crop&crop=face',
+          phone: '13800138001',
+          danceTypes: ['jazz', 'kpop'],
+          stores: ['nanshan', 'futian'],
+          introduction: '专业爵士舞和韩舞导师，擅长基础教学和编舞创作',
+          experience: 5,
+          rating: 4.8,
+          classCount: 156,
+          status: 'active',
+          createTime: '2023-01-15T10:00:00Z',
+          updateTime: '2023-10-18T15:30:00Z'
+        },
+        {
+          teacherId: 't2',
+          name: 'QURY',
+          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+          phone: '13800138002',
+          danceTypes: ['hiphop'],
+          stores: ['futian'],
+          introduction: '资深街舞导师，擅长各种街舞风格和Freestyle',
+          experience: 8,
+          rating: 4.7,
+          classCount: 203,
+          status: 'active',
+          createTime: '2023-02-20T14:30:00Z',
+          updateTime: '2023-10-16T09:15:00Z'
+        },
+        {
+          teacherId: 't3',
+          name: 'LISA',
+          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
+          phone: '13800138003',
+          danceTypes: ['kpop', 'waacking'],
+          stores: ['nanshan', 'baoan'],
+          introduction: '韩舞和Waacking专业导师，女团风格教学专家',
+          experience: 6,
+          rating: 4.9,
+          classCount: 178,
+          status: 'active',
+          createTime: '2023-03-10T11:20:00Z',
+          updateTime: '2023-10-17T16:45:00Z'
+        },
+        {
+          teacherId: 't4',
+          name: 'MIKE',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+          phone: '13800138004',
+          danceTypes: ['jazz', 'hiphop'],
+          stores: ['baoan'],
+          introduction: '爵士舞和街舞融合创新导师，擅长多元化风格教学',
+          experience: 7,
+          rating: 4.6,
+          classCount: 142,
+          status: 'inactive',
+          createTime: '2023-04-05T16:40:00Z',
+          updateTime: '2023-10-15T12:20:00Z'
+        }
+      ];
+      
+      // 根据参数筛选
+      let filteredAdminTeachers = adminTeachers;
+      if (params) {
+        if (params.storeId && params.storeId !== 'all') {
+          filteredAdminTeachers = filteredAdminTeachers.filter(teacher => 
+            teacher.stores.includes(params.storeId)
+          );
+        }
+        
+        if (params.status && params.status !== 'all') {
+          filteredAdminTeachers = filteredAdminTeachers.filter(teacher => 
+            teacher.status === params.status
+          );
+        }
+        
+        if (params.keyword) {
+          const keyword = params.keyword.toLowerCase();
+          filteredAdminTeachers = filteredAdminTeachers.filter(teacher => 
+            teacher.name.toLowerCase().includes(keyword) ||
+            teacher.phone.includes(keyword)
+          );
+        }
+      }
+      
+      // 分页处理
+      const adminPage = params && params.page ? params.page : 1;
+      const adminLimit = params && params.limit ? params.limit : 10;
+      const adminStart = (adminPage - 1) * adminLimit;
+      const adminEnd = adminStart + adminLimit;
+      
+      console.log('API: 返回管理员导师列表:', filteredAdminTeachers.slice(adminStart, adminEnd))
+      return {
+        list: filteredAdminTeachers.slice(adminStart, adminEnd),
+        total: filteredAdminTeachers.length,
+        page: adminPage,
+        limit: adminLimit,
+        hasMore: adminEnd < filteredAdminTeachers.length
+      };
+      
+    case '/api/admin/teacher/t1':
+    case '/api/admin/teacher/t2':
+    case '/api/admin/teacher/t3':
+    case '/api/admin/teacher/t4':
+      const adminTeacherId = url.split('/')[4];
+      const adminTeacherDetails = {
+        't1': {
+          teacherId: 't1',
+          name: 'BOA',
+          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b332c1ca?w=200&h=200&fit=crop&crop=face',
+          phone: '13800138001',
+          danceTypes: ['jazz', 'kpop'],
+          stores: ['nanshan', 'futian'],
+          introduction: '专业爵士舞和韩舞导师，擅长基础教学和编舞创作。拥有丰富的教学经验，曾获得多项舞蹈比赛奖项。',
+          experience: 5,
+          rating: 4.8,
+          classCount: 156,
+          status: 'active',
+          createTime: '2023-01-15T10:00:00Z',
+          updateTime: '2023-10-18T15:30:00Z'
+        },
+        't2': {
+          teacherId: 't2',
+          name: 'QURY',
+          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+          phone: '13800138002',
+          danceTypes: ['hiphop'],
+          stores: ['futian'],
+          introduction: '资深街舞导师，擅长各种街舞风格和Freestyle。多年教学经验，能够因材施教。',
+          experience: 8,
+          rating: 4.7,
+          classCount: 203,
+          status: 'active',
+          createTime: '2023-02-20T14:30:00Z',
+          updateTime: '2023-10-16T09:15:00Z'
+        },
+        't3': {
+          teacherId: 't3',
+          name: 'LISA',
+          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
+          phone: '13800138003',
+          danceTypes: ['kpop', 'waacking'],
+          stores: ['nanshan', 'baoan'],
+          introduction: '韩舞和Waacking专业导师，女团风格教学专家。擅长学员舞台表现力培养。',
+          experience: 6,
+          rating: 4.9,
+          classCount: 178,
+          status: 'active',
+          createTime: '2023-03-10T11:20:00Z',
+          updateTime: '2023-10-17T16:45:00Z'
+        },
+        't4': {
+          teacherId: 't4',
+          name: 'MIKE',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+          phone: '13800138004',
+          danceTypes: ['jazz', 'hiphop'],
+          stores: ['baoan'],
+          introduction: '爵士舞和街舞融合创新导师，擅长多元化风格教学。注重学员基本功训练。',
+          experience: 7,
+          rating: 4.6,
+          classCount: 142,
+          status: 'inactive',
+          createTime: '2023-04-05T16:40:00Z',
+          updateTime: '2023-10-15T12:20:00Z'
+        }
+      };
+      
+      return adminTeacherDetails[adminTeacherId] || null;
+      
+    case '/api/admin/teacher':
+      // 创建导师
+      const newTeacherData = {
+        ...params,
+        createTime: new Date().toISOString(),
+        updateTime: new Date().toISOString(),
+        classCount: 0
+      };
+      
+      // 处理头像存储到云数据库
+      if (newTeacherData.avatar && newTeacherData.avatar.type === 'image') {
+        // 云数据库自动处理图片存储
+        newTeacherData.avatar = `https://cloud.tencent.com/images/teacher_${Date.now()}.jpg`;
+      }
+      
+      const newTeacher = {
+        teacherId: 't' + Date.now(),
+        ...newTeacherData
+      };
+      
+      return {
+        success: true,
+        teacher: newTeacher,
+        message: '导师创建成功'
+      };
+      
+    case '/api/admin/teacher/t1/update':
+    case '/api/admin/teacher/t2/update':
+    case '/api/admin/teacher/t3/update':
+    case '/api/admin/teacher/t4/update':
+    case '/api/admin/teacher/t5/update':
+      // 更新导师
+      const teacherIdToUpdate = url.split('/')[4];
+      const updatedTeacherData = {
+        ...params,
+        updateTime: new Date().toISOString()
+      };
+      
+      // 处理头像存储到云数据库
+      if (updatedTeacherData.avatar && updatedTeacherData.avatar.type === 'image') {
+        // 云数据库自动处理图片存储
+        updatedTeacherData.avatar = `https://cloud.tencent.com/images/teacher_${teacherIdToUpdate}_${Date.now()}.jpg`;
+      }
+      
+      return {
+        success: true,
+        message: '导师信息更新成功',
+        teacher: {
+          teacherId: teacherIdToUpdate,
+          ...updatedTeacherData
+        }
+      };
+      
+    case '/api/admin/teacher/t1/delete':
+    case '/api/admin/teacher/t2/delete':
+    case '/api/admin/teacher/t3/delete':
+    case '/api/admin/teacher/t4/delete':
+    case '/api/admin/teacher/t5/delete':
+      // 删除导师
+      return {
+        success: true,
+        message: '导师删除成功'
+      };
+      
+    case '/api/admin/teacher/t1/status':
+    case '/api/admin/teacher/t2/status':
+    case '/api/admin/teacher/t3/status':
+    case '/api/admin/teacher/t4/status':
+    case '/api/admin/teacher/t5/status':
+      // 更新导师状态
+      return {
+        success: true,
+        message: params.status === 'active' ? '导师已启用' : '导师已禁用',
+        status: params.status
       };
       
     case '/api/admin/courses':
@@ -928,17 +1178,17 @@ function getMockData(url, params) {
       ];
       
       // 返回分页格式
-      var page = params.page || 1;
-      var limit = params.limit || 10;
-      var start = (page - 1) * limit;
-      var end = start + limit;
+      let teacherPage = params.page || 1;
+      let teacherLimit = params.limit || 10;
+      let teacherStart = (teacherPage - 1) * teacherLimit;
+      let teacherEnd = teacherStart + teacherLimit;
       
       return {
-        list: courses.slice(start, end),
+        list: courses.slice(teacherStart, teacherEnd),
         total: courses.length,
-        page: page,
-        limit: limit,
-        hasMore: end < courses.length
+        page: teacherPage,
+        limit: teacherLimit,
+        hasMore: teacherEnd < courses.length
       };
       
     case '/api/courses/1':
@@ -1239,17 +1489,17 @@ function getMockData(url, params) {
       }
       
       // 分页处理
-      var page = params && params.page ? params.page : 1;
-      var limit = params && params.limit ? params.limit : 10;
-      var start = (page - 1) * limit;
-      var end = start + limit;
+      let bookingPage = params && params.page ? params.page : 1;
+      let bookingLimit = params && params.limit ? params.limit : 10;
+      let bookingStart = (bookingPage - 1) * bookingLimit;
+      let bookingEnd = bookingStart + bookingLimit;
       
       return {
-        list: filteredBookings.slice(start, end),
+        list: filteredBookings.slice(bookingStart, bookingEnd),
         total: filteredBookings.length,
-        page: page,
-        limit: limit,
-        hasMore: end < filteredBookings.length
+        page: bookingPage,
+        limit: bookingLimit,
+        hasMore: bookingEnd < filteredBookings.length
       };
       
     default:
@@ -1353,6 +1603,51 @@ var teacherApi = {
 };
 
 /**
+ * 导师管理API
+ */
+var teacherManageApi = {
+  // 获取导师列表（管理员）
+  getTeacherList: function(params) {
+    return get('/api/admin/teachers', params);
+  },
+  
+  // 获取导师详情（管理员）
+  getTeacherDetail: function(teacherId) {
+    return get('/api/admin/teacher/' + teacherId);
+  },
+  
+  // 创建导师
+  createTeacher: function(teacherData) {
+    return post('/api/admin/teacher', teacherData);
+  },
+  
+  // 更新导师信息
+  updateTeacher: function(teacherId, teacherData) {
+    return post('/api/admin/teacher/' + teacherId + '/update', teacherData);
+  },
+  
+  // 删除导师
+  deleteTeacher: function(teacherId) {
+    return post('/api/admin/teacher/' + teacherId + '/delete');
+  },
+  
+  // 更新导师状态
+  updateTeacherStatus: function(teacherId, status) {
+    return post('/api/admin/teacher/' + teacherId + '/status', { status: status });
+  },
+  
+  // 批量导入导师
+  importTeachers: function(teachersData) {
+    return post('/api/admin/teachers/import', { teachers: teachersData });
+  },
+  
+  // 获取导师统计数据
+  getTeacherStats: function(params) {
+    return get('/api/admin/teacher/stats', params);
+  }
+};
+
+/**
  * 管理员API
  */
 var adminApi = {
@@ -1402,6 +1697,7 @@ module.exports = {
   courseApi: courseApi,
   storeApi: storeApi,
   teacherApi: teacherApi,
+  teacherManageApi: teacherManageApi,
   adminApi: adminApi,
   bookingApi: bookingApi
 };

@@ -157,7 +157,7 @@ export const del = <T = any>(url: string, options?: any): Promise<T> => {
   })
 }
 
-// 文件上传
+// 文件上传（腾讯云数据库直接存储图片，此方法保留用于其他文件上传）
 export const uploadFile = (filePath: string, url: string, formData?: any): Promise<any> => {
   showLoading('上传中...')
   
@@ -275,6 +275,43 @@ export const teacherApi = {
     page?: number
     limit?: number
   }) => get<any>(`/teacher/${teacherId}/courses`, params)
+}
+
+// 管理员导师管理接口
+export const teacherManageApi = {
+  // 获取导师列表（管理员）
+  getTeacherList: (params?: {
+    storeId?: string
+    status?: string
+    keyword?: string
+    page?: number
+    limit?: number
+  }) => get<any>('/admin/teachers', params),
+  
+  // 获取导师详情（管理员）
+  getTeacherDetail: (teacherId: string) => get<any>(`/admin/teacher/${teacherId}`),
+  
+  // 创建导师
+  createTeacher: (teacherData: any) => post<any>('/admin/teacher', teacherData),
+  
+  // 更新导师信息
+  updateTeacher: (teacherId: string, teacherData: any) => put<any>(`/admin/teacher/${teacherId}`, teacherData),
+  
+  // 删除导师
+  deleteTeacher: (teacherId: string) => del<any>(`/admin/teacher/${teacherId}`),
+  
+  // 更新导师状态
+  updateTeacherStatus: (teacherId: string, status: string) => put<any>(`/admin/teacher/${teacherId}/status`, { status }),
+  
+  // 批量导入导师
+  importTeachers: (teachersData: any[]) => post<any>('/admin/teachers/import', { teachers: teachersData }),
+  
+  // 获取导师统计数据
+  getTeacherStats: (params?: {
+    storeId?: string
+    startDate?: string
+    endDate?: string
+  }) => get<any>('/admin/teacher/stats', params)
 }
 
 // 管理员相关接口

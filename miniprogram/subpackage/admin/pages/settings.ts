@@ -345,6 +345,34 @@ Component({
         })
     },
     
+    // 导航到导师管理
+    navigateToTeacherManage() {
+      wx.navigateTo({
+        url: '/subpackage/admin/pages/teachermanage'
+      })
+    },
+    
+    // 导航到课程管理
+    navigateToCourseManage() {
+      wx.navigateTo({
+        url: '/subpackage/admin/pages/coursemanage'
+      })
+    },
+    
+    // 导航到学员管理
+    navigateToStudentManage() {
+      wx.navigateTo({
+        url: '/subpackage/admin/pages/studentmanage'
+      })
+    },
+    
+    // 导航到通知管理
+    navigateToNotification() {
+      wx.navigateTo({
+        url: '/subpackage/admin/pages/notification'
+      })
+    },
+    
     // 导出数据
     exportData() {
       showToast('正在准备导出数据...')

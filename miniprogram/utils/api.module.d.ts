@@ -35,6 +35,17 @@ declare module '../../../utils/api' {
     getTeacherDetail: (id: string) => Promise<any>;
   };
 
+  export const teacherManageApi: {
+    getTeacherList: (params?: any) => Promise<any>;
+    getTeacherDetail: (teacherId: string) => Promise<any>;
+    createTeacher: (teacherData: any) => Promise<any>;
+    updateTeacher: (teacherId: string, teacherData: any) => Promise<any>;
+    deleteTeacher: (teacherId: string) => Promise<any>;
+    updateTeacherStatus: (teacherId: string, status: string) => Promise<any>;
+    importTeachers: (teachersData: any[]) => Promise<any>;
+    getTeacherStats: (params?: any) => Promise<any>;
+  };
+
   export const adminApi: {
     adminLogin: (phone: string, code: string) => Promise<any>;
     getAdminInfo: () => Promise<any>;
