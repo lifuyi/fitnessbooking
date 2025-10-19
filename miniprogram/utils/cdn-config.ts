@@ -3,10 +3,10 @@
 export const CDN_CONFIG = {
   // 导师头像
   TEACHER_AVATARS: {
-    't1': 'https://images.unsplash.com/photo-1494790108755-2616b332c1ca?w=200&h=200&fit=crop&crop=face',
-    't2': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
-    't3': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
-    't4': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+    't1': '/images/joy.jpg',
+    't2': '/images/joy.jpg',
+    't3': '/images/joy.jpg',
+    't4': '/images/joy.jpg',
     '1': 'https://picsum.photos/seed/teacher1/100/100.jpg',
     '2': 'https://picsum.photos/seed/teacher2/100/100.jpg',
     '3': 'https://picsum.photos/seed/teacher3/100/100.jpg',

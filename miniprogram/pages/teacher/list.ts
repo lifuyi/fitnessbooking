@@ -159,7 +159,7 @@ Component({
           {
             teacherId: 't1',
             name: 'BOA',
-            avatar: 'https://images.unsplash.com/photo-1494790108755-2616b332c1ca?w=200&h=200&fit=crop&crop=face',
+            avatar: '/images/joy.jpg',
             danceTypes: ['jazz', 'kpop'],
             specialties: ['爵士舞基础', '韩舞编舞'],
             experience: '5年',
@@ -171,7 +171,7 @@ Component({
           {
             teacherId: 't2',
             name: 'QURY',
-            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+            avatar: '/images/joy.jpg',
             danceTypes: ['hiphop'],
             specialties: ['街舞基础', 'Freestyle'],
             experience: '8年',
@@ -183,7 +183,7 @@ Component({
           {
             teacherId: 't3',
             name: 'LISA',
-            avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
+            avatar: '/images/joy.jpg',
             danceTypes: ['kpop', 'waacking'],
             specialties: ['韩舞女团', 'Waacking技巧'],
             experience: '6年',
@@ -195,7 +195,7 @@ Component({
           {
             teacherId: 't4',
             name: 'MIKE',
-            avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+            avatar: '/images/joy.jpg',
             danceTypes: ['jazz', 'hiphop'],
             specialties: ['爵士舞进阶', '街舞融合'],
             experience: '7年',

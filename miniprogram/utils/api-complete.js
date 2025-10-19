@@ -207,7 +207,7 @@ function getMockData(url, params) {
       return {
         teacherId: 't1',
         name: 'BOA',
-        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b332c1ca?w=200&h=200&fit=crop&crop=face',
+        avatar: '/images/joy.jpg',
         danceTypes: ['jazz', 'kpop'],
         specialties: ['爵士舞基础', '韩舞编舞'],
         experience: '5年',
@@ -221,7 +221,7 @@ function getMockData(url, params) {
       return {
         teacherId: 't2',
         name: 'QURY',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+        avatar: '/images/joy.jpg',
         danceTypes: ['hiphop'],
         specialties: ['街舞基础', 'Freestyle'],
         experience: '8年',
@@ -235,7 +235,7 @@ function getMockData(url, params) {
       return {
         teacherId: 't3',
         name: 'LISA',
-        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
+        avatar: '/images/joy.jpg',
         danceTypes: ['kpop', 'waacking'],
         specialties: ['韩舞女团', 'Waacking技巧'],
         experience: '6年',
@@ -249,7 +249,7 @@ function getMockData(url, params) {
       return {
         teacherId: 't4',
         name: 'MIKE',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+        avatar: '/images/joy.jpg',
         danceTypes: ['jazz', 'hiphop'],
         specialties: ['爵士舞进阶', '街舞融合'],
         experience: '7年',
@@ -593,7 +593,7 @@ function getMockData(url, params) {
         {
           teacherId: 't1',
           name: 'BOA',
-          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b332c1ca?w=200&h=200&fit=crop&crop=face',
+          avatar: '/images/joy.jpg',
           phone: '13800138001',
           danceTypes: ['jazz', 'kpop'],
           stores: ['nanshan', 'futian'],
@@ -608,7 +608,7 @@ function getMockData(url, params) {
         {
           teacherId: 't2',
           name: 'QURY',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+          avatar: '/images/joy.jpg',
           phone: '13800138002',
           danceTypes: ['hiphop'],
           stores: ['futian'],
@@ -623,7 +623,7 @@ function getMockData(url, params) {
         {
           teacherId: 't3',
           name: 'LISA',
-          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
+          avatar: '/images/joy.jpg',
           phone: '13800138003',
           danceTypes: ['kpop', 'waacking'],
           stores: ['nanshan', 'baoan'],
@@ -638,7 +638,7 @@ function getMockData(url, params) {
         {
           teacherId: 't4',
           name: 'MIKE',
-          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+          avatar: '/images/joy.jpg',
           phone: '13800138004',
           danceTypes: ['jazz', 'hiphop'],
           stores: ['baoan'],
@@ -700,7 +700,7 @@ function getMockData(url, params) {
         't1': {
           teacherId: 't1',
           name: 'BOA',
-          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b332c1ca?w=200&h=200&fit=crop&crop=face',
+          avatar: '/images/joy.jpg',
           phone: '13800138001',
           danceTypes: ['jazz', 'kpop'],
           stores: ['nanshan', 'futian'],
@@ -715,7 +715,7 @@ function getMockData(url, params) {
         't2': {
           teacherId: 't2',
           name: 'QURY',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+          avatar: '/images/joy.jpg',
           phone: '13800138002',
           danceTypes: ['hiphop'],
           stores: ['futian'],
@@ -730,7 +730,7 @@ function getMockData(url, params) {
         't3': {
           teacherId: 't3',
           name: 'LISA',
-          avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
+          avatar: '/images/joy.jpg',
           phone: '13800138003',
           danceTypes: ['kpop', 'waacking'],
           stores: ['nanshan', 'baoan'],
@@ -745,7 +745,7 @@ function getMockData(url, params) {
         't4': {
           teacherId: 't4',
           name: 'MIKE',
-          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+          avatar: '/images/joy.jpg',
           phone: '13800138004',
           danceTypes: ['jazz', 'hiphop'],
           stores: ['baoan'],
@@ -1211,7 +1211,7 @@ function getMockData(url, params) {
         danceTypeName: '瑜伽',
         difficulty: 1,
         consumeType: 'class_card',
-        coverImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=300&fit=crop'
+        coverImage: '/images/class.jpg'
       };
       console.log('API: 返回课程详情:', course1)
       return course1;
@@ -1236,7 +1236,7 @@ function getMockData(url, params) {
         danceTypeName: '健身',
         difficulty: 3,
         consumeType: 'class_card',
-        coverImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop'
+        coverImage: '/images/class.jpg'
       };
       console.log('API: 返回课程详情:', course2)
       return course2;
@@ -1261,7 +1261,7 @@ function getMockData(url, params) {
         danceTypeName: '游泳',
         difficulty: 2,
         consumeType: 'class_card',
-        coverImage: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=400&h=300&fit=crop'
+        coverImage: '/images/class.jpg'
       };
       console.log('API: 返回课程详情:', course3)
       return course3;
