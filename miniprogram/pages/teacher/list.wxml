@@ -27,7 +27,7 @@
     </view>
   </view>
 
-  <!-- 导师列表 -->
+  <!-- 教练列表 -->
   <view class="teacher-list" wx:if="{{!loading && teachers.length > 0}}">
     <view class="teacher-item card card-padding" wx:for="{{teachers}}" wx:key="teacherId" bindtap="navigateToTeacherDetail" data-teacher-id="{{item.teacherId}}">
       <view class="teacher-avatar">
@@ -37,7 +37,6 @@
         <view class="teacher-header">
           <text class="teacher-name">{{item.name}}</text>
           <view class="teacher-rating">
-            <text class="rating-stars">{{getRatingStars(item.rating)}}</text>
             <text class="rating-value">{{item.rating}}</text>
           </view>
         </view>

@@ -14,10 +14,10 @@ Component({
     }
   },
   data: {
-    // 导师信息
+    // 教练信息
     teacher: null as Teacher | null,
     
-    // 导师课程列表
+    // 教练课程列表
     courses: [] as Course[],
     
     // 加载状态
@@ -72,6 +72,11 @@ Component({
   },
   
   methods: {
+    // 返回上一页
+    navigateBack() {
+      wx.navigateBack()
+    },
+    
     // 获取页面参数
     getPageParams() {
       const pages = getCurrentPages()
@@ -84,7 +89,7 @@ Component({
       // 合并所有可能的参数来源
       return { ...options }
     },
-    // 加载导师详情
+    // 加载教练详情
     async loadTeacherDetail() {
       try {
         // 获取页面参数的多种方式
@@ -100,12 +105,12 @@ Component({
           }
         }
         
-        console.log('导师详情页加载，获取到的teacherId:', teacherId)
+        console.log('教练详情页加载，获取到的teacherId:', teacherId)
         console.log('properties中的teacherId:', this.data.teacherId)
         
         if (!teacherId) {
-          console.error('导师ID不存在')
-          showToast('导师ID不存在')
+          console.error('教练ID不存在')
+          showToast('教练ID不存在')
           setTimeout(() => {
             wx.navigateBack()
           }, 1500)
@@ -113,20 +118,20 @@ Component({
         }
         
         this.setData({ loading: true })
-        console.log('开始获取导师详情，ID:', teacherId)
+        console.log('开始获取教练详情，ID:', teacherId)
         
-        // 获取导师详情
+        // 获取教练详情
         const teacher = await teacherApi.getTeacherDetail(teacherId)
-        console.log('获取到的导师详情:', teacher)
+        console.log('获取到的教练详情:', teacher)
         
         if (!teacher) {
-          console.error('导师详情为空')
-          showToast('导师不存在')
+          console.error('教练详情为空')
+          showToast('教练不存在')
           this.setData({ loading: false })
           return
         }
         
-        // 获取导师课程列表
+        // 获取教练课程列表
         await this.loadTeacherCourses(teacherId, true)
         
         this.setData({
@@ -139,14 +144,14 @@ Component({
           title: `${teacher.name}${this.data.teacherTitleText}`
         })
       } catch (error) {
-        console.error('加载导师详情失败:', error)
+        console.error('加载教练详情失败:', error)
         showToast('加载失败，请重试')
         this.setData({ loading: false })
         // 不自动返回，让用户决定是否返回
       }
     },
     
-    // 加载导师课程列表
+    // 加载教练课程列表
     async loadTeacherCourses(teacherId: string, reset = false) {
       try {
         const { page, limit } = this.data
@@ -163,7 +168,7 @@ Component({
           hasMore: result.hasMore
         })
       } catch (error) {
-        console.error('加载导师课程失败:', error)
+        console.error('加载教练课程失败:', error)
       }
     },
     
@@ -256,14 +261,14 @@ Component({
       }
     },
     
-    // 分享导师
+    // 分享教练
     onShareAppMessage() {
       const { teacher } = this.data
       
       if (!teacher) return {}
       
       return {
-        title: `${teacher.name}导师 - ${this.getDanceTypesText(teacher.danceTypes)}`,
+        title: `${teacher.name}教练 - ${this.getDanceTypesText(teacher.danceTypes)}`,
         path: `/pages/teacher/detail?teacherId=${teacher.teacherId}`,
         imageUrl: teacher.avatar
       }

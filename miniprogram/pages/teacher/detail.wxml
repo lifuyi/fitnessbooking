@@ -1,15 +1,20 @@
 <!-- teacher/detail.wxml -->
 <view class="container" wx:if="{{!loading}}">
-  <!-- 导师封面 -->
+  <!-- 教练封面 -->
   <view class="teacher-cover">
     <image class="cover-image" src="{{teacher.avatar}}" mode="aspectFill"></image>
     <view class="cover-gradient"></view>
+    <view class="cover-actions">
+      <view class="back-btn" bindtap="navigateBack">
+        <text class="iconfont icon-back"></text>
+      </view>
+    </view>
     <view class="cover-info">
       <view class="teacher-basic">
         <image class="teacher-avatar radius-circle" src="{{teacher.avatar}}" mode="aspectFill"></image>
         <view class="teacher-details">
           <view class="teacher-name">{{teacher.name}}</view>
-          <view class="teacher-title">{{getDanceTypesText(teacher.danceTypes)}}导师</view>
+          <view class="teacher-title">{{getDanceTypesText(teacher.danceTypes)}}教练</view>
         </view>
       </view>
       <view class="teacher-stats">
@@ -31,7 +36,7 @@
     </view>
   </view>
 
-  <!-- 导师介绍 -->
+  <!-- 教练介绍 -->
   <view class="teacher-intro card card-padding">
     <view class="section-title">{{teacherIntroText}}</view>
     <text class="intro-content">{{teacher.intro}}</text>
@@ -45,7 +50,7 @@
     </view>
   </view>
 
-  <!-- 导师课程 -->
+  <!-- 教练课程 -->
   <view class="teacher-courses">
     <view class="section-header">
       <text class="section-title">{{teacherCoursesText}}</text>

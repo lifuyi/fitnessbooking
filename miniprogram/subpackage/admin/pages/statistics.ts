@@ -246,7 +246,7 @@ Component({
       const danceTypeCategories = statistics.danceTypeStats.map(item => item.danceTypeName)
       const danceTypeData = statistics.danceTypeStats.map(item => item.bookings)
       
-      // 导师统计图
+      // 教练统计图
       const teacherCategories = statistics.teacherStats.map(item => item.teacherName)
       const teacherData = statistics.teacherStats.map(item => item.classes)
       

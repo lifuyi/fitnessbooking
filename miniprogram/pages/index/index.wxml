@@ -3,7 +3,7 @@
   <!-- 顶部操作栏 -->
   <view class="header-actions">
     <view class="store-switch" bindtap="switchStore">
-      <text class="store-name">{{currentStore.name || '南山店'}}</text>
+      <text class="store-name">{{currentStore.name || 'Home 24H Studio'}}</text>
       <text class="iconfont icon-arrow-down"></text>
     </view>
     <view class="qrcode-btn" bindtap="showQRCode">
@@ -21,32 +21,32 @@
   </swiper>
 
   <!-- 门店信息栏 -->
-  <view class="store-info card card-padding" wx:if="{{currentStore}}">
+  <view class="store-info card card-padding">
     <view class="store-header">
       <view class="store-logo radius-circle">
         <text class="iconfont icon-store"></text>
       </view>
       <view class="store-details">
-        <view class="store-title">{{i18n.t('app.name')}}（{{currentStore.name}}）</view>
+        <view class="store-title">{{i18n.t('app.name')}}（{{currentStore.name || 'Home24H Studio'}}）</view>
         <view class="store-hours text-small">
           <text class="iconfont icon-time"></text>
-          <text>{{i18n.t('index.store.hours')}} {{currentStore.businessHours}}</text>
+          <text>{{i18n.t('index.store.hours')}} {{currentStore.businessHours || '10:30-22:00'}}</text>
         </view>
       </view>
     </view>
     <view class="store-contact">
       <view class="contact-item" bindtap="makePhoneCall">
         <text class="iconfont icon-phone"></text>
-        <text class="text-small">{{currentStore.phone}}</text>
+        <text class="text-small">{{currentStore.phone || '19925187494'}}</text>
       </view>
       <view class="contact-item" bindtap="openLocation">
         <text class="iconfont icon-location"></text>
-        <text class="text-small">{{currentStore.address}}</text>
+        <text class="text-small">{{currentStore.address || '石厦北二街新天世纪a座614'}}</text>
       </view>
     </view>
   </view>
 
-  <!-- 功能入口 -->
+  <!--   -->
   <view class="function-entries">
     <view class="entry-item" bindtap="navigateToBooking">
       <view class="entry-icon brand-bg">
@@ -54,27 +54,21 @@
       </view>
       <text class="entry-title">{{functionBookingText}}</text>
     </view>
-    <view class="entry-item disabled">
-      <view class="entry-icon">
-        <text class="iconfont icon-card"></text>
-      </view>
-      <text class="entry-title">{{functionPurchaseText}}</text>
-    </view>
     <view class="entry-item" bindtap="viewAllTeachers">
-      <view class="entry-icon">
-        <text class="iconfont icon-user"></text>
+      <view class="entry-icon brand-bg">
+        <text class="iconfont icon-calendar"></text>
       </view>
       <text class="entry-title">{{functionTeachersText}}</text>
     </view>
-    <view class="entry-item disabled">
-      <view class="entry-icon">
-        <text class="iconfont icon-shop"></text>
+    <view class="entry-item" bindtap="navigateToProfile">
+      <view class="entry-icon brand-bg">
+        <text class="iconfont icon-calendar"></text>
       </view>
-      <text class="entry-title">{{functionShopText}}</text>
+      <text class="entry-title">{{functionPurchaseText}}</text>
     </view>
   </view>
 
-  <!-- 导师展示区 -->
+  <!-- 教练展示区 -->
   <view class="teachers-section">
     <view class="section-header">
       <text class="section-title">{{teachersSectionText}}</text>

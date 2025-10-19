@@ -123,12 +123,12 @@
       </view>
     </view>
 
-    <!-- 导师分析 -->
+    <!-- 教练分析 -->
     <view class="chart-section">
-      <view class="section-title">导师分析</view>
+      <view class="section-title">教练分析</view>
       <view class="chart-container">
         <view class="chart-placeholder">
-          <text class="chart-title">导师带课次数</text>
+          <text class="chart-title">教练带课次数</text>
           <view class="chart-data">
             <view class="chart-bar" wx:for="{{chartOptions.teacherStats.series[0].data}}" wx:key="*this" style="height: {{item * 6}}rpx;">
               <text class="bar-value">{{item}}</text>
@@ -141,9 +141,9 @@
       </view>
     </view>
 
-    <!-- 导师详情 -->
+    <!-- 教练详情 -->
     <view class="teacher-section">
-      <view class="section-title">导师详情</view>
+      <view class="section-title">教练详情</view>
       <view class="teacher-list">
         <view class="teacher-item" wx:for="{{statistics.teacherStats}}" wx:key="teacherId">
           <view class="teacher-info">

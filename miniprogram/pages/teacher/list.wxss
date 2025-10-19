@@ -53,7 +53,7 @@
   color: #333333;
 }
 
-/* 导师列表 */
+/* 教练列表 */
 .teacher-list {
   padding: 30rpx;
 }

@@ -6,7 +6,7 @@ import type { Teacher } from '../../utils/types'
 
 Component({
   data: {
-    // 导师列表
+    // 教练列表
     teachers: [] as Teacher[],
     
     // 筛选条件
@@ -165,7 +165,7 @@ Component({
             experience: '5年',
             rating: 4.8,
             classCount: 156,
-            intro: '专业爵士舞和韩舞导师，擅长基础教学和编舞创作',
+            intro: '专业爵士舞和韩舞教练，擅长基础教学和编舞创作',
             store: 'nanshan'
           },
           {
@@ -177,7 +177,7 @@ Component({
             experience: '8年',
             rating: 4.7,
             classCount: 203,
-            intro: '资深街舞导师，擅长各种街舞风格和Freestyle',
+            intro: '资深街舞教练，擅长各种街舞风格和Freestyle',
             store: 'futian'
           },
           {
@@ -189,7 +189,7 @@ Component({
             experience: '6年',
             rating: 4.9,
             classCount: 178,
-            intro: '韩舞和Waacking专业导师，女团风格教学专家',
+            intro: '韩舞和Waacking专业教练，女团风格教学专家',
             store: 'nanshan'
           },
           {
@@ -201,7 +201,7 @@ Component({
             experience: '7年',
             rating: 4.6,
             classCount: 142,
-            intro: '爵士舞和街舞融合创新导师，擅长多元化风格教学',
+            intro: '爵士舞和街舞融合创新教练，擅长多元化风格教学',
             store: 'baoan'
           }
         ]
@@ -235,13 +235,13 @@ Component({
           page: page + 1
         })
       } catch (error) {
-        console.error('加载导师列表失败:', error)
+        console.error('加载教练列表失败:', error)
         showToast('加载失败，请重试')
         this.setData({ loading: false })
       }
     },
     
-    // 加载更多导师
+    // 加载更多教练
     async loadMoreTeachers() {
       this.setData({ loadingMore: true })
       
@@ -280,7 +280,7 @@ Component({
     
     
     
-    // 跳转到导师详情
+    // 跳转到教练详情
     navigateToTeacherDetail(e: any) {
       const { teacherId } = e.currentTarget.dataset
       wx.navigateTo({

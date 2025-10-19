@@ -20,7 +20,7 @@ Component({
     banners: CDN_CONFIG.BANNERS,
     currentBannerIndex: 0,
     
-    // 导师数据
+    // 教练数据
     teachers: [] as Teacher[],
     
     // 今日课程
@@ -66,7 +66,7 @@ Component({
         functionShopText: i18nInstance.t('index.function.shop'),
         teachersSectionText: i18nInstance.t('index.teachers.section'),
         coursesTodayText: i18nInstance.t('index.courses.today'),
-        confirmButtonText: i18nInstance.t('button.confirm'),
+        confirmButtonText: i18nInstance.t('button.view'),
         allButtonText: i18nInstance.t('button.all')
       })
       
@@ -116,23 +116,41 @@ Component({
     async loadCurrentStore() {
       try {
         const stores = await storeApi.getStoreList()
-        const currentStoreName = app.globalData.currentStore || '南山店'
-        const currentStore = stores.find((store: Store) => store.name === currentStoreName)
+        console.log('获取到的门店列表:', stores)
         
+        const currentStoreName = app.globalData.currentStore || 'Home24H Studio'
+        let currentStore = stores.find((store: Store) => store.name === currentStoreName)
+        
+        // 如果没有找到匹配的门店，使用第一个门店作为默认
+        if (!currentStore && stores.length > 0) {
+          currentStore = stores[0]
+          app.globalData.currentStore = currentStore.name
+        }
+        
+        console.log('当前门店:', currentStore)
         this.setData({ currentStore })
       } catch (error) {
         console.error('加载门店信息失败:', error)
+        // 设置默认门店信息
+        const defaultStore = {
+          id: 1,
+          name: 'Home24H Studio',
+          address: '石厦北二街新天世纪a座614',
+          phone: '19925187494',
+          businessHours: '10:30-22:00'
+        }
+        this.setData({ currentStore: defaultStore })
       }
     },
     
-    // 加载导师列表
+    // 加载教练列表
     async loadTeachers() {
       try {
-        console.log('开始加载导师列表...')
+        console.log('开始加载教练列表...')
         const teachers = await teacherApi.getTeacherList()
-        console.log('获取到的导师列表:', teachers)
+        console.log('获取到的教练列表:', teachers)
         
-        // 确保每个导师都有必要的字段
+        // 确保每个教练都有必要的字段
         const processedTeachers = teachers.map(teacher => {
           const processedTeacher = { ...teacher }
           // 确保有teacherId
@@ -146,10 +164,10 @@ Component({
           return processedTeacher
         })
         
-        console.log('处理后的导师列表:', processedTeachers)
-        this.setData({ teachers: processedTeachers.slice(0, 6) }) // 只显示前6个导师
+        console.log('处理后的教练列表:', processedTeachers)
+        this.setData({ teachers: processedTeachers.slice(0, 6) }) // 只显示前6个教练
       } catch (error) {
-        console.error('加载导师列表失败:', error)
+        console.error('加载教练列表失败:', error)
       }
     },
     
@@ -322,26 +340,33 @@ Component({
     
     // 跳转到课程预约
     navigateToBooking() {
-      wx.switchTab({
+      wx.navigateTo({
         url: '/pages/course/list'
       })
     },
     
-    // 跳转到导师详情
+    // 跳转到教练详情
     navigateToTeacherDetail(e: any) {
       const { teacherId } = e.currentTarget.dataset
-      console.log('点击导师头像，导师ID:', teacherId)
-      console.log('导师数据:', this.data.teachers.find(t => t.teacherId === teacherId))
+      console.log('点击教练头像，教练ID:', teacherId)
+      console.log('教练数据:', this.data.teachers.find(t => t.teacherId === teacherId))
       
       wx.navigateTo({
         url: `/pages/teacher/detail?teacherId=${teacherId}`
       })
     },
     
-    // 查看所有导师
+    // 查看所有教练
     viewAllTeachers() {
       wx.navigateTo({
         url: '/pages/teacher/list'
+      })
+    },
+    
+    // 跳转到个人中心
+    navigateToProfile() {
+      wx.switchTab({
+        url: '/pages/profile/index'
       })
     },
     
@@ -456,7 +481,7 @@ Component({
         functionShopText: i18nInstance.t('index.function.shop'),
         teachersSectionText: i18nInstance.t('index.teachers.section'),
         coursesTodayText: i18nInstance.t('index.courses.today'),
-        confirmButtonText: i18nInstance.t('button.confirm'),
+        confirmButtonText: i18nInstance.t('button.view'),
         allButtonText: i18nInstance.t('button.all'),
         entranceCodeText: '入场码'
       })

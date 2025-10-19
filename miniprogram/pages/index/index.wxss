@@ -177,7 +177,7 @@
   color: #CCCCCC;
 }
 
-/* 导师展示区 */
+/* 教练展示区 */
 .teachers-section {
   margin-bottom: 40rpx;
 }

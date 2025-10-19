@@ -52,6 +52,12 @@
   <!-- 课程列表 -->
   <view class="course-list" wx:if="{{!loading && courses.length > 0}}">
     <view class="course-item" wx:for="{{courses}}" wx:key="courseId">
+      <!-- 紧张状态标签 - 放在左上角 -->
+      <view class="status-badge tense corner-left" wx:if="{{item.isTense}}">
+        <text class="badge-icon">🔥</text>
+        <text class="badge-text">{{tenseText}}</text>
+      </view>
+      
       <view class="course-time">
         <text class="time-range">{{item.startTime}}–{{item.endTime}}</text>
       </view>
@@ -74,37 +80,25 @@
         
         <!-- 预约按钮或状态标签 -->
         <view class="booking-action">
+          <!-- 已满员 - 显示灰色按钮 -->
+          <block wx:if="{{item.isFull}}">
+            <button class="book-btn disabled" disabled>
+              {{fullyBookedText}}
+            </button>
+          </block>
+          
           <!-- 可以预约 -->
-          <block wx:if="{{item.canBook}}">
+          <block wx:elif="{{item.canBook}}">
             <button class="book-btn" bindtap="bookCourse" data-course-id="{{item.courseId}}">
               {{bookText}}
             </button>
           </block>
           
-          <!-- 已满员 -->
-          <block wx:elif="{{item.isFull}}">
-            <view class="status-badge full">
-              <text class="badge-icon">👥</text>
-              <text class="badge-text">{{fullyBookedText}}</text>
-            </view>
-          </block>
-          
-          <!-- 紧张 -->
-          <block wx:elif="{{item.isTense}}">
-            <button class="book-btn" bindtap="bookCourse" data-course-id="{{item.courseId}}">
-              预约
-            </button>
-            <view class="status-badge tense">
-              <text class="badge-icon">🔥</text>
-              <text class="badge-text">{{tenseText}}</text>
-            </view>
-          </block>
-          
           <!-- 未开放预约 -->
           <block wx:else>
-            <view class="booking-time">
-              <text>{{item.bookingOpenTime}}{{bookingOpenText}}</text>
-            </view>
+            <button class="book-btn disabled" disabled>
+              {{item.bookingOpenTime}}{{bookingOpenText}}
+            </button>
           </block>
         </view>
       </view>

@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "福田石厦Home 24h自助舞蹈室",
-  "enablePullDownRefresh": true,
+  "enablePullDownRefresh": false,
   "backgroundTextStyle": "dark",
   "backgroundColor": "#F5F5F5",
   "usingComponents": {

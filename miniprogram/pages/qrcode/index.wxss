@@ -1,4 +1,16 @@
 /* qrcode/index.wxss */
+
+/* 图标字体 */
+.iconfont {
+  font-family: 'iconfont';
+}
+
+.icon-back:before { content: '\e602'; }
+.icon-refresh:before { content: '\e603'; }
+.icon-qrcode-large:before { content: '\e604'; }
+.icon-download:before { content: '\e605'; }
+.icon-service:before { content: '\e606'; }
+
 .container {
   min-height: 100vh;
   background-color: #F5F5F5;
@@ -22,11 +34,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
 }
 
 .back-btn .icon-back,
 .refresh-btn .icon-refresh {
   font-size: 32rpx;
+  color: #FFFFFF;
 }
 
 .header-title {

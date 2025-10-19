@@ -263,7 +263,7 @@
   color: #666666;
 }
 
-/* 导师详情 */
+/* 教练详情 */
 .teacher-list {
   display: flex;
   flex-direction: column;

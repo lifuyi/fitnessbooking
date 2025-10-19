@@ -4,7 +4,7 @@
   background-color: #F5F5F5;
 }
 
-/* 导师封面 */
+/* 教练封面 */
 .teacher-cover {
   position: relative;
   width: 100%;
@@ -24,6 +24,32 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.cover-actions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 60rpx 30rpx 20rpx;
+}
+
+.back-btn {
+  width: 64rpx;
+  height: 64rpx;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+.back-btn .icon-back {
+  font-size: 32rpx;
 }
 
 .cover-info {
@@ -93,7 +119,7 @@
   margin: 0 20rpx;
 }
 
-/* 导师介绍 */
+/* 教练介绍 */
 .teacher-intro {
   margin: 20rpx 30rpx;
 }
@@ -140,7 +166,7 @@
   font-size: 26rpx;
 }
 
-/* 导师课程 */
+/* 教练课程 */
 .teacher-courses {
   margin: 20rpx 30rpx;
 }
@@ -289,3 +315,4 @@
 
 .icon-star:before { content: '\e600'; }
 .icon-empty:before { content: '\e601'; }
+.icon-back:before { content: '\e602'; }

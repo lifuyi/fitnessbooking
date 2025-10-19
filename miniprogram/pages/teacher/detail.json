@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "导师详情",
+  "navigationBarTitleText": "教练详情",
   "navigationStyle": "custom",
   "usingComponents": {
     "language-switch": "/components/language-switch"

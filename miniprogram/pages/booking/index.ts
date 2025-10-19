@@ -179,7 +179,7 @@ Page({
           bookedCount: 11,
           canBook: true,
           isFull: false,
-          isTense: true,
+          isTense: false, // 将通过计算得出
           bookingOpenTime: '',
           courseType: 'regular',
           date: this.formatDate(new Date())
@@ -212,10 +212,10 @@ Page({
           startTime: '14:30',
           endTime: '16:00',
           capacity: 30,
-          bookedCount: 19,
+          bookedCount: 25, // 修改为25，约83%满足紧张状态条件
           canBook: true,
           isFull: false,
-          isTense: false,
+          isTense: false, // 将通过计算得出
           bookingOpenTime: '',
           courseType: 'regular',
           date: this.formatDate(new Date())
@@ -258,8 +258,22 @@ Page({
         }
       ]
       
+      // 计算课程状态（已满和紧张）
+      const processedCourses = allCourses.map(course => {
+        // 计算预约比例
+        const bookingRatio = course.bookedCount / course.capacity
+        
+        // 更新课程状态
+        return {
+          ...course,
+          isFull: course.bookedCount >= course.capacity,
+          isTense: bookingRatio >= 0.8 && !course.isFull, // 预约数达到80%且未满时为紧张状态
+          canBook: course.bookedCount < course.capacity && course.canBook // 只有未满且原状态可预约才可预约
+        }
+      })
+      
       // 根据当前选择的日期和类型筛选课程
-      const filteredCourses = allCourses.filter(course => {
+      const filteredCourses = processedCourses.filter(course => {
         const dateMatch = !currentDate || course.date === currentDate
         const typeMatch = !currentType || course.courseType === currentType
         return dateMatch && typeMatch
